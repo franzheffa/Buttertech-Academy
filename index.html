@@ -1,0 +1,398 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Bot, 
+  Users, 
+  MessageSquare, 
+  CheckCircle, 
+  ArrowRight, 
+  ShieldCheck, 
+  BookOpen, 
+  Zap,
+  Menu,
+  X,
+  FileText,
+  Star,
+  Sparkles,
+  Loader2,
+  Send,
+  Cloud,
+  ShieldAlert,
+  Clock,
+  ChevronRight,
+  Lightbulb,
+  BrainCircuit,
+  ClipboardCheck
+} from 'lucide-react';
+
+// Configuration de l'API Gemini (L'environnement fournit la clé)
+const apiKey = "";
+const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
+
+const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [userQuery, setUserQuery] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
+  const [activeTab, setActiveTab] = useState('optimizer'); // optimizer, advisor, roadmap, quiz
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
+  // Fonction d'appel API avec gestion des erreurs et backoff exponentiel
+  const callGemini = async (prompt, systemInstruction) => {
+    setAiLoading(true);
+    setAiResponse("");
+    
+    const maxRetries = 5;
+    let delay = 1000;
+
+    for (let i = 0; i < maxRetries; i++) {
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            systemInstruction: { parts: [{ text: systemInstruction }] }
+          })
+        });
+
+        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+        
+        const data = await response.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        setAiResponse(text || "Désolé, je n'ai pas pu générer de réponse.");
+        setAiLoading(false);
+        return;
+      } catch (error) {
+        if (i === maxRetries - 1) {
+          setAiResponse("Une erreur est survenue lors de la communication avec l'IA. Veuillez réessayer dans quelques instants.");
+          setAiLoading(false);
+          return;
+        }
+        await new Promise(resolve => setTimeout(resolve, delay));
+        delay *= 2;
+      }
+    }
+  };
+
+  const handleAiAction = () => {
+    if (!userQuery.trim()) return;
+
+    let systemPrompt = "";
+    let userPrompt = userQuery;
+
+    switch(activeTab) {
+      case 'optimizer':
+        systemPrompt = "Tu es l'expert Buttertech en Prompt Engineering. Ta mission est d'optimiser le prompt de l'utilisateur en appliquant rigoureusement la méthode P.T.C.F (Persona, Tâche, Contexte, Format). Explique brièvement les améliorations apportées. Réponds en français de manière professionnelle.";
+        break;
+      case 'advisor':
+        systemPrompt = "Tu es le conseiller d'orientation de Buttertech Academy. Analyse le profil ou le besoin de l'utilisateur et recommande l'un de nos 3 parcours (IA Visionnaire, IA Responsable ou Productivité). Sois persuasif et montre comment cela répond à ses objectifs. Réponds en français.";
+        break;
+      case 'roadmap':
+        systemPrompt = "Tu es un architecte de formation cloud. Génère une roadmap d'apprentissage personnalisée en 4 étapes clés basée sur le sujet de l'utilisateur. Inclus des micro-objectifs pour chaque étape. Présente cela de manière structurée et moderne. Réponds en français.";
+        break;
+      case 'quiz':
+        systemPrompt = "Génère un quiz rapide de 3 questions (avec options A, B, C) sur le sujet fourni par l'utilisateur pour tester ses connaissances. Inclus les bonnes réponses à la fin avec une brève explication. Réponds en français.";
+        break;
+      default:
+        systemPrompt = "Réponds aux questions sur les formations Buttertech Academy et l'IA.";
+    }
+
+    callGemini(userPrompt, systemPrompt);
+  };
+
+  const courses = [
+    {
+      id: 1,
+      title: "IA Visionnaire & Multimodale",
+      duration: "12 heures",
+      category: "Innovation & Stratégie",
+      description: "Apprenez à orchestrer des agents IA et à utiliser la vision artificielle pour transformer vos processus décisionnels.",
+      icon: <Bot className="w-6 h-6" />,
+      color: "blue",
+      plan: [
+        "Module 1: Fondamentaux & IA moderne (2h)",
+        "Module 2: Vision artificielle & Capteurs (2h)",
+        "Module 3: Raisonnement multimodal (2h)",
+        "Module 4: Orchestration d'agents IA (2h)",
+        "Module 5: Éthique & Acceptabilité (2h)",
+        "Module 6: Atelier d'analyse de cas réels (2h)"
+      ]
+    },
+    {
+      id: 2,
+      title: "IA Responsable & Loi 25",
+      duration: "9 heures",
+      category: "Gouvernance & RH",
+      description: "Assurez la conformité de votre organisation. Maîtrisez les risques, les biais et la protection des données sensibles.",
+      icon: <ShieldAlert className="w-6 h-6" />,
+      color: "indigo",
+      plan: [
+        "Module 1: Cartographie des risques (2h)",
+        "Module 2: Loi 25 & Protection des données (2h)",
+        "Module 3: Éthique, Biais & Transparence (2h)",
+        "Module 4: Politiques internes de gouvernance (2h)",
+        "Module 5: Étude de cas sur incident réel (1h)"
+      ]
+    },
+    {
+      id: 3,
+      title: "Productivité Augmentée",
+      duration: "6 heures",
+      category: "Compétences Professionnelles",
+      description: "La quintessence du Prompt Engineering. Gagnez 2h par jour grâce à l'automatisation et à la synthèse intelligente.",
+      icon: <Sparkles className="w-6 h-6" />,
+      color: "teal",
+      plan: [
+        "Module 1: IA comme assistant quotidien (1.5h)",
+        "Module 2: Structure de prompts avancés (1.5h)",
+        "Module 3: Analyse & Synthèse de rapports (1.5h)",
+        "Module 4: Atelier pratique de mise en situation (1.5h)"
+      ]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900">
+      {/* Navigation */}
+      <nav className="fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16 items-center">
+            <div className="flex items-center space-x-2 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
+                <ShieldCheck className="text-white w-6 h-6" />
+              </div>
+              <span className="font-bold text-xl tracking-tight text-slate-900">Buttertech Academy</span>
+            </div>
+            <div className="hidden md:flex space-x-8 items-center">
+              <a href="#formations" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Formations</a>
+              <a href="#ai-tools" className="text-sm font-semibold text-blue-600 flex items-center gap-1">Outils IA ✨</a>
+              <a href="#tarifs" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Tarifs</a>
+              <a href="#contact" className="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-700 transition-all shadow-md shadow-blue-100">S'inscrire</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-40 pb-20 px-4 text-center">
+        <div className="max-w-4xl mx-auto">
+          <div className="inline-flex items-center px-4 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold mb-8 border border-blue-100 animate-pulse">
+            <Zap className="w-4 h-4 mr-2" /> ACCRÉDITATION SOFEDUC • AUDIT 2026
+          </div>
+          <h1 className="text-5xl md:text-8xl font-black text-slate-900 mb-6 leading-tight tracking-tighter">
+            L'IA certifiée pour les <br/><span className="text-blue-600 underline decoration-blue-200 decoration-8 underline-offset-4">Organisations.</span>
+          </h1>
+          <p className="text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+            Fusionnez l'innovation multimodale, la gouvernance responsable et la productivité grâce à nos parcours automatisés sur Cloud Run.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#formations" className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-slate-800 transition-all flex items-center justify-center shadow-lg">
+              Voir les programmes <ChevronRight className="ml-2 w-5 h-5"/>
+            </a>
+            <a href="#ai-tools" className="bg-white border border-slate-200 text-slate-700 px-10 py-4 rounded-2xl font-bold hover:bg-slate-50 transition-all">
+              Tester l'Assistant ✨
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: ENHANCED AI TOOLS SECTION */}
+      <section id="ai-tools" className="py-24 px-4 bg-slate-50 overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent"></div>
+        <div className="max-w-5xl mx-auto bg-white rounded-[3rem] border border-slate-200 p-8 md:p-14 shadow-2xl relative z-10">
+          <div className="text-center mb-10">
+            <h2 className="text-4xl font-black text-slate-900 mb-4 flex items-center justify-center gap-3">
+              Laboratoire Intelligent ✨
+            </h2>
+            <p className="text-slate-500">Expérimentez la puissance de nos algorithmes pédagogiques en temps réel.</p>
+          </div>
+
+          <div className="flex flex-wrap gap-2 mb-8 justify-center">
+            {[
+              { id: 'optimizer', label: 'Optimiseur P.T.C.F ✨', icon: <BrainCircuit className="w-4 h-4" /> },
+              { id: 'roadmap', label: 'Générateur Roadmap ✨', icon: <Lightbulb className="w-4 h-4" /> },
+              { id: 'quiz', label: 'Simulateur Quiz ✨', icon: <ClipboardCheck className="w-4 h-4" /> },
+              { id: 'advisor', label: 'Conseiller ✨', icon: <Users className="w-4 h-4" /> }
+            ].map((tab) => (
+              <button 
+                key={tab.id}
+                onClick={() => { setActiveTab(tab.id); setAiResponse(""); }}
+                className={`px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 transition-all duration-300 ${activeTab === tab.id ? 'bg-blue-600 text-white shadow-xl shadow-blue-200' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
+              >
+                {tab.icon} {tab.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="space-y-6">
+            <div className="relative group">
+              <textarea 
+                value={userQuery} 
+                onChange={(e) => setUserQuery(e.target.value)}
+                placeholder={
+                  activeTab === 'optimizer' ? "Entrez votre prompt brut (ex: écris un mail de vente)..." :
+                  activeTab === 'roadmap' ? "Quel sujet souhaitez-vous maîtriser ? (ex: automatisation Python)..." :
+                  activeTab === 'quiz' ? "Sur quel sujet voulez-vous être testé ?..." :
+                  "Quels sont vos objectifs professionnels ?..."
+                }
+                className="w-full bg-slate-50 border border-slate-200 rounded-[2rem] p-6 text-slate-900 placeholder:text-slate-400 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none min-h-[160px] transition-all text-lg"
+              />
+              <button 
+                onClick={handleAiAction} 
+                disabled={aiLoading || !userQuery.trim()} 
+                className="absolute bottom-6 right-6 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl hover:bg-blue-700 transition-all disabled:opacity-50 disabled:grayscale"
+              >
+                {aiLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Sparkles className="w-5 h-5" /> Générer ✨</>}
+              </button>
+            </div>
+
+            {aiResponse && (
+              <div className="bg-blue-50 border border-blue-100 rounded-[2rem] p-8 shadow-inner animate-in fade-in zoom-in-95 duration-500">
+                <div className="flex items-center gap-2 text-blue-600 font-black text-xs uppercase tracking-widest mb-4">
+                  <Star className="w-4 h-4 fill-blue-600" /> Réponse de l'Assistant Buttertech ✨
+                </div>
+                <div className="prose prose-slate max-w-none">
+                  <p className="text-blue-900 text-lg whitespace-pre-wrap leading-relaxed font-medium">{aiResponse}</p>
+                </div>
+                <div className="mt-6 pt-6 border-t border-blue-100 flex justify-end">
+                  <button className="text-blue-600 font-bold text-sm flex items-center gap-2 hover:underline">
+                    Appliquer cette recommandation <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Courses Section */}
+      <section id="formations" className="py-24 px-4 bg-white">
+        <div className="max-w-7xl mx-auto text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter">Programmes SOFEDUC 2026</h2>
+          <p className="text-slate-500 max-w-2xl mx-auto text-lg">La quintessence pédagogique validée pour vos crédits UEC.</p>
+        </div>
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-3 gap-8">
+          {courses.map((course) => (
+            <div key={course.id} className="group bg-white p-8 rounded-[2.5rem] border border-slate-200 hover:border-blue-500 hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform 
+                ${course.color === 'blue' ? 'bg-blue-50 text-blue-600' : 
+                  course.color === 'indigo' ? 'bg-indigo-50 text-indigo-600' : 
+                  'bg-teal-50 text-teal-600'}`}>
+                {course.icon}
+              </div>
+              <h3 className="text-3xl font-black text-slate-900 mb-2">{course.title}</h3>
+              <p className="text-sm font-black text-blue-600 uppercase mb-6 tracking-widest">{course.category}</p>
+              <p className="text-slate-500 mb-8 flex-grow leading-relaxed">{course.description}</p>
+              <div className="flex items-center text-sm font-black text-slate-400 mb-8 bg-slate-50 p-3 rounded-xl w-fit">
+                <Clock className="w-4 h-4 mr-2" /> {course.duration}
+              </div>
+              <button 
+                onClick={() => setSelectedCourse(course)}
+                className="w-full py-4 rounded-2xl bg-slate-50 border border-slate-100 font-black text-slate-900 hover:bg-slate-900 hover:text-white transition-all mb-3"
+              >
+                Consulter le Plan ✨
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="tarifs" className="py-24 px-4 bg-slate-900 text-white rounded-[4rem] mx-4 md:mx-10 my-10 relative overflow-hidden shadow-3xl">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-600/10 -skew-x-12 translate-x-20"></div>
+        <div className="max-w-6xl mx-auto relative z-10 grid md:grid-cols-2 gap-20 items-center">
+          <div>
+            <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center mb-8">
+              <Cloud className="text-white w-6 h-6" />
+            </div>
+            <span className="text-blue-400 font-bold text-sm tracking-widest uppercase">Économie d'échelle Cloud Run</span>
+            <h2 className="text-4xl md:text-6xl font-black mt-4 mb-8 leading-tight tracking-tighter">L'automatisation au service de votre budget.</h2>
+            <p className="text-slate-400 text-xl mb-10 leading-relaxed">
+              En orchestrant nos contenus sur <span className="text-white font-bold">Cloud Run</span>, nous supprimons les coûts d'infrastructure classiques pour vous offrir le meilleur rapport qualité/prix du marché québécois.
+            </p>
+            <div className="grid grid-cols-2 gap-6">
+              <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+                <h4 className="font-bold text-blue-400 mb-1">99.9%</h4>
+                <p className="text-xs text-slate-400">Disponibilité garantie</p>
+              </div>
+              <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+                <h4 className="font-bold text-blue-400 mb-1">Instant</h4>
+                <p className="text-xs text-slate-400">Attestations auto-générées</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white text-slate-900 p-10 md:p-12 rounded-[3.5rem] shadow-2xl relative">
+            <div className="absolute -top-4 right-10 bg-blue-600 text-white px-6 py-2 rounded-full text-xs font-black uppercase tracking-tighter">Économie massive de 600$</div>
+            <h3 className="text-3xl font-black mb-2">Bundle Quintessence</h3>
+            <p className="text-slate-500 text-sm mb-8 italic">Accès illimité aux 3 parcours (27h certifiées)</p>
+            <div className="flex items-baseline gap-2 mb-10">
+              <span className="text-7xl font-black tracking-tighter">299$</span>
+              <span className="text-slate-300 line-through text-2xl">899$</span>
+            </div>
+            <ul className="space-y-5 mb-10">
+              {["Accès prioritaire à l'Assistant IA ✨", "Tableau de bord Cloud Run individuel", "Examens SOFEDUC automatisés", "Certifications PDF haute résolution"].map((benefit, i) => (
+                <li key={i} className="flex items-center text-sm font-bold text-slate-700">
+                  <CheckCircle className="text-green-500 w-5 h-5 mr-4 flex-shrink-0" /> {benefit}
+                </li>
+              ))}
+            </ul>
+            <button className="w-full bg-blue-600 text-white py-5 rounded-[2rem] font-black text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 hover:scale-[1.02] active:scale-95">
+              DÉMARRER MON PARCOURS
+            </button>
+            <p className="text-center text-[10px] text-slate-400 mt-6 uppercase tracking-widest font-black">Accréditation SOFEDUC en vigueur</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Modal - Course Plan */}
+      {selectedCourse && (
+        <div className="fixed inset-0 bg-slate-900/90 backdrop-blur-md z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
+          <div className="bg-white w-full max-w-2xl rounded-[3rem] p-10 md:p-14 relative shadow-2xl">
+            <button onClick={() => setSelectedCourse(null)} className="absolute top-8 right-8 p-3 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+              <X className="w-6 h-6" />
+            </button>
+            <h3 className="text-4xl font-black mb-2 tracking-tighter">{selectedCourse.title}</h3>
+            <p className="text-blue-600 font-black mb-10 uppercase text-sm tracking-widest">{selectedCourse.category}</p>
+            <div className="space-y-4 mb-12">
+              <h4 className="font-black text-slate-300 uppercase text-xs tracking-widest mb-6">Séquence Pédagogique (Norme 5.c)</h4>
+              {selectedCourse.plan.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-6 p-5 bg-slate-50 rounded-[1.5rem] border border-slate-100 hover:border-blue-200 transition-all">
+                  <div className="w-10 h-10 rounded-full bg-white border border-blue-100 flex items-center justify-center font-black text-sm text-blue-600 shadow-sm flex-shrink-0">{idx + 1}</div>
+                  <span className="font-bold text-slate-700 text-lg leading-tight">{item}</span>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => setSelectedCourse(null)} className="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-slate-200">
+              Compris, Fermer
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Footer */}
+      <footer className="py-24 bg-white border-t border-slate-100 text-center">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-center space-x-2 mb-10">
+            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+              <ShieldCheck className="text-white w-6 h-6" />
+            </div>
+            <span className="font-black text-slate-900 text-2xl">Buttertech Academy</span>
+          </div>
+          <div className="flex flex-wrap justify-center gap-10 text-sm font-black text-slate-400 mb-16 uppercase tracking-widest">
+            <a href="#" className="hover:text-blue-600">Loi 25 (Privacité)</a>
+            <a href="#" className="hover:text-blue-600">Règlements UEC</a>
+            <a href="#" className="hover:text-blue-600">Audit SOFEDUC</a>
+            <a href="#" className="hover:text-blue-600">API Status ✨</a>
+          </div>
+          <div className="max-w-md mx-auto p-6 bg-slate-50 rounded-3xl border border-slate-100">
+            <p className="text-[10px] text-slate-400 leading-relaxed font-bold uppercase tracking-widest mb-2">Technologie Pédagogique</p>
+            <p className="text-slate-500 text-xs italic">"L'IA ne remplacera pas le formateur, mais le formateur qui utilise l'IA remplacera celui qui ne l'utilise pas."</p>
+          </div>
+          <p className="mt-16 text-[10px] text-slate-300 font-black uppercase tracking-widest tracking-[0.2em]">© 2026 Buttertech inc. Solutions Cloud Run pour l'Éducation Continue.</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
