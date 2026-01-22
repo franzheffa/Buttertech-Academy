@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buttertech Academy - IA Certifiée & Excellence Cloud</title>
+    <title>Buttertech Academy | IA Mondiale & Conformité SOFEDUC</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .animate-drift { animation: drift 20s linear infinite; }
+        .animate-drift { animation: drift 30s linear infinite; }
+        .badge-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
     </style>
 </head>
 <body class="bg-white text-slate-900 selection:bg-blue-100">
@@ -24,7 +26,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        const apiKey = ""; // La clé est injectée par l'environnement
+        const apiKey = ""; // Injectée par l'environnement
         const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
 
         const Icon = ({ name, className = "w-6 h-6" }) => {
@@ -54,7 +56,7 @@
                     const data = await response.json();
                     setAiResponse(data.candidates?.[0]?.content?.parts?.[0]?.text || "Analyse terminée.");
                 } catch (e) {
-                    setAiResponse("L'assistant intelligent est surchargé. Réessayez plus tard.");
+                    setAiResponse("L'assistant intelligent est momentanément indisponible.");
                 } finally {
                     setAiLoading(false);
                 }
@@ -63,91 +65,120 @@
             const handleAiAction = () => {
                 if (!userQuery.trim()) return;
                 const prompts = {
-                    optimizer: "Optimise ce prompt selon la méthode P.T.C.F apprise chez Buttertech (Persona, Tâche, Contexte, Format). Réponds en français.",
-                    advisor: "Recommande l'un de nos 3 parcours SOFEDUC pour ce profil : " + userQuery,
-                    roadmap: "Génère un plan de déploiement Cloud Run en 4 étapes pour : " + userQuery
+                    optimizer: "Tu es l'expert Buttertech. Optimise ce prompt pour un déploiement Cloud Run sécurisé selon la méthode P.T.C.F. Réponds en français.",
+                    advisor: "Conseille le parcours SOFEDUC idéal pour ce profil professionnel en mettant l'accent sur la Loi 25 : " + userQuery,
+                    roadmap: "Génère une roadmap de conformité IA (RGPD/Loi 25/SOC2) en 4 étapes pour : " + userQuery
                 };
                 callGemini(userQuery, prompts[activeTab]);
             };
 
             const courses = [
-                { id: 1, title: "IA Visionnaire & Multimodale", duration: "12h", cat: "Innovation", desc: "Agents IA et vision artificielle (NVIDIA/Google Cloud).", icon: "bot", color: "blue", plan: ["Fondamentaux IA", "Vision Artificielle", "Inférence Multimodale", "Orchestration Agents", "Éthique & Droit", "Projet Final"] },
-                { id: 2, title: "IA Responsable & Loi 25", duration: "9h", cat: "Conformité", desc: "Gouvernance et protection des données sensibles.", icon: "shield-alert", color: "indigo", plan: ["Cartographie Risques", "Loi 25 & RGPD", "Biais & Éthique", "Politiques Internes", "Audit de sécurité"] },
-                { id: 3, title: "Productivité Augmentée", duration: "6h", cat: "Efficacité", desc: "La quintessence du Prompt Engineering P.T.C.F.", icon: "zap", color: "teal", plan: ["IA Assistant pro", "Prompts avancés", "Synthèse de masse", "Automatisation Office"] }
+                { id: 1, title: "IA Visionnaire & Multimodale", duration: "12h", cat: "Audit NVIDIA Ready", desc: "Orchestration d'agents IA et vision artificielle haut niveau sur Cloud Run.", icon: "bot", color: "blue", plan: ["Fondamentaux NVIDIA Inception", "Vision Artificielle & GPU", "Inférence Multimodale", "Orchestration Agents", "Souveraineté des données", "Audit Technique"] },
+                { id: 2, title: "IA Responsable & Loi 25", duration: "9h", cat: "Compliance & Droit", desc: "Le plus haut niveau réglementaire : Loi 25, RGPD et AI Act.", icon: "shield-alert", color: "indigo", plan: ["Cartographie Loi 25", "Cadre Éthique Mondial", "Atténuation des Biais", "Politiques de Gouvernance", "Audit de Sécurité Cloud"] },
+                { id: 3, title: "Productivité Augmentée", duration: "6h", cat: "Efficiency", desc: "Optimisation des flux de travail via Google Cloud & Workspace.", icon: "zap", color: "teal", plan: ["IA Assistant Certifié", "Prompt Engineering P.T.C.F", "Synthèse de Données Masse", "Automatisation Cloud Run"] }
             ];
 
             return (
                 <div className="min-h-screen">
-                    {/* Header Premium */}
+                    {/* Top Alert Bar */}
+                    <div className="bg-slate-900 text-white text-[10px] py-2 px-4 font-black uppercase tracking-[0.3em] flex justify-between items-center">
+                        <span className="flex items-center gap-2"><Icon name="shield-check" className="w-3 h-3 text-green-400" /> IA Souveraine & Certifiée SOFEDUC</span>
+                        <span className="hidden md:block">Audit Janvier 2026 • Conformité Loi 25 & RGPD</span>
+                    </div>
+
+                    {/* Navigation */}
                     <nav className="fixed w-full glass z-50 border-b border-slate-100 px-8 h-20 flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg"><Icon name="shield-check" /></div>
-                            <span className="font-black text-xl tracking-tighter uppercase">Buttertech Academy</span>
+                            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg"><Icon name="cpu" /></div>
+                            <span className="font-black text-xl tracking-tighter uppercase italic">Buttertech Academy</span>
                         </div>
-                        <div className="hidden lg:flex gap-10 items-center font-bold text-xs uppercase tracking-widest text-slate-400">
+                        <div className="hidden lg:flex gap-10 items-center font-bold text-[11px] uppercase tracking-widest text-slate-400">
+                            <a href="#compliance" className="hover:text-blue-600">Conformité</a>
                             <a href="#formations" className="hover:text-blue-600">Formations</a>
-                            <a href="#proof" className="hover:text-blue-600">Déploiement</a>
-                            <a href="#ai" className="text-blue-600 flex items-center gap-2">Lab IA <Icon name="sparkles" className="w-4 h-4" /></a>
-                            <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-all shadow-md shadow-blue-100">S'inscrire</button>
+                            <a href="#proof" className="hover:text-blue-600">Preuves</a>
+                            <a href="#ai" className="text-blue-600 flex items-center gap-2">Lab IA <Icon name="zap" className="w-4 h-4" /></a>
+                            <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-all shadow-xl font-black">Inscription</button>
                         </div>
                     </nav>
 
-                    {/* Hero Section - Urgence & Offre */}
+                    {/* Hero Section */}
                     <section className="pt-48 pb-24 px-6 text-center max-w-6xl mx-auto">
-                        <div className="inline-flex items-center px-4 py-2 rounded-full bg-orange-50 text-orange-600 text-[10px] font-black mb-10 border border-orange-100 tracking-[0.2em] uppercase animate-pulse">
-                            Offre de lancement : -70% • Temps Limité
+                        <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-[10px] font-black mb-10 border border-blue-100 tracking-[0.2em] uppercase">
+                            Leader en IA Réglementée au Canada
                         </div>
-                        <h1 className="text-6xl md:text-8xl font-black text-slate-900 mb-8 leading-[0.85] tracking-tighter">
-                            L'IA certifiée par la <br/><span className="text-blue-600 italic">SOFEDUC.</span>
+                        <h1 className="text-6xl md:text-[100px] font-black text-slate-900 mb-8 leading-[0.85] tracking-tighter">
+                            L'IA de confiance. <br/><span className="text-blue-600 underline decoration-blue-200 decoration-[16px] underline-offset-8">Certifiée.</span>
                         </h1>
-                        <p className="text-xl text-slate-500 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-                            Accréditation rigoureuse, crédits UEC et déploiement haute performance sur <span className="text-slate-900 font-bold italic">Cloud Run</span>. Le futur de l'éducation continue est ici.
+                        <p className="text-2xl text-slate-500 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
+                            Buttertech Academy fusionne l'excellence de <span className="text-slate-900 font-bold">NVIDIA</span> et de <span className="text-slate-900 font-bold">Google Cloud</span> avec la rigueur académique de la <span className="text-blue-600 font-bold italic underline decoration-blue-200 decoration-4">SOFEDUC</span>.
                         </p>
-                        <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-                            <div className="bg-slate-900 text-white px-10 py-5 rounded-[2rem] font-black text-xl shadow-2xl flex flex-col items-center">
-                                <span>299$ <span className="text-slate-500 line-through text-sm ml-2">899$</span></span>
-                                <span className="text-[10px] uppercase tracking-widest opacity-50">Accès bundle complet</span>
+                        
+                        {/* Price Card */}
+                        <div className="bg-slate-50 border border-slate-200 p-8 rounded-[3rem] inline-flex flex-col md:flex-row items-center gap-8 shadow-2xl relative overflow-hidden">
+                            <div className="absolute top-0 right-0 bg-blue-600 text-white px-6 py-1 font-black text-[10px] uppercase tracking-widest">Offre Adoption Massive</div>
+                            <div className="text-left">
+                                <p className="text-slate-400 font-black text-[10px] uppercase tracking-widest mb-1">Bundle Quintessence 2026</p>
+                                <div className="flex items-baseline gap-3">
+                                    <span className="text-6xl font-black text-slate-900 tracking-tighter">299$</span>
+                                    <span className="text-2xl text-slate-300 line-through font-black">899$</span>
+                                </div>
                             </div>
-                            <a href="#ai" className="bg-white border-2 border-slate-100 text-slate-900 px-10 py-5 rounded-[2rem] font-black text-lg hover:bg-slate-50 transition-all flex items-center gap-3">
-                                Tester l'Assistant ✨
-                            </a>
+                            <button className="bg-blue-600 text-white px-12 py-5 rounded-[2rem] font-black text-xl shadow-xl shadow-blue-200 hover:scale-105 transition-all">DÉMARRER MAINTENANT</button>
                         </div>
                     </section>
 
-                    {/* Deployment & Partner Proof */}
+                    {/* Proof Ticker */}
                     <section id="proof" className="py-20 border-y border-slate-50 bg-white overflow-hidden">
-                        <p className="text-center text-[10px] font-black uppercase text-slate-300 tracking-[0.4em] mb-12">Nos Partenaires & Déploiements Réussis</p>
                         <div className="flex items-center gap-20 animate-drift whitespace-nowrap px-10">
-                            {["NVIDIA Inception Member", "Google Cloud Build Partner", "Google AI Accelerator Select", "Google for Education Certified", "Cloud Run Infrastructure", "Vertex AI Deployment", "Vercel Edge Ready"].map((p, i) => (
-                                <span key={i} className="text-3xl md:text-5xl font-black text-slate-100 flex items-center gap-4 uppercase italic">
-                                    <Icon name="check-circle" className="text-blue-200" /> {p}
+                            {["NVIDIA INCEPTION MEMBER", "GOOGLE CLOUD BUILD PARTNER", "GOOGLE FOR EDUCATION CERTIFIED", "CERTIFIÉ LOI 25 QUÉBEC", "CONFORMITÉ RGPD EUROPE", "INFRASTRUCTURE SOC2 TYPE II", "CLOUD RUN DEPLOYMENT READY"].map((p, i) => (
+                                <span key={i} className="text-3xl md:text-5xl font-black text-slate-100 flex items-center gap-6 uppercase italic tracking-tighter">
+                                    <Icon name="check-circle" className="text-blue-200 w-10 h-10" /> {p}
                                 </span>
                             ))}
                         </div>
                     </section>
 
-                    {/* Why SOFEDUC */}
-                    <section className="py-32 px-6 bg-slate-900 text-white rounded-[4rem] mx-4 md:mx-10 my-20 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-600/10 -skew-x-12 translate-x-24"></div>
-                        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center relative z-10">
+                    {/* Global Compliance Section */}
+                    <section id="compliance" className="py-32 px-6 bg-white">
+                        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
                             <div>
-                                <h2 className="text-5xl font-black mb-8 tracking-tighter leading-none">Pourquoi la <br/><span className="text-blue-400">SOFEDUC ?</span></h2>
-                                <p className="text-slate-400 text-xl leading-relaxed mb-10 font-medium">
-                                    La SOFEDUC garantit la qualité des activités de formation continue. En choisissant Buttertech, vous obtenez :
+                                <span className="text-blue-600 font-black text-xs uppercase tracking-[0.3em]">Compliance & Sécurité</span>
+                                <h2 className="text-6xl font-black mt-6 mb-10 tracking-tighter leading-none">IA Mondiale. <br/>Rigueur <span className="text-blue-600">Locale.</span></h2>
+                                <p className="text-slate-400 text-xl leading-relaxed mb-10 font-medium italic">
+                                    Nous travaillons avec des modèles d'IA mondiaux au niveau réglementaire le plus élevé. Notre académie n'enseigne pas seulement l'IA, elle enseigne comment la déployer sans risque.
                                 </p>
-                                <ul className="space-y-6">
-                                    {["Crédits UEC reconnus officiellement", "Rigueur de déploiement Cloud sécurisée", "Contenu pédagogique audité annuellement", "Protection des données (Loi 25)"].map((item, i) => (
-                                        <li key={i} className="flex items-center gap-4 text-lg font-bold">
-                                            <Icon name="check" className="text-blue-400" /> {item}
-                                        </li>
-                                    ))}
-                                </ul>
+                                <div className="grid grid-cols-2 gap-8">
+                                    <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                                        <Icon name="shield-check" className="text-blue-600 mb-4" />
+                                        <h4 className="font-black text-sm uppercase mb-2">Loi 25 Québec</h4>
+                                        <p className="text-xs text-slate-500">Protection totale des renseignements personnels et respect des obligations de transparence.</p>
+                                    </div>
+                                    <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                                        <Icon name="globe" className="text-blue-600 mb-4" />
+                                        <h4 className="font-black text-sm uppercase mb-2">RGPD & AI Act</h4>
+                                        <p className="text-xs text-slate-500">Alignement sur les standards européens de protection des données et d'IA éthique.</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="bg-white/5 border border-white/10 p-12 rounded-[4rem] backdrop-blur-md">
-                                <Icon name="award" className="w-16 h-16 text-blue-400 mb-8" />
-                                <h3 className="text-3xl font-black mb-4">Certification Professionnelle</h3>
-                                <p className="text-slate-400 mb-8 font-medium">Nos diplômés voient leur autorité technique renforcée grâce à des badges numériques certifiés et vérifiables sur la blockchain pédagogique.</p>
-                                <button className="text-blue-400 font-black uppercase text-xs tracking-widest flex items-center gap-2 hover:translate-x-2 transition-transform">Consulter les standards <Icon name="arrow-right" className="w-4 h-4" /></button>
+                            <div className="relative group">
+                                <div className="absolute -inset-4 bg-blue-600/5 rounded-[4rem] group-hover:bg-blue-600/10 transition-all"></div>
+                                <div className="bg-slate-900 text-white p-12 rounded-[4rem] relative shadow-2xl">
+                                    <h3 className="text-3xl font-black mb-8 flex items-center gap-4">
+                                        <Icon name="award" className="text-blue-400" /> Certifié SOFEDUC
+                                    </h3>
+                                    <p className="text-slate-400 mb-8 font-medium leading-relaxed">
+                                        Chaque formation Buttertech est créditée en <span className="text-white font-bold">Unités d'Éducation Continue (UEC)</span>. 
+                                        C'est la garantie que votre investissement est audité selon les 13 normes de qualité les plus strictes au monde.
+                                    </p>
+                                    <ul className="space-y-4 mb-10">
+                                        {["Audit pédagogique annuel", "Qualifications formateurs validées", "Évaluation rigoureuse des acquis", "Attestations de réussite officielles"].map((item, i) => (
+                                            <li key={i} className="flex items-center gap-3 text-sm font-bold">
+                                                <Icon name="check" className="text-blue-400 w-4 h-4" /> {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <button className="w-full bg-blue-600 py-5 rounded-3xl font-black uppercase text-xs tracking-widest hover:bg-blue-700">Consulter le dossier d'audit</button>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -155,12 +186,19 @@
                     {/* AI Lab Section */}
                     <section id="ai" className="py-32 px-6 bg-slate-50">
                         <div className="max-w-5xl mx-auto bg-white rounded-[4rem] p-10 md:p-20 shadow-2xl border border-slate-200">
-                            <h2 className="text-5xl font-black mb-4 tracking-tighter">Lab Interactif ✨</h2>
-                            <p className="text-slate-400 mb-12 text-lg font-medium italic">Vérifiez la puissance de notre modèle déployé sur Cloud Run.</p>
+                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
+                                <div>
+                                    <h2 className="text-5xl font-black tracking-tighter">Lab IA Buttertech ✨</h2>
+                                    <p className="text-slate-400 font-medium italic">Inférence sur Cloud Run (Infrastructure SOC2 Type II)</p>
+                                </div>
+                                <div className="bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                                    <Icon name="zap" className="w-3 h-3" /> Souveraineté Digitale
+                                </div>
+                            </div>
                             <div className="flex gap-4 mb-10 overflow-x-auto no-scrollbar pb-2">
-                                {[{id:'optimizer', label:'Optimiseur P.T.C.F'}, {id:'advisor', label:'Conseiller SOFEDUC'}, {id:'roadmap', label:'Roadmap Cloud'}].map(t => (
+                                {[{id:'optimizer', label:'Optimiseur P.T.C.F'}, {id:'advisor', label:'Conseiller Conformité'}, {id:'roadmap', label:'Plan Déploiement'}].map(t => (
                                     <button key={t.id} onClick={() => {setActiveTab(t.id); setAiResponse("");}}
-                                        className={`px-8 py-4 rounded-2xl text-xs font-black uppercase transition-all whitespace-nowrap ${activeTab === t.id ? 'bg-blue-600 text-white shadow-xl shadow-blue-100' : 'bg-slate-100 text-slate-500'}`}
+                                        className={`px-8 py-4 rounded-2xl text-[10px] font-black uppercase transition-all whitespace-nowrap ${activeTab === t.id ? 'bg-slate-900 text-white shadow-xl shadow-slate-100' : 'bg-slate-100 text-slate-500'}`}
                                     >
                                         {t.label}
                                     </button>
@@ -169,44 +207,56 @@
                             <div className="relative">
                                 <textarea value={userQuery} onChange={(e) => setUserQuery(e.target.value)}
                                     className="w-full bg-slate-50 border-2 border-slate-100 rounded-[2.5rem] p-10 min-h-[220px] outline-none focus:border-blue-500 text-xl font-medium transition-all"
-                                    placeholder="Décrivez votre besoin technique..."
+                                    placeholder="Décrivez votre besoin technique ou réglementaire..."
                                 />
                                 <button onClick={handleAiAction} disabled={aiLoading || !userQuery.trim()}
-                                    className="absolute bottom-10 right-10 bg-blue-600 text-white px-10 py-5 rounded-[2rem] font-black text-lg shadow-xl hover:bg-blue-700 disabled:opacity-50"
+                                    className="absolute bottom-10 right-10 bg-blue-600 text-white px-10 py-5 rounded-[2rem] font-black text-lg shadow-xl hover:bg-blue-700 disabled:opacity-50 transition-all flex items-center gap-3"
                                 >
-                                    {aiLoading ? <Icon name="loader-2" className="animate-spin" /> : 'Générer ✨'}
+                                    {aiLoading ? <Icon name="loader-2" className="animate-spin" /> : <><Icon name="sparkles" /> Générer ✨</>}
                                 </button>
                             </div>
-                            {aiResponse && <div className="mt-10 bg-blue-50 p-10 rounded-[3rem] text-blue-900 font-bold italic leading-relaxed border border-blue-100">{aiResponse}</div>}
+                            {aiResponse && <div className="mt-10 bg-blue-50 p-10 rounded-[3rem] text-blue-900 font-bold italic leading-relaxed border border-blue-100 animate-in">{aiResponse}</div>}
                         </div>
                     </section>
 
                     {/* Courses Listing */}
                     <section id="formations" className="py-32 px-6 max-w-7xl mx-auto">
                         <div className="text-center mb-24">
-                            <h2 className="text-6xl font-black mb-6 tracking-tighter">Parcours 2026</h2>
-                            <p className="text-slate-400 text-xl font-medium">L'IA de demain, disponible aujourd'hui.</p>
+                            <h2 className="text-7xl font-black mb-6 tracking-tighter">Parcours SOFEDUC 2026</h2>
+                            <p className="text-slate-400 text-xl font-medium italic underline decoration-blue-100 decoration-8 underline-offset-4">La quintessence pédagogique mondiale.</p>
                         </div>
                         <div className="grid lg:grid-cols-3 gap-12">
                             {courses.map(c => (
                                 <div key={c.id} className="group bg-white p-12 rounded-[4rem] border-2 border-slate-100 hover:border-blue-500 hover:shadow-3xl transition-all flex flex-col h-full relative overflow-hidden">
-                                    <div className="bg-blue-50 text-blue-600 w-16 h-16 rounded-[1.5rem] flex items-center justify-center mb-10 group-hover:scale-110 transition-transform"><Icon name={c.icon} /></div>
+                                    <div className="bg-blue-50 text-blue-600 w-16 h-16 rounded-[1.5rem] flex items-center justify-center mb-10 group-hover:scale-110 transition-transform shadow-sm"><Icon name={c.icon} /></div>
                                     <h3 className="text-3xl font-black mb-2 leading-none">{c.title}</h3>
                                     <p className="text-blue-600 font-black text-[10px] uppercase tracking-widest mb-10">{c.cat}</p>
-                                    <p className="text-slate-400 mb-10 flex-grow font-medium leading-relaxed">{c.desc}</p>
-                                    <button onClick={() => setSelectedCourse(c)} className="w-full py-6 rounded-3xl bg-slate-900 text-white font-black text-lg hover:bg-blue-600 transition-all">Plan Pédagogique ✨</button>
+                                    <p className="text-slate-400 mb-12 flex-grow font-medium leading-relaxed">{c.desc}</p>
+                                    <div className="flex items-center gap-4 text-xs font-black text-slate-300 mb-8 uppercase tracking-widest italic border-t border-slate-50 pt-8">
+                                        <Icon name="clock" className="w-4 h-4" /> {c.duration} 
+                                        <span className="text-blue-200">•</span>
+                                        <Icon name="award" className="w-4 h-4" /> Certifié UEC
+                                    </div>
+                                    <button onClick={() => setSelectedCourse(c)} className="w-full py-6 rounded-[2rem] bg-slate-900 text-white font-black text-lg hover:bg-blue-600 transition-all flex items-center justify-center gap-3">
+                                        Plan de Formation <Icon name="chevron-right" />
+                                    </button>
                                 </div>
                             ))}
                         </div>
                     </section>
 
                     {/* Footer */}
-                    <footer className="py-32 text-center border-t border-slate-50 mt-20 opacity-50">
-                        <p className="text-[10px] font-black uppercase tracking-[0.5em] mb-4">© 2026 Buttertech inc. AI-Powered Academy.</p>
-                        <div className="flex justify-center gap-12 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                            <a href="#">Loi 25</a>
-                            <a href="#">Audit SOFEDUC</a>
-                            <a href="#">Infrastructure Cloud Run</a>
+                    <footer className="py-32 text-center border-t border-slate-50 mt-20 opacity-80 bg-slate-50">
+                        <div className="flex justify-center items-center gap-6 mb-12">
+                            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 font-black text-xs">NVIDIA Inception</div>
+                            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 font-black text-xs text-blue-600">Google Cloud Partner</div>
+                            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 font-black text-xs text-indigo-600 italic">SOFEDUC Member</div>
+                        </div>
+                        <p className="text-[10px] font-black uppercase tracking-[0.5em] mb-4 text-slate-400">© 2026 Buttertech inc. AI Regulatory Excellence Academy.</p>
+                        <div className="flex justify-center gap-12 text-[10px] font-black uppercase tracking-widest text-slate-300">
+                            <a href="#" className="hover:text-blue-600 transition-colors">Loi 25</a>
+                            <a href="#" className="hover:text-blue-600 transition-colors">Politique Éthique IA</a>
+                            <a href="#" className="hover:text-blue-600 transition-colors">Audit 2026</a>
                         </div>
                     </footer>
 
@@ -214,12 +264,15 @@
                     {selectedCourse && (
                         <div className="fixed inset-0 bg-slate-900/95 backdrop-blur-xl z-[100] flex items-center justify-center p-6" onClick={() => setSelectedCourse(null)}>
                             <div className="bg-white w-full max-w-2xl rounded-[4rem] p-16 relative" onClick={e => e.stopPropagation()}>
-                                <button onClick={() => setSelectedCourse(null)} className="absolute top-10 right-10 w-12 h-12 bg-slate-100 rounded-full font-black">✕</button>
-                                <h3 className="text-5xl font-black mb-12 tracking-tighter">{selectedCourse.title}</h3>
+                                <button onClick={() => setSelectedCourse(null)} className="absolute top-10 right-10 w-12 h-12 bg-slate-100 rounded-full font-black flex items-center justify-center hover:bg-slate-200 transition-colors">✕</button>
+                                <h3 className="text-5xl font-black mb-4 tracking-tighter leading-none">{selectedCourse.title}</h3>
+                                <p className="text-blue-600 font-black mb-12 uppercase text-[10px] tracking-[0.4em] italic underline decoration-blue-100 decoration-4">{selectedCourse.cat}</p>
                                 <div className="space-y-4">
+                                    <h4 className="font-black text-slate-200 uppercase text-[10px] tracking-widest mb-6">Contenu Audité (Norme SOFEDUC 5.c)</h4>
                                     {selectedCourse.plan.map((p, i) => (
-                                        <div key={i} className="flex gap-6 p-6 bg-slate-50 rounded-[2.5rem] font-bold text-lg border border-slate-100">
-                                            <span className="text-blue-600">{i+1}</span> <span>{p}</span>
+                                        <div key={i} className="flex gap-6 p-6 bg-slate-50 rounded-[2.5rem] font-bold text-lg border border-slate-100 hover:border-blue-100 transition-all">
+                                            <span className="text-blue-600 w-8 h-8 rounded-full bg-white border-2 border-blue-600 flex items-center justify-center text-xs shadow-sm">{i+1}</span> 
+                                            <span className="text-slate-800 leading-tight">{p}</span>
                                         </div>
                                     ))}
                                 </div>
