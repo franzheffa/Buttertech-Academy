@@ -13,29 +13,71 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="bg-white text-slate-900">
     <div id="root"></div>
+
     <script type="text/babel">
         const { useState, useEffect } = React;
+
         const App = () => {
+            const [aiLoading, setAiLoading] = useState(false);
+            const [userQuery, setUserQuery] = useState("");
+            const [aiResponse, setAiResponse] = useState("");
+            const [activeTab, setActiveTab] = useState('optimizer');
+
+            const courses = [
+                { id: 1, title: "IA Visionnaire & Multimodale", duration: "12h", category: "Innovation", icon: "bot" },
+                { id: 2, title: "IA Responsable & Loi 25", duration: "9h", category: "Gouvernance", icon: "shield-check" },
+                { id: 3, title: "Productivité Augmentée", duration: "6h", category: "Efficacité", icon: "sparkles" }
+            ];
+
             useEffect(() => {
                 if (window.lucide) window.lucide.createIcons();
-            }, []);
+            }, [aiResponse, activeTab]);
 
             return (
-                <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-center">
-                        <h1 className="text-5xl font-black text-blue-600 mb-4">Buttertech Academy</h1>
-                        <p className="text-xl text-slate-500">L'IA certifiée pour les organisations.</p>
-                        <div className="mt-8 p-6 bg-blue-50 rounded-3xl border border-blue-100">
-                            <p className="font-bold text-blue-800">Site en ligne et fonctionnel !</p>
+                <div className="min-h-screen">
+                    <nav className="fixed w-full glass z-50 border-b border-slate-100 px-6 h-20 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white"><i data-lucide="shield-check"></i></div>
+                            <span className="font-black text-xl tracking-tighter uppercase">Buttertech Academy</span>
                         </div>
-                    </div>
+                    </nav>
+
+                    <section className="pt-48 pb-24 px-6 text-center max-w-5xl mx-auto">
+                        <h1 className="text-6xl md:text-8xl font-black text-slate-900 mb-8 leading-[0.9] tracking-tighter">
+                            L'IA certifiée pour les <br/><span className="text-blue-600">Organisations.</span>
+                        </h1>
+                        <p className="text-xl text-slate-500 mb-12 max-w-2xl mx-auto font-medium">Innovation multimodale et productivité automatisée.</p>
+                    </section>
+
+                    <section id="ai" className="py-24 px-6 bg-slate-50">
+                        <div className="max-w-4xl mx-auto bg-white rounded-[3rem] p-8 md:p-14 border border-slate-200 shadow-2xl">
+                            <h2 className="text-4xl font-black mb-10 tracking-tighter">Laboratoire Intelligent ✨</h2>
+                            <div className="flex gap-2 mb-8 overflow-x-auto no-scrollbar">
+                                {['optimizer', 'roadmap', 'quiz'].map(tab => (
+                                    <button key={tab} onClick={() => setActiveTab(tab)} className={`px-6 py-3 rounded-2xl text-sm font-black ${activeTab === tab ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                                        {tab === 'optimizer' ? 'Optimiseur P.T.C.F' : tab === 'roadmap' ? 'Roadmap' : 'Quiz'}
+                                    </button>
+                                ))}
+                            </div>
+                            <textarea 
+                                value={userQuery} onChange={(e) => setUserQuery(e.target.value)}
+                                className="w-full bg-slate-50 border-2 border-slate-100 rounded-3xl p-6 min-h-[160px] text-lg outline-none focus:border-blue-500"
+                                placeholder="Posez votre question à l'IA Buttertech..."
+                            />
+                            <button className="mt-4 w-full bg-blue-600 text-white py-4 rounded-2xl font-black hover:bg-blue-700 transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="sparkles" className="w-5 h-5"></i> Analyser avec l'IA
+                            </button>
+                        </div>
+                    </section>
                 </div>
             );
         };
+
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
