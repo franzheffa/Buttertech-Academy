@@ -137,7 +137,7 @@
                 </div>
             </div>
             <button class="bg-blue-600 hover:bg-blue-500 text-white px-12 py-6 rounded-3xl font-black uppercase tracking-widest shadow-2xl transition-all scale-110">
-                Bundle Quintessence IA (299$)
+                Bundle Quintessence IA (399$)
             </button>
         </div>
     </section>
@@ -156,5 +156,226 @@
         </div>
     </footer>
 
+
+
+<script>
+  async function callGemini(prompt) {
+    const r = await fetch("/api/gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt })
+    });
+    return r.json();
+  }
+
+  async function onSimulate() {
+    const inputEl = document.getElementById("academyPrompt");
+    const outEl = document.getElementById("academyOut");
+    const btnEl = document.getElementById("academyBtn");
+    const input = (inputEl && inputEl.value ? inputEl.value : "").trim();
+    if (!input) return;
+    if (btnEl) btnEl.disabled = true;
+    if (outEl) outEl.textContent = "Analyse...";
+    try {
+      const result = await callGemini(input);
+      const prefix = result.mode === "demo" ? "[DEMO] " : "[LIVE] ";
+      if (outEl) outEl.textContent = prefix + (result.text || "");
+    } catch (e) {
+      if (outEl) outEl.textContent = "[ERREUR] Gemini indisponible.";
+    } finally {
+      if (btnEl) btnEl.disabled = false;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("academyBtn");
+    if (btn) btn.addEventListener("click", onSimulate);
+  });
+</script>
+
+
+/* BUTTERTECH_GEMINI_SIMULATOR */
+<script>
+
+  function pickOne(selectors){
+
+    for (const s of selectors) {
+
+      const el = document.querySelector(s);
+
+      if (el) return el;
+
+    }
+
+    return null;
+
+  }
+
+
+  async function callGemini(prompt) {
+
+    const r = await fetch("/api/gemini", {
+
+      method: "POST",
+
+      headers: { "Content-Type": "application/json" },
+
+      body: JSON.stringify({ prompt })
+
+    });
+
+    return r.json();
+
+  }
+
+
+  async function onSimulate() {
+
+    const inputEl = pickOne([
+
+      "#academyPrompt",
+
+      "textarea#academyPrompt",
+
+      "textarea[placeholder*=Défi]",
+
+      "textarea[placeholder*=logistique]",
+
+      "textarea[placeholder*=municipal]",
+
+      "textarea",
+
+      "input[type=text]",
+
+      "input"
+
+    ]);
+
+
+    const btnEl = pickOne([
+
+      "#academyBtn",
+
+      "button#academyBtn",
+
+      "button[id*=academy]",
+
+      "button:contains(SIMULER)"
+
+    ]);
+
+
+    // :contains() n est pas supporté par querySelector, donc fallback texte:
+
+    let realBtn = btnEl;
+
+    if (!realBtn) {
+
+      realBtn = Array.from(document.querySelectorAll("button")).find(b => (b.textContent||"").toUpperCase().includes("SIMUL")) || null;
+
+    }
+
+
+    const outEl = pickOne([
+
+      "#academyOut",
+
+      "pre#academyOut",
+
+      "#academyOut pre",
+
+      "#academyOut div",
+
+      "pre[id*=academy]",
+
+      "pre",
+
+      "[data-output]"
+
+    ]);
+
+
+    const input = (inputEl && inputEl.value ? inputEl.value : "").trim();
+
+    if (!input) return;
+
+
+    if (realBtn) realBtn.disabled = true;
+
+    if (outEl) outEl.textContent = "Analyse...";
+
+
+    try {
+
+      const result = await callGemini(input);
+
+      const prefix = result.mode === "demo" ? "[DEMO] " : "[LIVE] ";
+
+      if (outEl) outEl.textContent = prefix + (result.text || "");
+
+    } catch (e) {
+
+      if (outEl) outEl.textContent = "[ERREUR] Gemini indisponible.";
+
+    } finally {
+
+      if (realBtn) realBtn.disabled = false;
+
+    }
+
+  }
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+    // bind sur le premier bouton SIMUL*
+
+    const b = Array.from(document.querySelectorAll("button")).find(x => (x.textContent||"").toUpperCase().includes("SIMUL"));
+
+    if (b) b.addEventListener("click", onSimulate);
+
+  });
+
+</script>
+
 </body>
 </html>
+<script>
+  async function callGemini(prompt) {
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        prompt: prompt,
+        system: "Tu es Smith-HEFFA Academy. Réponse structurée, concise, actionnable."
+      })
+    });
+
+    return await res.json(); // { text, mode }
+  }
+
+  async function onSimulate() {
+    const inputEl = document.getElementById("academyPrompt");
+    const outEl = document.getElementById("academyOut");
+
+    if (!inputEl || !outEl) return;
+
+    const input = inputEl.value.trim();
+    if (!input) return;
+
+    outEl.textContent = "Analyse...";
+
+    try {
+      const result = await callGemini(input);
+      const prefix = result.mode === "demo" ? "[DEMO] " : "[LIVE] ";
+      outEl.textContent = prefix + (result.text || "");
+    } catch (e) {
+      outEl.textContent = "[ERREUR] Gemini indisponible.";
+    }
+  }
+
+  const btn = document.getElementById("academyBtn");
+  if (btn) {
+    btn.addEventListener("click", onSimulate);
+  }
+</script>
