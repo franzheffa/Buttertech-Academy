@@ -1,60 +1,87 @@
+function pickBestModel(list) {
+  const models = list?.models || [];
+
+  // 1) Priorité: modèles Gemini supportant generateContent
+  const candidates = models.filter(m =>
+    (m.name || "").includes("gemini") &&
+    (m.supportedGenerationMethods || []).includes("generateContent")
+  );
+
+  // 2) Si possible, préfère un "flash" (rapide/cheap)
+  const flash = candidates.find(m => (m.name || "").toLowerCase().includes("flash"));
+  return (flash || candidates[0] || models[0])?.name || null;
+}
+
 export default async function handler(req, res) {
-  // CORS (au cas où)
+  // CORS / preflight
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
   if (req.method === "OPTIONS") return res.status(200).end();
 
   try {
+    const key = process.env.GEMINI_API_KEY;
+    if (!key) {
+      return res.status(200).json({ text: "MODE DEMO: clé API manquante.", mode: "demo" });
+    }
+
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
-    const prompt = (body.prompt || "").toString().trim();
-
+    const prompt = (body.prompt || body.text || "").toString().trim();
     if (!prompt) {
-      return res.status(200).json({ text: "Entrez une demande (ex: 'loi 25', 'audit', 'ville').", mode: "demo" });
+      return res.status(200).json({ text: "MODE DEMO: prompt vide.", mode: "demo" });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-    if (!apiKey) {
-      // IMPORTANT: on retourne 200 + demo pour éviter le catch côté front
-      return res.status(200).json({
-        text: "MODE DEMO: GEMINI_API_KEY manquante dans Vercel (Project Settings → Environment Variables).",
-        mode: "demo"
-      });
+    // 1) modèle forcé si tu veux
+    let model = (process.env.GEMINI_MODEL || "").trim();
+
+    // 2) sinon, on liste les modèles et on choisit le meilleur compatible
+    if (!model) {
+      const listUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`;
+      const lr = await fetch(listUrl);
+      const list = await lr.json();
+      if (!lr.ok) {
+        return res.status(200).json({
+          text: list?.error?.message || "MODE DEMO: ListModels failed.",
+          mode: "demo"
+        });
+      }
+      model = pickBestModel(list);
     }
 
-    // Modèle stable côté Generative Language API
-    const model = process.env.GEMINI_MODEL || "gemini-1.5-flash";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    if (!model) {
+      return res.status(200).json({ text: "MODE DEMO: aucun modèle compatible trouvé.", mode: "demo" });
+    }
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/${model}:generateContent?key=${encodeURIComponent(key)}`;
+
+    const payload = {
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.4, maxOutputTokens: 512 }
+    };
 
     const r = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.4,
-          maxOutputTokens: 450
-        }
-      })
+      body: JSON.stringify(payload)
     });
 
-    const data = await r.json().catch(() => ({}));
+    const data = await r.json();
 
     const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      data?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join("") ||
       data?.error?.message ||
       "Aucune réponse exploitable.";
 
-    // Même si Gemini renvoie une erreur, on reste en 200 pour garder l'UI vivante
     return res.status(200).json({
       text,
-      mode: r.ok ? "live" : "demo"
+      mode: r.ok ? "live" : "demo",
+      model
     });
-  } catch (err) {
+  } catch (e) {
     return res.status(200).json({
       text: "MODE DEMO: Gemini indisponible (erreur serveur).",
-      mode: "demo"
+      mode: "demo",
+      error: String(e)
     });
   }
 }
