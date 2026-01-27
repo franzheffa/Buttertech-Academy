@@ -1,1 +1,10 @@
 .vercel
+.DS_Store
+*.bak
+index.html.bak
+smith_*.sh
+agent smith fraud detection /
+.DS_Store
+*.bak
+index.html.bak
+smith_*.sh
