@@ -3,380 +3,507 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buttertech Academy | Simulateur Stratégique Gemini 3.0</title>
+    <title>Buttertech Academy | Simulateur Stratégique Gemini — SOFEDUC 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+      :root {
+        --bt-white:  #FFFFFF;
+        --bt-black:  #000000;
+        --bt-gold:   #C9A84C;
+        --bt-gold-lt:#E8C96E;
+        --bt-gray:   #F5F5F5;
+        --bt-gray-md:#888888;
+        --bt-border: #E0E0E0;
+      }
+      * { box-sizing: border-box; }
+      body {
+        background: var(--bt-white);
+        color: var(--bt-black);
+        font-family: Arial, 'Times New Roman', sans-serif;
+        margin: 0; padding: 0;
+      }
+      .bt-banner {
+        background: var(--bt-black);
+        color: var(--bt-gold);
+        font-size: 10px; font-weight: 900;
+        letter-spacing: 0.3em; text-transform: uppercase;
+        text-align: center; padding: 10px 20px;
+        border-bottom: 2px solid var(--bt-gold);
+      }
+      .bt-nav {
+        position: sticky; top: 0; z-index: 50;
+        background: var(--bt-white);
+        border-bottom: 2px solid var(--bt-black);
+        padding: 16px 32px;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .bt-logo { display: flex; align-items: center; gap: 12px; }
+      .bt-logo-icon {
+        background: var(--bt-black); color: var(--bt-gold);
+        width: 44px; height: 44px; border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 900; font-size: 22px;
+        font-family: 'Times New Roman', serif; font-style: italic;
+      }
+      .bt-logo-text { display: flex; flex-direction: column; }
+      .bt-logo-text span:first-child {
+        font-family: 'Times New Roman', serif; font-weight: 900;
+        font-size: 20px; font-style: italic; text-transform: uppercase;
+        letter-spacing: -0.05em; color: var(--bt-black);
+      }
+      .bt-logo-text span:last-child {
+        font-size: 8px; font-weight: 700; letter-spacing: 0.4em;
+        text-transform: uppercase; color: var(--bt-gold);
+      }
+      .bt-nav-links {
+        display: flex; gap: 32px; font-size: 10px; font-weight: 700;
+        letter-spacing: 0.15em; text-transform: uppercase;
+      }
+      .bt-nav-links a { text-decoration: none; color: var(--bt-gray-md); transition: color 0.2s; }
+      .bt-nav-links a:hover { color: var(--bt-gold); }
+      .bt-btn-primary {
+        background: var(--bt-black); color: var(--bt-gold);
+        border: 2px solid var(--bt-black);
+        padding: 12px 28px; font-family: Arial, sans-serif;
+        font-weight: 900; font-size: 10px; letter-spacing: 0.2em;
+        text-transform: uppercase; border-radius: 4px; cursor: pointer;
+        transition: all 0.2s; text-decoration: none; display: inline-block;
+      }
+      .bt-btn-primary:hover { background: var(--bt-gold); color: var(--bt-black); border-color: var(--bt-gold); }
+      .bt-btn-gold {
+        background: var(--bt-gold); color: var(--bt-black);
+        border: 2px solid var(--bt-gold);
+        padding: 18px 44px; font-family: Arial, sans-serif;
+        font-weight: 900; font-size: 13px; letter-spacing: 0.15em;
+        text-transform: uppercase; border-radius: 4px; cursor: pointer;
+        transition: all 0.2s; text-decoration: none; display: inline-block;
+      }
+      .bt-btn-gold:hover { background: var(--bt-black); color: var(--bt-gold); border-color: var(--bt-black); }
+      .bt-btn-outline {
+        background: transparent; color: var(--bt-black);
+        border: 2px solid var(--bt-black);
+        padding: 14px 32px; font-family: Arial, sans-serif;
+        font-weight: 700; font-size: 11px; letter-spacing: 0.15em;
+        text-transform: uppercase; border-radius: 4px; cursor: pointer;
+        transition: all 0.2s; text-decoration: none; display: inline-block;
+      }
+      .bt-btn-outline:hover { background: var(--bt-black); color: var(--bt-white); }
+      .bt-hero {
+        background: var(--bt-white); border-bottom: 2px solid var(--bt-black);
+        padding: 80px 32px 64px; text-align: center;
+      }
+      .bt-hero-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: var(--bt-black); color: var(--bt-gold);
+        padding: 8px 20px; font-size: 9px; font-weight: 900;
+        letter-spacing: 0.3em; text-transform: uppercase;
+        border-radius: 2px; margin-bottom: 32px;
+      }
+      .bt-hero h1 {
+        font-family: 'Times New Roman', serif;
+        font-size: clamp(48px, 8vw, 96px);
+        font-weight: 900; font-style: italic;
+        letter-spacing: -0.04em; line-height: 0.9;
+        color: var(--bt-black); margin: 0 0 16px; text-transform: uppercase;
+      }
+      .bt-hero h1 span { color: var(--bt-gold); font-style: normal; }
+      .bt-hero p {
+        font-size: 18px; color: var(--bt-gray-md);
+        max-width: 640px; margin: 24px auto 40px;
+        line-height: 1.6; font-style: italic;
+      }
+      .bt-hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+      .bt-section-title {
+        font-family: 'Times New Roman', serif;
+        font-size: clamp(28px, 4vw, 48px);
+        font-weight: 900; font-style: italic;
+        text-transform: uppercase; letter-spacing: -0.03em;
+        color: var(--bt-black); margin: 0 0 8px;
+      }
+      .bt-section-title span { color: var(--bt-gold); }
+      .bt-simulator {
+        background: var(--bt-black); color: var(--bt-white);
+        padding: 64px 32px; border-bottom: 4px solid var(--bt-gold);
+      }
+      .bt-simulator-inner {
+        max-width: 800px; margin: 0 auto;
+        border: 2px solid var(--bt-gold); border-radius: 4px; overflow: hidden;
+      }
+      .bt-simulator-header {
+        background: var(--bt-gold); color: var(--bt-black);
+        padding: 20px 32px; display: flex; align-items: center; gap: 12px;
+      }
+      .bt-simulator-header h2 {
+        font-family: 'Times New Roman', serif; font-size: 18px;
+        font-weight: 900; font-style: italic; text-transform: uppercase;
+        letter-spacing: -0.02em; margin: 0;
+      }
+      .bt-simulator-header p {
+        font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+        text-transform: uppercase; margin: 0; opacity: 0.7;
+      }
+      .bt-simulator-body { padding: 40px 32px; background: #0a0a0a; }
+      #academyPrompt {
+        width: 100%; background: #111; border: 1px solid var(--bt-gold);
+        color: var(--bt-white); padding: 16px 20px;
+        font-family: Arial, sans-serif; font-size: 14px;
+        border-radius: 2px; outline: none; margin-bottom: 12px;
+        transition: border-color 0.2s;
+      }
+      #academyPrompt::placeholder { color: #555; }
+      #academyPrompt:focus { border-color: var(--bt-gold-lt); }
+      #academyBtn {
+        width: 100%; background: var(--bt-gold); color: var(--bt-black);
+        border: none; padding: 16px; font-family: Arial, sans-serif;
+        font-weight: 900; font-size: 11px; letter-spacing: 0.2em;
+        text-transform: uppercase; cursor: pointer; border-radius: 2px;
+        transition: all 0.2s; margin-bottom: 20px;
+      }
+      #academyBtn:hover { background: var(--bt-gold-lt); }
+      #academyBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+      #academyOut {
+        background: #000; border: 1px solid #333;
+        border-left: 3px solid var(--bt-gold);
+        color: #ddd; font-family: 'Courier New', monospace;
+        font-size: 13px; padding: 20px; min-height: 100px;
+        white-space: pre-wrap; border-radius: 2px; line-height: 1.6;
+      }
+      .bt-sim-footer {
+        font-size: 9px; font-weight: 700; letter-spacing: 0.25em;
+        text-transform: uppercase; color: var(--bt-gold);
+        text-align: center; margin-top: 16px; opacity: 0.7;
+      }
+      .bt-parcours { background: var(--bt-white); padding: 80px 32px; border-bottom: 2px solid var(--bt-black); }
+      .bt-parcours-grid {
+        max-width: 1100px; margin: 48px auto 0;
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2px; border: 2px solid var(--bt-black);
+      }
+      .bt-card {
+        background: var(--bt-white); border-right: 2px solid var(--bt-black);
+        padding: 40px 32px; transition: background 0.2s;
+      }
+      .bt-card:last-child { border-right: none; }
+      .bt-card:hover { background: var(--bt-gray); }
+      .bt-card.bt-card-featured { background: var(--bt-black); color: var(--bt-white); }
+      .bt-card.bt-card-featured:hover { background: #111; }
+      .bt-card-tag {
+        display: inline-block; background: var(--bt-black); color: var(--bt-gold);
+        font-size: 8px; font-weight: 900; letter-spacing: 0.3em;
+        text-transform: uppercase; padding: 6px 12px; margin-bottom: 24px;
+      }
+      .bt-card.bt-card-featured .bt-card-tag { background: var(--bt-gold); color: var(--bt-black); }
+      .bt-card h3 {
+        font-family: 'Times New Roman', serif; font-size: 22px;
+        font-weight: 900; font-style: italic; text-transform: uppercase;
+        letter-spacing: -0.02em; margin: 0 0 16px;
+        text-decoration: underline; text-decoration-color: var(--bt-gold);
+        text-underline-offset: 4px;
+      }
+      .bt-card ul { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 2; color: #555; }
+      .bt-card.bt-card-featured ul { color: #aaa; }
+      .bt-card ul li::before { content: "→ "; color: var(--bt-gold); font-weight: 700; }
+      .bt-stats {
+        background: var(--bt-black); color: var(--bt-white);
+        padding: 64px 32px; border-bottom: 4px solid var(--bt-gold);
+      }
+      .bt-stats-grid {
+        max-width: 900px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        gap: 2px; border: 1px solid #333;
+      }
+      .bt-stat { padding: 32px 24px; text-align: center; border-right: 1px solid #333; }
+      .bt-stat:last-child { border-right: none; }
+      .bt-stat-value {
+        font-family: 'Times New Roman', serif; font-size: 40px;
+        font-weight: 900; font-style: italic; color: var(--bt-gold);
+        display: block; line-height: 1;
+      }
+      .bt-stat-label {
+        font-size: 8px; font-weight: 700; letter-spacing: 0.3em;
+        text-transform: uppercase; color: #666; margin-top: 8px; display: block;
+      }
+      .bt-paygate {
+        background: var(--bt-white); padding: 80px 32px;
+        border-bottom: 2px solid var(--bt-black); text-align: center;
+      }
+      .bt-paygate-inner {
+        max-width: 640px; margin: 0 auto;
+        border: 3px solid var(--bt-black); padding: 56px 48px; position: relative;
+      }
+      .bt-paygate-inner::before {
+        content: ''; position: absolute;
+        top: 6px; left: 6px; right: -6px; bottom: -6px;
+        background: var(--bt-gold); z-index: -1;
+      }
+      .bt-price-label {
+        font-size: 9px; font-weight: 900; letter-spacing: 0.4em;
+        text-transform: uppercase; color: var(--bt-gold); display: block; margin-bottom: 12px;
+      }
+      .bt-price {
+        font-family: 'Times New Roman', serif; font-size: 72px;
+        font-weight: 900; font-style: italic; color: var(--bt-black);
+        line-height: 1; display: block;
+      }
+      .bt-price sup { font-size: 32px; vertical-align: top; margin-top: 16px; }
+      .bt-price-desc { font-size: 12px; color: var(--bt-gray-md); margin: 16px 0 36px; font-style: italic; }
+      .bt-price-features {
+        list-style: none; padding: 0; margin: 0 0 40px;
+        text-align: left; font-size: 13px; line-height: 2;
+      }
+      .bt-price-features li::before { content: "✓ "; color: var(--bt-gold); font-weight: 900; }
+      .bt-footer { background: var(--bt-black); color: var(--bt-white); padding: 40px 32px; }
+      .bt-footer-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+      .bt-footer-top {
+        display: flex; justify-content: space-between; align-items: flex-start;
+        flex-wrap: wrap; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid #222;
+      }
+      .bt-footer-brand span:first-child {
+        font-family: 'Times New Roman', serif; font-size: 20px;
+        font-weight: 900; font-style: italic; text-transform: uppercase;
+        color: var(--bt-white); display: block;
+      }
+      .bt-footer-brand span:last-child { font-size: 10px; color: var(--bt-gold); font-style: italic; }
+      .bt-footer-links { display: flex; gap: 24px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+      .bt-footer-links a { color: #666; text-decoration: none; transition: color 0.2s; }
+      .bt-footer-links a:hover { color: var(--bt-gold); }
+      .bt-footer-bottom { font-size: 9px; color: #444; letter-spacing: 0.1em; text-align: center; }
+      @media (max-width: 768px) {
+        .bt-nav-links { display: none; }
+        .bt-stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .bt-paygate-inner { padding: 40px 24px; }
+        .bt-price { font-size: 56px; }
+      }
+    </style>
 </head>
-<body class="bg-[#05070a] text-slate-200 font-sans leading-relaxed">
+<body>
 
-    <div class="bg-blue-600 text-white text-[10px] py-2 text-center uppercase tracking-[0.3em] font-black border-b border-blue-500/30">
-        Audit Janvier 2026 • IA Souveraine & Certifiée SOFEDUC • Conformité Loi 25 & RGPD
+  <div class="bt-banner">
+    Audit 2026 · IA Souveraine Certifiée SOFEDUC · Conformité Loi 25 & RGPD · Région Montréal
+  </div>
+
+  <nav class="bt-nav">
+    <div class="bt-logo">
+      <div class="bt-logo-icon">B</div>
+      <div class="bt-logo-text">
+        <span>Buttertech</span>
+        <span>Academy</span>
+      </div>
     </div>
+    <div class="bt-nav-links">
+      <a href="#simulateur">Simulateur Gemini</a>
+      <a href="#parcours">Parcours SOFEDUC</a>
+      <a href="#certification">Certification</a>
+    </div>
+    <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="bt-btn-primary">
+      S'inscrire — 399$
+    </a>
+  </nav>
 
-    <nav class="sticky top-0 z-50 bg-[#05070a]/90 backdrop-blur-xl border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 w-10 h-10 flex items-center justify-center rounded-xl font-black text-2xl text-white">B</div>
-                <div class="flex flex-col uppercase tracking-tighter">
-                    <span class="font-black text-xl leading-none text-white italic">Buttertech</span>
-                    <span class="text-[9px] font-bold text-blue-400 tracking-[0.4em]">Academy</span>
-                </div>
-            </div>
-            <div class="hidden lg:flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                <a href="#simulateur" class="hover:text-blue-400 transition">Simulateur Stratégique</a>
-                <a href="#unites" class="hover:text-blue-400 transition text-white">Unités de Crédit (UEC)</a>
-                <a href="#souverainete" class="hover:text-blue-400 transition text-blue-500">Souveraineté Montréal</a>
-            </div>
-            <button class="bg-white text-black px-8 py-2.5 rounded-full font-black text-[10px] tracking-widest hover:bg-blue-600 hover:text-white transition-all shadow-xl uppercase">
-                Inscription Immédiate
-            </button>
+  <header class="bt-hero">
+    <div class="bt-hero-badge">
+      <i class="fas fa-certificate"></i>
+      Leader IA Réglementée · Google &amp; NVIDIA Partner · SOFEDUC Accrédité
+    </div>
+    <h1>L'IA DE CONFIANCE.<br><span>Certifiée.</span></h1>
+    <p>L'excellence de <strong>NVIDIA Inception</strong> et de <strong>Google for Education</strong>
+      sous la rigueur académique de la <strong>SOFEDUC</strong>.
+      Formations certifiantes en IA générative — Région Montréal.</p>
+    <div class="bt-hero-ctas">
+      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="bt-btn-gold">
+        <i class="fas fa-bolt" style="margin-right:8px;"></i>Démarrer ma certification — 399$
+      </a>
+      <a href="#simulateur" class="bt-btn-outline">Tester le simulateur</a>
+    </div>
+  </header>
+
+  <section id="simulateur" class="bt-simulator">
+    <div style="text-align:center; margin-bottom:40px;">
+      <h2 class="bt-section-title" style="color:var(--bt-white);">
+        Simulateur Stratégique <span>Gemini</span>
+      </h2>
+      <p style="color:#888; font-size:14px; font-style:italic;">
+        Déployez un Agent Smith-Heffa virtuel pour orienter votre organisation.
+      </p>
+    </div>
+    <div class="bt-simulator-inner">
+      <div class="bt-simulator-header">
+        <i class="fas fa-terminal" style="font-size:20px;"></i>
+        <div>
+          <h2>Smith-Heffa Agent Console</h2>
+          <p>Powered by Gemini · Cloud Run Montréal · 24ms avg</p>
         </div>
-    </nav>
-
-    <header class="py-24 px-6 text-center border-b border-white/5">
-        <div class="max-w-5xl mx-auto">
-            <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-full mb-10 uppercase tracking-widest text-[10px] font-black text-blue-400">
-                Leader IA Réglementée • Google & NVIDIA Partner
-            </div>
-            <h1 class="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-10 text-white italic">
-                L'IA DE CONFIANCE. <br><span class="text-blue-500 uppercase not-italic">Certifiée.</span>
-            </h1>
-            <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-medium italic mb-12">
-                L'excellence de **NVIDIA Inception** et de **Google for Education** sous la rigueur académique de la **SOFEDUC**.
-            </p>
+      </div>
+      <div class="bt-simulator-body">
+        <input type="text" id="academyPrompt"
+          placeholder="Ex : Défi logistique municipal, stratégie IA, conformité Loi 25..." />
+        <button id="academyBtn">
+          <i class="fas fa-robot" style="margin-right:8px;"></i>
+          Simuler l'architecture avec Gemini
+        </button>
+        <pre id="academyOut">Prêt. Entrez votre défi stratégique.</pre>
+        <div class="bt-sim-footer">
+          Inférence validée · Cloud Run Montréal · NVIDIA NIM · SOC2 Type II
         </div>
-    </header>
+      </div>
+    </div>
+  </section>
 
-    <section id="simulateur" class="py-24 px-6 bg-gradient-to-b from-[#05070a] to-[#0a0f18]">
-        <div class="max-w-4xl mx-auto border border-blue-500/30 rounded-[40px] overflow-hidden bg-[#0f172a]/50 backdrop-blur-md shadow-2xl shadow-blue-500/10">
-            <div class="p-10 text-center border-b border-white/5">
-                <h2 class="text-2xl font-black uppercase italic tracking-tighter text-white">Simulateur Stratégique Gemini 3.0</h2>
-                <p class="text-slate-400 text-sm mt-2 font-medium italic">Déployez un Agent-Smith-Heffa virtuel pour orienter votre organisation.</p>
-            </div>
-            <div class="p-10 bg-black/40 min-h-[400px] flex flex-col items-center justify-center space-y-8">
-                <i class="fas fa-terminal text-blue-500 text-5xl animate-pulse"></i>
-                <div class="w-full max-w-md space-y-4">
-                    <input type="text" placeholder="Défi logistique ou municipal..." id="academyPrompt" class="w-full bg-[#1e293b]/50 border border-white/10 p-5 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all">
-                    <button id="academyBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest py-5 rounded-2xl transition-all shadow-xl">SIMULER L'ARCHITECTURE AVEC GEMINI
-                    </button>
-
-<pre id="academyOut" class="mt-6 whitespace-pre-wrap text-left text-slate-200/90 text-sm bg-black/30 border border-blue-500/20 rounded-2xl p-5 min-h-[120px]">Prêt.</pre>
-                </div>
-                <p class="text-[10px] text-slate-500 uppercase tracking-widest font-black">Inférence validée : 24ms sur Cloud Run Montréal</p>
-            </div>
+  <section id="parcours" class="bt-parcours">
+    <div style="max-width:1100px; margin:0 auto;">
+      <div style="text-align:center; margin-bottom:48px;">
+        <h2 class="bt-section-title">Parcours Certifiés <span>SOFEDUC</span></h2>
+        <p style="color:var(--bt-gray-md); font-style:italic; font-size:14px;">
+          Session Janvier 2026 · Unités d'Éducation Continue (UEC) reconnues
+        </p>
+      </div>
+      <div class="bt-parcours-grid">
+        <div class="bt-card">
+          <div class="bt-card-tag">12h · Niveau Avancé</div>
+          <h3>Visionnaire &amp; Multimodal</h3>
+          <ul>
+            <li>Orchestration d'Agents IA via Gemini</li>
+            <li>Vision Artificielle &amp; Infrastructures</li>
+            <li>Inférence NVIDIA NIM Validée</li>
+            <li>Architecture Cloud Native GCP</li>
+          </ul>
         </div>
-    </section>
-
-    <section id="unites" class="py-24 px-6 bg-white text-slate-900">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-black tracking-tighter uppercase mb-20 text-center italic">Parcours Certifiés SOFEDUC (Session Janvier 2026)</h2>
-            <div class="grid lg:grid-cols-3 gap-10 italic">
-                <div class="p-10 border border-slate-200 rounded-3xl hover:shadow-2xl transition-all">
-                    <div class="flex justify-between mb-10 uppercase text-[10px] font-black">
-                        <span class="bg-blue-600 text-white px-3 py-1 rounded-lg tracking-widest">12h d'Audit</span>
-                        <i class="fab fa-nvidia text-3xl text-slate-300"></i>
-                    </div>
-                    <h3 class="text-2xl font-black uppercase tracking-tighter mb-6 underline decoration-blue-600 decoration-4 italic">Visionnaire & Multimodal</h3>
-                    <ul class="space-y-4 text-sm text-slate-600 font-bold">
-                        <li>- Orchestration d'Agents IA via **Gemini 3.0**.</li>
-                        <li>- Vision Artificielle & Infrastructures.</li>
-                        <li>- Inférence NVIDIA NIM Validée.</li>
-                    </ul>
-                </div>
-                <div class="p-10 bg-slate-900 text-white rounded-[40px] shadow-2xl scale-105 border-4 border-blue-600 relative">
-                    <div class="absolute -top-4 right-10 bg-blue-600 px-4 py-2 rounded-b-xl text-[9px] font-black uppercase tracking-widest italic">Priorité Souveraine</div>
-                    <div class="flex justify-between mb-10 text-blue-400">
-                        <span class="text-[10px] font-black uppercase tracking-widest">09h de Gouvernance</span>
-                        <i class="fas fa-shield-halved text-2xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-black uppercase tracking-tighter mb-6 italic leading-tight">IA Responsable & Loi 25</h3>
-                    <ul class="space-y-4 text-sm text-slate-400 font-bold italic">
-                        <li>- Conformité Loi 25 / RGPD.</li>
-                        <li>- Déploiement Cloud Run Montréal.</li>
-                        <li>- Standard **SOC2 Type II**.</li>
-                    </ul>
-                </div>
-                <div class="p-10 border border-slate-200 rounded-3xl hover:shadow-2xl transition-all">
-                    <div class="flex justify-between mb-10 uppercase text-[10px] font-black">
-                        <span class="bg-red-600 text-white px-3 py-1 rounded-lg tracking-widest">06h d'Élite</span>
-                        <i class="fab fa-google text-2xl text-slate-300"></i>
-                    </div>
-                    <h3 class="text-2xl font-black uppercase tracking-tighter mb-6 underline decoration-red-600 decoration-4 italic">Productivité Agentique</h3>
-                    <ul class="space-y-4 text-sm text-slate-600 font-bold">
-                        <li>- Méthode exclusive Prompt P.T.C.F.</li>
-                        <li>- Google Workspace for Education.</li>
-                        <li>- Automatisation Cloud Native.</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="bt-card bt-card-featured">
+          <div class="bt-card-tag">09h · Priorité Souveraine</div>
+          <h3>IA Responsable &amp; Loi 25</h3>
+          <ul>
+            <li>Conformité Loi 25 / RGPD</li>
+            <li>Déploiement Cloud Run Montréal</li>
+            <li>Standard SOC2 Type II</li>
+            <li>Gouvernance des données IA</li>
+          </ul>
         </div>
-    </section>
-
-    <section id="souverainete" class="py-32 bg-[#05070a] text-white text-center">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-12 italic underline decoration-blue-600 decoration-8">Le Nouveau Contrat Social</h2>
-            <p class="text-xl text-slate-400 font-medium mb-20 italic">
-                Inspiré par Rousseau : La technologie doit élever l'individu. 
-                <strong class="text-blue-500 uppercase italic">D'ici 2028, chaque certification finance l'accès gratuit pour les orphelins.</strong>
-            </p>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-                <div class="p-8 border border-white/5 rounded-3xl bg-white/5">
-                    <div class="text-4xl font-black text-blue-500 italic">100%</div>
-                    <div class="text-[9px] font-black uppercase tracking-widest mt-2 text-slate-500 italic">Equity Souverain</div>
-                </div>
-                <div class="p-8 border border-white/5 rounded-3xl bg-white/5 shadow-blue-500/10 shadow-lg">
-                    <div class="text-4xl font-black text-blue-500 uppercase">UEC</div>
-                    <div class="text-[9px] font-black uppercase tracking-widest mt-2 text-slate-500 italic">Certifié SOFEDUC</div>
-                </div>
-                <div class="p-8 border border-white/5 rounded-3xl bg-white/5">
-                    <div class="text-4xl font-black text-blue-500 italic uppercase">V.3.0</div>
-                    <div class="text-[9px] font-black uppercase tracking-widest mt-2 text-slate-500 italic">Core Gemini</div>
-                </div>
-                <div class="p-8 border border-white/5 rounded-3xl bg-white/5">
-                    <div class="text-4xl font-black text-blue-500 italic uppercase">24ms</div>
-                    [cite_start]<div class="text-[9px] font-black uppercase tracking-widest mt-2 text-slate-500 italic">Cloud Run Montréal [cite: 34]</div>
-                </div>
-            </div>
-            <button class="bg-blue-600 hover:bg-blue-500 text-white px-12 py-6 rounded-3xl font-black uppercase tracking-widest shadow-2xl transition-all scale-110">
-                Bundle Quintessence IA (399$)
-            </button>
+        <div class="bt-card">
+          <div class="bt-card-tag">06h · Productivité Élite</div>
+          <h3>Productivité Agentique</h3>
+          <ul>
+            <li>Méthode exclusive Prompt P.T.C.F.</li>
+            <li>Google Workspace for Education</li>
+            <li>Automatisation Cloud Native</li>
+            <li>Déploiement en production Vercel</li>
+          </ul>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <footer class="bg-black border-t border-white/10 py-16">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-500 italic">
-            <div class="text-center md:text-left">
-                <div class="text-white text-xl font-black tracking-tighter mb-2 italic uppercase">Buttertech Academy</div>
-                <p class="text-blue-500 italic">Architecture Gemini 3.0 • Région Montréal</p>
-            </div>
-            <div class="flex gap-10 mt-8 md:mt-0">
-                <span>© 2026 Buttertech Inc.</span>
-                <a href="#" class="hover:text-blue-400 transition">Confidentialité</a>
-                <a href="#" class="hover:text-blue-400">Audit SOFEDUC 2026</a>
-            </div>
+  <section class="bt-stats">
+    <div class="bt-stats-grid">
+      <div class="bt-stat">
+        <span class="bt-stat-value">100%</span>
+        <span class="bt-stat-label">Equity Souverain</span>
+      </div>
+      <div class="bt-stat">
+        <span class="bt-stat-value">UEC</span>
+        <span class="bt-stat-label">Certifié SOFEDUC</span>
+      </div>
+      <div class="bt-stat">
+        <span class="bt-stat-value">V.3.0</span>
+        <span class="bt-stat-label">Core Gemini</span>
+      </div>
+      <div class="bt-stat">
+        <span class="bt-stat-value">24ms</span>
+        <span class="bt-stat-label">Cloud Run Montréal</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="certification" class="bt-paygate">
+    <div class="bt-paygate-inner">
+      <span class="bt-price-label">Bundle Quintessence IA · Session Janvier 2026</span>
+      <span class="bt-price"><sup>$</sup>399</span>
+      <p class="bt-price-desc">
+        Accès complet aux 3 parcours certifiants · Certification SOFEDUC incluse · Paiement sécurisé
+      </p>
+      <ul class="bt-price-features">
+        <li>27h de formation certifiante (UEC)</li>
+        <li>Accès au Simulateur Stratégique Gemini</li>
+        <li>Attestation SOFEDUC officielle</li>
+        <li>Conformité Loi 25 &amp; RGPD documentée</li>
+        <li>Support Agent Smith-Heffa inclus</li>
+      </ul>
+      <a href="https://smith-heffa-paygate.vercel.app" target="_blank"
+         class="bt-btn-gold" style="font-size:14px; padding:20px 56px;">
+        <i class="fas fa-lock" style="margin-right:10px;"></i>
+        Paiement sécurisé · S'inscrire maintenant
+      </a>
+      <p style="font-size:10px; color:var(--bt-gray-md); margin-top:20px; letter-spacing:0.1em;">
+        PAIEMENT SÉCURISÉ · SSL · SOFEDUC ACCRÉDITÉ
+      </p>
+    </div>
+  </section>
+
+  <footer class="bt-footer">
+    <div class="bt-footer-inner">
+      <div class="bt-footer-top">
+        <div class="bt-footer-brand">
+          <span>Buttertech Academy</span>
+          <span>Architecture Gemini 3.0 · Région Montréal · SOFEDUC</span>
         </div>
-    </footer>
-
-
-
-<script>
-  async function callGemini(prompt) {
-    const r = await fetch("/api/gemini", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt })
-    });
-    return r.json();
-  }
-
-  async function onSimulate() {
-    const inputEl = document.getElementById("academyPrompt");
-    const outEl = document.getElementById("academyOut");
-    const btnEl = document.getElementById("academyBtn");
-    const input = (inputEl && inputEl.value ? inputEl.value : "").trim();
-    if (!input) return;
-    if (btnEl) btnEl.disabled = true;
-    if (outEl) outEl.textContent = "Analyse...";
-    try {
-      const result = await callGemini(input);
-      const prefix = result.mode === "demo" ? "[DEMO] " : "[LIVE] ";
-      if (outEl) outEl.textContent = prefix + (result.text || "");
-    } catch (e) {
-      if (outEl) outEl.textContent = "[ERREUR] Gemini indisponible.";
-    } finally {
-      if (btnEl) btnEl.disabled = false;
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("academyBtn");
-    if (btn) btn.addEventListener("click", onSimulate);
-  });
-</script>
-
-
-/* BUTTERTECH_GEMINI_SIMULATOR */
-<script>
-
-  function pickOne(selectors){
-
-    for (const s of selectors) {
-
-      const el = document.querySelector(s);
-
-      if (el) return el;
-
-    }
-
-    return null;
-
-  }
-
-
-  async function callGemini(prompt) {
-
-    const r = await fetch("/api/gemini", {
-
-      method: "POST",
-
-      headers: { "Content-Type": "application/json" },
-
-      body: JSON.stringify({ prompt })
-
-    });
-
-    return r.json();
-
-  }
-
-
-  async function onSimulate() {
-
-    const inputEl = pickOne([
-
-      "#academyPrompt",
-
-      "textarea#academyPrompt",
-
-      "textarea[placeholder*=Défi]",
-
-      "textarea[placeholder*=logistique]",
-
-      "textarea[placeholder*=municipal]",
-
-      "textarea",
-
-      "input[type=text]",
-
-      "input"
-
-    ]);
-
-
-    const btnEl = pickOne([
-
-      "#academyBtn",
-
-      "button#academyBtn",
-
-      "button[id*=academy]",
-
-      "button:contains(SIMULER)"
-
-    ]);
-
-
-    // :contains() n est pas supporté par querySelector, donc fallback texte:
-
-    let realBtn = btnEl;
-
-    if (!realBtn) {
-
-      realBtn = Array.from(document.querySelectorAll("button")).find(b => (b.textContent||"").toUpperCase().includes("SIMUL")) || null;
-
-    }
-
-
-    const outEl = pickOne([
-
-      "#academyOut",
-
-      "pre#academyOut",
-
-      "#academyOut pre",
-
-      "#academyOut div",
-
-      "pre[id*=academy]",
-
-      "pre",
-
-      "[data-output]"
-
-    ]);
-
-
-    const input = (inputEl && inputEl.value ? inputEl.value : "").trim();
-
-    if (!input) return;
-
-
-    if (realBtn) realBtn.disabled = true;
-
-    if (outEl) outEl.textContent = "Analyse...";
-
-
-    try {
-
-      const result = await callGemini(input);
-
-      const prefix = result.mode === "demo" ? "[DEMO] " : "[LIVE] ";
-
-      if (outEl) outEl.textContent = prefix + (result.text || "");
-
-    } catch (e) {
-
-      if (outEl) outEl.textContent = "[ERREUR] Gemini indisponible.";
-
-    } finally {
-
-      if (realBtn) realBtn.disabled = false;
-
-    }
-
-  }
-
-
-  document.addEventListener("DOMContentLoaded", () => {
-
-    // bind sur le premier bouton SIMUL*
-
-    const b = Array.from(document.querySelectorAll("button")).find(x => (x.textContent||"").toUpperCase().includes("SIMUL"));
-
-    if (b) b.addEventListener("click", onSimulate);
-
-  });
-
-</script>
+        <div class="bt-footer-links">
+          <a href="#">Confidentialité (Loi 25)</a>
+          <a href="#">Audit SOFEDUC 2026</a>
+          <a href="#simulateur">Simulateur</a>
+          <a href="https://smith-heffa-paygate.vercel.app" target="_blank">Inscription</a>
+        </div>
+      </div>
+      <div class="bt-footer-bottom">
+        © 2026 Buttertech Inc. · Tous droits réservés · buttertech.io
+        · NVIDIA Inception Partner · Google for Education Partner
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      var btn    = document.getElementById("academyBtn");
+      var input  = document.getElementById("academyPrompt");
+      var output = document.getElementById("academyOut");
+      if (!btn || !input || !output) return;
+
+      async function callGemini(prompt) {
+        var res = await fetch("/api/gemini", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt: prompt,
+            system: "Tu es l'Agent Smith-Heffa de Buttertech Academy, assistant IA certifié SOFEDUC. Réponds en français, de façon structurée, concise et actionnable."
+          })
+        });
+        return await res.json();
+      }
+
+      async function onSimulate() {
+        var prompt = input.value.trim();
+        if (!prompt) { output.textContent = "Veuillez entrer un défi stratégique."; return; }
+        btn.disabled = true;
+        output.textContent = "[ Agent Smith-Heffa ] Analyse en cours...";
+        try {
+          var result = await callGemini(prompt);
+          var prefix = result.mode === "live"
+            ? "[LIVE · " + (result.model || "Gemini") + "]\n\n"
+            : "[DEMO · Mode hors ligne]\n\n";
+          output.textContent = prefix + (result.text || "Aucune réponse.");
+        } catch (err) {
+          output.textContent = "[ERREUR] Gemini indisponible.";
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      btn.addEventListener("click", onSimulate);
+      input.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") { e.preventDefault(); onSimulate(); }
+      });
+    })();
+  </script>
 
 </body>
 </html>
-<script>
-  async function callGemini(prompt) {
-    const res = await fetch("/api/gemini", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        prompt: prompt,
-        system: "Tu es Smith-HEFFA Academy. Réponse structurée, concise, actionnable."
-      })
-    });
-
-    return await res.json(); // { text, mode }
-  }
-
-  async function onSimulate() {
-    const inputEl = document.getElementById("academyPrompt");
-    const outEl = document.getElementById("academyOut");
-
-    if (!inputEl || !outEl) return;
-
-    const input = inputEl.value.trim();
-    if (!input) return;
-
-    outEl.textContent = "Analyse...";
-
-    try {
-      const result = await callGemini(input);
-      const prefix = result.mode === "demo" ? "[DEMO] " : "[LIVE] ";
-      outEl.textContent = prefix + (result.text || "");
-    } catch (e) {
-      outEl.textContent = "[ERREUR] Gemini indisponible.";
-    }
-  }
-
-  const btn = document.getElementById("academyBtn");
-  if (btn) {
-    btn.addEventListener("click", onSimulate);
-  }
-</script>
