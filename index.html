@@ -1,509 +1,565 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buttertech Academy | Simulateur Stratégique Gemini — SOFEDUC 2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-      :root {
-        --bt-white:  #FFFFFF;
-        --bt-black:  #000000;
-        --bt-gold:   #C9A84C;
-        --bt-gold-lt:#E8C96E;
-        --bt-gray:   #F5F5F5;
-        --bt-gray-md:#888888;
-        --bt-border: #E0E0E0;
-      }
-      * { box-sizing: border-box; }
-      body {
-        background: var(--bt-white);
-        color: var(--bt-black);
-        font-family: Arial, 'Times New Roman', sans-serif;
-        margin: 0; padding: 0;
-      }
-      .bt-banner {
-        background: var(--bt-black);
-        color: var(--bt-gold);
-        font-size: 10px; font-weight: 900;
-        letter-spacing: 0.3em; text-transform: uppercase;
-        text-align: center; padding: 10px 20px;
-        border-bottom: 2px solid var(--bt-gold);
-      }
-      .bt-nav {
-        position: sticky; top: 0; z-index: 50;
-        background: var(--bt-white);
-        border-bottom: 2px solid var(--bt-black);
-        padding: 16px 32px;
-        display: flex; justify-content: space-between; align-items: center;
-      }
-      .bt-logo { display: flex; align-items: center; gap: 12px; }
-      .bt-logo-icon {
-        background: var(--bt-black); color: var(--bt-gold);
-        width: 44px; height: 44px; border-radius: 8px;
-        display: flex; align-items: center; justify-content: center;
-        font-weight: 900; font-size: 22px;
-        font-family: 'Times New Roman', serif; font-style: italic;
-      }
-      .bt-logo-text { display: flex; flex-direction: column; }
-      .bt-logo-text span:first-child {
-        font-family: 'Times New Roman', serif; font-weight: 900;
-        font-size: 20px; font-style: italic; text-transform: uppercase;
-        letter-spacing: -0.05em; color: var(--bt-black);
-      }
-      .bt-logo-text span:last-child {
-        font-size: 8px; font-weight: 700; letter-spacing: 0.4em;
-        text-transform: uppercase; color: var(--bt-gold);
-      }
-      .bt-nav-links {
-        display: flex; gap: 32px; font-size: 10px; font-weight: 700;
-        letter-spacing: 0.15em; text-transform: uppercase;
-      }
-      .bt-nav-links a { text-decoration: none; color: var(--bt-gray-md); transition: color 0.2s; }
-      .bt-nav-links a:hover { color: var(--bt-gold); }
-      .bt-btn-primary {
-        background: var(--bt-black); color: var(--bt-gold);
-        border: 2px solid var(--bt-black);
-        padding: 12px 28px; font-family: Arial, sans-serif;
-        font-weight: 900; font-size: 10px; letter-spacing: 0.2em;
-        text-transform: uppercase; border-radius: 4px; cursor: pointer;
-        transition: all 0.2s; text-decoration: none; display: inline-block;
-      }
-      .bt-btn-primary:hover { background: var(--bt-gold); color: var(--bt-black); border-color: var(--bt-gold); }
-      .bt-btn-gold {
-        background: var(--bt-gold); color: var(--bt-black);
-        border: 2px solid var(--bt-gold);
-        padding: 18px 44px; font-family: Arial, sans-serif;
-        font-weight: 900; font-size: 13px; letter-spacing: 0.15em;
-        text-transform: uppercase; border-radius: 4px; cursor: pointer;
-        transition: all 0.2s; text-decoration: none; display: inline-block;
-      }
-      .bt-btn-gold:hover { background: var(--bt-black); color: var(--bt-gold); border-color: var(--bt-black); }
-      .bt-btn-outline {
-        background: transparent; color: var(--bt-black);
-        border: 2px solid var(--bt-black);
-        padding: 14px 32px; font-family: Arial, sans-serif;
-        font-weight: 700; font-size: 11px; letter-spacing: 0.15em;
-        text-transform: uppercase; border-radius: 4px; cursor: pointer;
-        transition: all 0.2s; text-decoration: none; display: inline-block;
-      }
-      .bt-btn-outline:hover { background: var(--bt-black); color: var(--bt-white); }
-      .bt-hero {
-        background: var(--bt-white); border-bottom: 2px solid var(--bt-black);
-        padding: 80px 32px 64px; text-align: center;
-      }
-      .bt-hero-badge {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: var(--bt-black); color: var(--bt-gold);
-        padding: 8px 20px; font-size: 9px; font-weight: 900;
-        letter-spacing: 0.3em; text-transform: uppercase;
-        border-radius: 2px; margin-bottom: 32px;
-      }
-      .bt-hero h1 {
-        font-family: 'Times New Roman', serif;
-        font-size: clamp(48px, 8vw, 96px);
-        font-weight: 900; font-style: italic;
-        letter-spacing: -0.04em; line-height: 0.9;
-        color: var(--bt-black); margin: 0 0 16px; text-transform: uppercase;
-      }
-      .bt-hero h1 span { color: var(--bt-gold); font-style: normal; }
-      .bt-hero p {
-        font-size: 18px; color: var(--bt-gray-md);
-        max-width: 640px; margin: 24px auto 40px;
-        line-height: 1.6; font-style: italic;
-      }
-      .bt-hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-      .bt-section-title {
-        font-family: 'Times New Roman', serif;
-        font-size: clamp(28px, 4vw, 48px);
-        font-weight: 900; font-style: italic;
-        text-transform: uppercase; letter-spacing: -0.03em;
-        color: var(--bt-black); margin: 0 0 8px;
-      }
-      .bt-section-title span { color: var(--bt-gold); }
-      .bt-simulator {
-        background: var(--bt-black); color: var(--bt-white);
-        padding: 64px 32px; border-bottom: 4px solid var(--bt-gold);
-      }
-      .bt-simulator-inner {
-        max-width: 800px; margin: 0 auto;
-        border: 2px solid var(--bt-gold); border-radius: 4px; overflow: hidden;
-      }
-      .bt-simulator-header {
-        background: var(--bt-gold); color: var(--bt-black);
-        padding: 20px 32px; display: flex; align-items: center; gap: 12px;
-      }
-      .bt-simulator-header h2 {
-        font-family: 'Times New Roman', serif; font-size: 18px;
-        font-weight: 900; font-style: italic; text-transform: uppercase;
-        letter-spacing: -0.02em; margin: 0;
-      }
-      .bt-simulator-header p {
-        font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
-        text-transform: uppercase; margin: 0; opacity: 0.7;
-      }
-      .bt-simulator-body { padding: 40px 32px; background: #0a0a0a; }
-      #academyPrompt {
-        width: 100%; background: #111; border: 1px solid var(--bt-gold);
-        color: var(--bt-white); padding: 16px 20px;
-        font-family: Arial, sans-serif; font-size: 14px;
-        border-radius: 2px; outline: none; margin-bottom: 12px;
-        transition: border-color 0.2s;
-      }
-      #academyPrompt::placeholder { color: #555; }
-      #academyPrompt:focus { border-color: var(--bt-gold-lt); }
-      #academyBtn {
-        width: 100%; background: var(--bt-gold); color: var(--bt-black);
-        border: none; padding: 16px; font-family: Arial, sans-serif;
-        font-weight: 900; font-size: 11px; letter-spacing: 0.2em;
-        text-transform: uppercase; cursor: pointer; border-radius: 2px;
-        transition: all 0.2s; margin-bottom: 20px;
-      }
-      #academyBtn:hover { background: var(--bt-gold-lt); }
-      #academyBtn:disabled { opacity: 0.5; cursor: not-allowed; }
-      #academyOut {
-        background: #000; border: 1px solid #333;
-        border-left: 3px solid var(--bt-gold);
-        color: #ddd; font-family: 'Courier New', monospace;
-        font-size: 13px; padding: 20px; min-height: 100px;
-        white-space: pre-wrap; border-radius: 2px; line-height: 1.6;
-      }
-      .bt-sim-footer {
-        font-size: 9px; font-weight: 700; letter-spacing: 0.25em;
-        text-transform: uppercase; color: var(--bt-gold);
-        text-align: center; margin-top: 16px; opacity: 0.7;
-      }
-      .bt-parcours { background: var(--bt-white); padding: 80px 32px; border-bottom: 2px solid var(--bt-black); }
-      .bt-parcours-grid {
-        max-width: 1100px; margin: 48px auto 0;
-        display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2px; border: 2px solid var(--bt-black);
-      }
-      .bt-card {
-        background: var(--bt-white); border-right: 2px solid var(--bt-black);
-        padding: 40px 32px; transition: background 0.2s;
-      }
-      .bt-card:last-child { border-right: none; }
-      .bt-card:hover { background: var(--bt-gray); }
-      .bt-card.bt-card-featured { background: var(--bt-black); color: var(--bt-white); }
-      .bt-card.bt-card-featured:hover { background: #111; }
-      .bt-card-tag {
-        display: inline-block; background: var(--bt-black); color: var(--bt-gold);
-        font-size: 8px; font-weight: 900; letter-spacing: 0.3em;
-        text-transform: uppercase; padding: 6px 12px; margin-bottom: 24px;
-      }
-      .bt-card.bt-card-featured .bt-card-tag { background: var(--bt-gold); color: var(--bt-black); }
-      .bt-card h3 {
-        font-family: 'Times New Roman', serif; font-size: 22px;
-        font-weight: 900; font-style: italic; text-transform: uppercase;
-        letter-spacing: -0.02em; margin: 0 0 16px;
-        text-decoration: underline; text-decoration-color: var(--bt-gold);
-        text-underline-offset: 4px;
-      }
-      .bt-card ul { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 2; color: #555; }
-      .bt-card.bt-card-featured ul { color: #aaa; }
-      .bt-card ul li::before { content: "→ "; color: var(--bt-gold); font-weight: 700; }
-      .bt-stats {
-        background: var(--bt-black); color: var(--bt-white);
-        padding: 64px 32px; border-bottom: 4px solid var(--bt-gold);
-      }
-      .bt-stats-grid {
-        max-width: 900px; margin: 0 auto;
-        display: grid; grid-template-columns: repeat(4, 1fr);
-        gap: 2px; border: 1px solid #333;
-      }
-      .bt-stat { padding: 32px 24px; text-align: center; border-right: 1px solid #333; }
-      .bt-stat:last-child { border-right: none; }
-      .bt-stat-value {
-        font-family: 'Times New Roman', serif; font-size: 40px;
-        font-weight: 900; font-style: italic; color: var(--bt-gold);
-        display: block; line-height: 1;
-      }
-      .bt-stat-label {
-        font-size: 8px; font-weight: 700; letter-spacing: 0.3em;
-        text-transform: uppercase; color: #666; margin-top: 8px; display: block;
-      }
-      .bt-paygate {
-        background: var(--bt-white); padding: 80px 32px;
-        border-bottom: 2px solid var(--bt-black); text-align: center;
-      }
-      .bt-paygate-inner {
-        max-width: 640px; margin: 0 auto;
-        border: 3px solid var(--bt-black); padding: 56px 48px; position: relative;
-      }
-      .bt-paygate-inner::before {
-        content: ''; position: absolute;
-        top: 6px; left: 6px; right: -6px; bottom: -6px;
-        background: var(--bt-gold); z-index: -1;
-      }
-      .bt-price-label {
-        font-size: 9px; font-weight: 900; letter-spacing: 0.4em;
-        text-transform: uppercase; color: var(--bt-gold); display: block; margin-bottom: 12px;
-      }
-      .bt-price {
-        font-family: 'Times New Roman', serif; font-size: 72px;
-        font-weight: 900; font-style: italic; color: var(--bt-black);
-        line-height: 1; display: block;
-      }
-      .bt-price sup { font-size: 32px; vertical-align: top; margin-top: 16px; }
-      .bt-price-desc { font-size: 12px; color: var(--bt-gray-md); margin: 16px 0 36px; font-style: italic; }
-      .bt-price-features {
-        list-style: none; padding: 0; margin: 0 0 40px;
-        text-align: left; font-size: 13px; line-height: 2;
-      }
-      .bt-price-features li::before { content: "✓ "; color: var(--bt-gold); font-weight: 900; }
-      .bt-footer { background: var(--bt-black); color: var(--bt-white); padding: 40px 32px; }
-      .bt-footer-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
-      .bt-footer-top {
-        display: flex; justify-content: space-between; align-items: flex-start;
-        flex-wrap: wrap; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid #222;
-      }
-      .bt-footer-brand span:first-child {
-        font-family: 'Times New Roman', serif; font-size: 20px;
-        font-weight: 900; font-style: italic; text-transform: uppercase;
-        color: var(--bt-white); display: block;
-      }
-      .bt-footer-brand span:last-child { font-size: 10px; color: var(--bt-gold); font-style: italic; }
-      .bt-footer-links { display: flex; gap: 24px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-      .bt-footer-links a { color: #666; text-decoration: none; transition: color 0.2s; }
-      .bt-footer-links a:hover { color: var(--bt-gold); }
-      .bt-footer-bottom { font-size: 9px; color: #444; letter-spacing: 0.1em; text-align: center; }
-      @media (max-width: 768px) {
-        .bt-nav-links { display: none; }
-        .bt-stats-grid { grid-template-columns: repeat(2, 1fr); }
-        .bt-paygate-inner { padding: 40px 24px; }
-        .bt-price { font-size: 56px; }
-      }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buttertech Academy | LMS IA Certifié SOFEDUC 2026</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root{--w:#FFFFFF;--b:#000000;--g:#C9A84C;--gl:#E8C96E;--gd:#A07830;--gr:#F5F5F5;--gm:#888888;--border:#E0E0E0;--dark:#0a0a0a;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--w);color:var(--b);font-family:Arial,'Times New Roman',sans-serif;}
+    .view{display:none;min-height:100vh;}
+    .view.active{display:block;}
+    .btn{display:inline-flex;align-items:center;gap:6px;font-family:Arial,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.15em;border-radius:3px;cursor:pointer;transition:all .2s;text-decoration:none;border:2px solid transparent;}
+    .btn-sm{font-size:9px;padding:8px 18px;}
+    .btn-md{font-size:10px;padding:12px 26px;}
+    .btn-lg{font-size:12px;padding:16px 40px;}
+    .btn-xl{font-size:13px;padding:20px 56px;}
+    .btn-black{background:var(--b);color:var(--g);border-color:var(--b);}
+    .btn-black:hover{background:var(--g);color:var(--b);border-color:var(--g);}
+    .btn-gold{background:var(--g);color:var(--b);border-color:var(--g);}
+    .btn-gold:hover{background:var(--b);color:var(--g);border-color:var(--b);}
+    .btn-outline{background:transparent;color:var(--b);border-color:var(--b);}
+    .btn-outline:hover{background:var(--b);color:var(--w);}
+    /* LANDING */
+    .banner{background:var(--b);color:var(--g);font-size:10px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;text-align:center;padding:10px;border-bottom:2px solid var(--g);}
+    .nav{background:var(--w);border-bottom:2px solid var(--b);padding:14px 32px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+    .logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
+    .logo-icon{background:var(--b);color:var(--g);width:40px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Times New Roman',serif;font-size:20px;font-weight:900;font-style:italic;}
+    .logo-txt{display:flex;flex-direction:column;}
+    .logo-txt b{font-family:'Times New Roman',serif;font-size:18px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.04em;}
+    .logo-txt small{font-size:7px;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--g);}
+    .nav-links{display:flex;gap:28px;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;}
+    .nav-links a{text-decoration:none;color:var(--gm);transition:color .2s;}
+    .nav-links a:hover{color:var(--g);}
+    .nav-right{display:flex;gap:10px;align-items:center;}
+    .hero{background:var(--w);border-bottom:2px solid var(--b);padding:80px 32px 64px;text-align:center;}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:var(--b);color:var(--g);padding:7px 18px;font-size:9px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;border-radius:2px;margin-bottom:28px;}
+    .hero h1{font-family:'Times New Roman',serif;font-size:clamp(44px,8vw,88px);font-weight:900;font-style:italic;letter-spacing:-.04em;line-height:.9;color:var(--b);text-transform:uppercase;margin-bottom:10px;}
+    .hero h1 span{color:var(--g);font-style:normal;}
+    .hero p{font-size:17px;color:var(--gm);max-width:620px;margin:20px auto 36px;line-height:1.6;font-style:italic;}
+    .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+    .section{padding:72px 32px;border-bottom:2px solid var(--b);}
+    .section-dark{background:var(--b);color:var(--w);}
+    .section-title{font-family:'Times New Roman',serif;font-style:italic;font-weight:900;font-size:clamp(26px,4vw,44px);text-transform:uppercase;letter-spacing:-.03em;margin-bottom:6px;}
+    .section-sub{font-size:13px;color:var(--gm);font-style:italic;margin-bottom:48px;}
+    /* COURSE CARDS */
+    .courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1100px;margin:0 auto;border:2px solid var(--b);}
+    .course-card{background:var(--w);padding:36px;border-right:2px solid var(--b);cursor:pointer;transition:background .15s;}
+    .course-card:last-child{border-right:none;}
+    .course-card:hover{background:#fffbf0;}
+    .course-card.featured{background:var(--b);color:var(--w);}
+    .course-card.featured:hover{background:#111;}
+    .course-level{display:inline-block;font-size:8px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;padding:5px 10px;margin-bottom:18px;background:var(--b);color:var(--g);}
+    .course-level.gold{background:var(--g);color:var(--b);}
+    .course-card.featured .course-level{background:var(--g);color:var(--b);}
+    .course-card h3{font-family:'Times New Roman',serif;font-size:20px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.02em;text-decoration:underline;text-decoration-color:var(--g);text-underline-offset:4px;margin-bottom:12px;line-height:1.2;}
+    .course-card p{font-size:13px;color:var(--gm);line-height:1.7;margin-bottom:18px;}
+    .course-card.featured p{color:#aaa;}
+    .course-meta{display:flex;gap:16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gm);}
+    .course-meta span{display:flex;align-items:center;gap:4px;}
+    .course-card.featured .course-meta{color:#666;}
+    .bloom-tag{display:inline-block;font-size:8px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;padding:4px 10px;border-radius:2px;background:var(--gr);color:var(--gm);border:1px solid var(--border);margin-top:12px;}
+    .course-card.featured .bloom-tag{background:#1a1a1a;color:var(--g);border-color:#333;}
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #222;max-width:900px;margin:0 auto;}
+    .stat{padding:32px 20px;text-align:center;border-right:1px solid #222;}
+    .stat:last-child{border-right:none;}
+    .stat-val{font-family:'Times New Roman',serif;font-size:40px;font-weight:900;font-style:italic;color:var(--g);display:block;line-height:1;}
+    .stat-lbl{font-size:8px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#666;margin-top:6px;display:block;}
+    /* SIMULATOR */
+    .sim-wrap{max-width:780px;margin:0 auto;border:2px solid var(--g);border-radius:3px;overflow:hidden;}
+    .sim-head{background:var(--g);color:var(--b);padding:16px 28px;display:flex;align-items:center;gap:12px;}
+    .sim-head h2{font-family:'Times New Roman',serif;font-size:16px;font-weight:900;font-style:italic;text-transform:uppercase;margin:0;}
+    .sim-body{padding:32px 28px;background:#080808;}
+    #academyPrompt{width:100%;background:#111;border:1px solid var(--g);color:var(--w);padding:14px 18px;font-family:Arial,sans-serif;font-size:13px;border-radius:2px;outline:none;margin-bottom:10px;}
+    #academyPrompt:focus{border-color:var(--gl);}
+    #academyBtn{width:100%;background:var(--g);color:var(--b);border:none;padding:14px;font-family:Arial,sans-serif;font-weight:900;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background .2s;margin-bottom:18px;}
+    #academyBtn:hover{background:var(--gl);}
+    #academyBtn:disabled{opacity:.5;cursor:not-allowed;}
+    #academyOut{background:#000;border:1px solid #222;border-left:3px solid var(--g);color:#ccc;font-family:'Courier New',monospace;font-size:12px;padding:18px;min-height:90px;white-space:pre-wrap;line-height:1.6;}
+    /* PAYGATE */
+    .paygate-box{max-width:600px;margin:0 auto;border:3px solid var(--b);padding:52px 44px;position:relative;text-align:center;}
+    .paygate-box::after{content:'';position:absolute;top:7px;left:7px;right:-7px;bottom:-7px;background:var(--g);z-index:-1;}
+    .price-lbl{font-size:9px;font-weight:900;letter-spacing:.4em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:10px;}
+    .price-big{font-family:'Times New Roman',serif;font-size:80px;font-weight:900;font-style:italic;color:var(--b);line-height:1;display:block;}
+    .price-big sup{font-size:34px;vertical-align:top;margin-top:18px;}
+    .price-desc{font-size:12px;color:var(--gm);margin:14px 0 28px;font-style:italic;}
+    .price-list{list-style:none;text-align:left;font-size:13px;line-height:2.2;margin-bottom:36px;}
+    .price-list li::before{content:"✓ ";color:var(--g);font-weight:900;}
+    footer{background:var(--b);color:var(--w);padding:36px 32px;}
+    .foot-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+    .foot-brand b{font-family:'Times New Roman',serif;font-size:18px;font-weight:900;font-style:italic;text-transform:uppercase;display:block;}
+    .foot-brand small{font-size:10px;color:var(--g);font-style:italic;}
+    .foot-links{display:flex;gap:20px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+    .foot-links a{color:#555;text-decoration:none;transition:color .2s;}
+    .foot-links a:hover{color:var(--g);}
+    .foot-copy{font-size:9px;color:#333;letter-spacing:.1em;width:100%;text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid #1a1a1a;}
+    /* LOGIN */
+    .login-page{background:var(--b);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px;}
+    .login-box{background:var(--w);border:3px solid var(--g);padding:52px 48px;width:100%;max-width:420px;position:relative;}
+    .login-box::after{content:'';position:absolute;top:8px;left:8px;right:-8px;bottom:-8px;background:var(--g);z-index:-1;}
+    .login-title{font-family:'Times New Roman',serif;font-size:22px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.02em;text-align:center;margin-bottom:4px;}
+    .login-sub{font-size:10px;color:var(--gm);text-align:center;letter-spacing:.2em;text-transform:uppercase;margin-bottom:32px;}
+    .field{margin-bottom:16px;}
+    .field label{display:block;font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;}
+    .field input{width:100%;background:var(--gr);border:2px solid var(--border);padding:12px 16px;font-family:Arial,sans-serif;font-size:13px;border-radius:2px;outline:none;transition:border-color .2s;}
+    .field input:focus{border-color:var(--g);}
+    .login-hint{font-size:10px;color:var(--gm);text-align:center;margin-top:14px;}
+    .login-hint span{color:var(--g);font-weight:700;cursor:pointer;}
+    /* DASHBOARD */
+    .dash-layout{display:flex;min-height:100vh;}
+    .sidebar{width:240px;background:var(--b);color:var(--w);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;}
+    .sidebar-logo{padding:22px 18px;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;gap:10px;cursor:pointer;}
+    .sidebar-nav{padding:12px 0;flex:1;}
+    .sidebar-section{font-size:8px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;color:#444;padding:14px 18px 6px;}
+    .sidebar-link{display:flex;align-items:center;gap:10px;padding:10px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#777;cursor:pointer;transition:all .15s;}
+    .sidebar-link:hover,.sidebar-link.active{color:var(--g);background:rgba(201,168,76,.08);border-left:3px solid var(--g);padding-left:15px;}
+    .sidebar-link i{width:16px;text-align:center;font-size:13px;}
+    .sidebar-footer{padding:16px 18px;border-top:1px solid #1a1a1a;}
+    .user-info{display:flex;align-items:center;gap:10px;}
+    .avatar{width:34px;height:34px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--b);flex-shrink:0;}
+    .user-name{font-size:11px;font-weight:700;color:var(--w);display:block;}
+    .user-role{font-size:8px;color:var(--g);letter-spacing:.1em;text-transform:uppercase;}
+    .dash-main{flex:1;background:var(--gr);overflow-y:auto;}
+    .dash-header{background:var(--w);border-bottom:2px solid var(--b);padding:18px 28px;display:flex;justify-content:space-between;align-items:center;}
+    .dash-header h2{font-family:'Times New Roman',serif;font-size:20px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.02em;}
+    .dash-content{padding:28px;}
+    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:28px;border:2px solid var(--b);}
+    .kpi{background:var(--w);padding:22px;border-right:2px solid var(--b);text-align:center;}
+    .kpi:last-child{border-right:none;}
+    .kpi-val{font-family:'Times New Roman',serif;font-size:30px;font-weight:900;font-style:italic;color:var(--g);display:block;}
+    .kpi-lbl{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gm);margin-top:4px;display:block;}
+    .progress-card{background:var(--w);border:2px solid var(--b);padding:22px;margin-bottom:22px;}
+    .progress-card h3{font-family:'Times New Roman',serif;font-size:15px;font-weight:900;font-style:italic;text-transform:uppercase;margin-bottom:14px;}
+    .prog-item{margin-bottom:14px;}
+    .prog-header{display:flex;justify-content:space-between;margin-bottom:5px;font-size:11px;font-weight:700;}
+    .prog-bar{height:5px;background:var(--border);}
+    .prog-fill{height:100%;background:var(--g);transition:width .6s;}
+    .course-list-item{background:var(--w);border:2px solid var(--b);padding:18px 22px;margin-bottom:2px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:background .15s;}
+    .course-list-item:hover{background:#fffbf0;}
+    .course-num{width:38px;height:38px;background:var(--b);color:var(--g);display:flex;align-items:center;justify-content:center;font-family:'Times New Roman',serif;font-size:15px;font-weight:900;font-style:italic;flex-shrink:0;}
+    .course-info{flex:1;}
+    .course-info h4{font-family:'Times New Roman',serif;font-size:14px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:3px;}
+    .course-info p{font-size:11px;color:var(--gm);}
+    .course-status{font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;padding:5px 10px;flex-shrink:0;}
+    .status-done{background:var(--b);color:var(--g);}
+    .status-progress{background:var(--g);color:var(--b);}
+    .status-new{background:var(--gr);color:var(--gm);border:1px solid var(--border);}
+    /* COURSE PAGE */
+    .course-page{background:var(--gr);min-height:100vh;}
+    .course-nav{background:var(--b);color:var(--w);padding:14px 28px;display:flex;align-items:center;gap:14px;border-bottom:3px solid var(--g);}
+    .course-nav-back{background:none;border:none;color:var(--g);cursor:pointer;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+    .course-nav-title{font-family:'Times New Roman',serif;font-size:14px;font-weight:900;font-style:italic;text-transform:uppercase;color:var(--w);}
+    .course-layout{display:flex;max-width:1200px;margin:0 auto;padding:28px;gap:24px;}
+    .course-sidebar-panel{width:270px;flex-shrink:0;}
+    .module-list{background:var(--w);border:2px solid var(--b);}
+    .module-title-bar{background:var(--b);color:var(--g);padding:12px 16px;font-size:9px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;}
+    .module-item{padding:11px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;font-weight:700;transition:background .15s;}
+    .module-item:hover{background:var(--gr);}
+    .module-item.active{background:#fffbf0;border-left:3px solid var(--g);padding-left:13px;}
+    .mod-icon{font-size:12px;color:var(--g);width:14px;flex-shrink:0;}
+    .mod-done{margin-left:auto;color:var(--g);font-size:11px;}
+    .course-main-panel{flex:1;}
+    .lesson-card{background:var(--w);border:2px solid var(--b);padding:36px;margin-bottom:20px;}
+    .lesson-tag{display:inline-block;background:var(--b);color:var(--g);font-size:8px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;padding:5px 12px;margin-bottom:18px;}
+    .lesson-card h2{font-family:'Times New Roman',serif;font-size:24px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.03em;margin-bottom:18px;text-decoration:underline;text-decoration-color:var(--g);text-underline-offset:4px;}
+    .lesson-card p{font-size:14px;line-height:1.8;color:#333;margin-bottom:14px;}
+    .lesson-card ul{padding-left:20px;margin-bottom:14px;}
+    .lesson-card ul li{font-size:13px;line-height:2;color:#333;}
+    .lesson-card ul li::marker{color:var(--g);}
+    .bloom-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gr);border:1px solid var(--border);font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;padding:6px 14px;margin-bottom:18px;color:var(--gm);}
+    .bloom-badge.create{background:#fff3cd;border-color:var(--g);color:var(--gd);}
+    .bloom-badge.evaluate{background:#e8f4fd;border-color:#4a9ede;color:#1a6fa8;}
+    .bloom-badge.analyze{background:#e8f8e8;border-color:#4a8c4a;color:#2d6a2d;}
+    .bloom-badge.apply{background:#fdecea;border-color:#e57373;color:#c62828;}
+    .video-placeholder{background:var(--dark);border:2px solid var(--b);padding:56px 20px;text-align:center;color:var(--w);margin-bottom:18px;}
+    .video-placeholder i{font-size:44px;color:var(--g);display:block;margin-bottom:10px;}
+    .video-placeholder p{font-size:12px;color:#666;}
+    .quiz-block{background:var(--gr);border:2px solid var(--b);padding:26px;margin-top:20px;}
+    .quiz-block h3{font-family:'Times New Roman',serif;font-size:17px;font-weight:900;font-style:italic;text-transform:uppercase;margin-bottom:14px;}
+    .quiz-q{font-size:14px;font-weight:700;margin-bottom:12px;}
+    .quiz-opt{display:block;padding:10px 14px;background:var(--w);border:2px solid var(--border);margin-bottom:7px;cursor:pointer;font-size:12px;transition:all .15s;border-radius:2px;}
+    .quiz-opt:hover{border-color:var(--g);background:#fffbf0;}
+    .quiz-opt.correct{border-color:#4a8c4a;background:#e8f8e8;color:#2d6a2d;}
+    .quiz-opt.wrong{border-color:#e57373;background:#fdecea;color:#c62828;}
+    /* Certificates */
+    .cert-card{background:var(--w);border:3px solid var(--b);padding:28px;text-align:center;position:relative;}
+    .cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g);}
+    @media(max-width:900px){
+      .sidebar{display:none;}
+      .kpi-row{grid-template-columns:repeat(2,1fr);}
+      .stats-row{grid-template-columns:repeat(2,1fr);}
+      .nav-links{display:none;}
+      .courses-grid{grid-template-columns:1fr;}
+      .course-layout{flex-direction:column;padding:16px;}
+      .course-sidebar-panel{width:100%;}
+    }
+  </style>
 </head>
 <body>
 
-  <div class="bt-banner">
-    Audit 2026 · IA Souveraine Certifiée SOFEDUC · Conformité Loi 25 & RGPD · Région Montréal
-  </div>
-
-  <nav class="bt-nav">
-    <div class="bt-logo">
-      <div class="bt-logo-icon">B</div>
-      <div class="bt-logo-text">
-        <span>Buttertech</span>
-        <span>Academy</span>
-      </div>
+<!-- ═══ VIEW 1 — LANDING ═══ -->
+<div id="view-landing" class="view active">
+  <div class="banner">Audit 2026 · IA Souveraine Certifiée SOFEDUC · Loi 25 &amp; RGPD · Montréal · Asynchrone En Ligne</div>
+  <nav class="nav">
+    <div class="logo" onclick="showView('view-landing')">
+      <div class="logo-icon">B</div>
+      <div class="logo-txt"><b>Buttertech</b><small>Academy LMS</small></div>
     </div>
-    <div class="bt-nav-links">
-      <a href="#simulateur">Simulateur Gemini</a>
-      <a href="#parcours">Parcours SOFEDUC</a>
+    <div class="nav-links">
+      <a href="#formations">3 Formations</a>
+      <a href="#simulateur">Simulateur IA</a>
       <a href="#certification">Certification</a>
     </div>
-    <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="bt-btn-primary">
-      S'inscrire — 399$
-    </a>
+    <div class="nav-right">
+      <button class="btn btn-sm btn-outline" onclick="showView('view-login')"><i class="fas fa-user-graduate"></i> Espace Étudiant</button>
+      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn btn-sm btn-gold">S'inscrire — 399$</a>
+    </div>
   </nav>
 
-  <header class="bt-hero">
-    <div class="bt-hero-badge">
-      <i class="fas fa-certificate"></i>
-      Leader IA Réglementée · Google &amp; NVIDIA Partner · SOFEDUC Accrédité
-    </div>
+  <header class="hero">
+    <div class="badge"><i class="fas fa-certificate"></i> Leader IA Réglementée · Google &amp; NVIDIA Partner · SOFEDUC Accrédité</div>
     <h1>L'IA DE CONFIANCE.<br><span>Certifiée.</span></h1>
-    <p>L'excellence de <strong>NVIDIA Inception</strong> et de <strong>Google for Education</strong>
-      sous la rigueur académique de la <strong>SOFEDUC</strong>.
-      Formations certifiantes en IA générative — Région Montréal.</p>
-    <div class="bt-hero-ctas">
-      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="bt-btn-gold">
-        <i class="fas fa-bolt" style="margin-right:8px;"></i>Démarrer ma certification — 399$
-      </a>
-      <a href="#simulateur" class="bt-btn-outline">Tester le simulateur</a>
+    <p>3 formations asynchrones certifiantes, alignées sur les Normes SOFEDUC et la Taxonomie de Bloom revisitée. Apprenez à votre rythme, certifié <strong>NVIDIA Inception</strong> &amp; <strong>Google for Education</strong>.</p>
+    <div class="hero-ctas">
+      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn btn-lg btn-gold"><i class="fas fa-bolt"></i> Démarrer ma certification — 399$</a>
+      <button class="btn btn-lg btn-outline" onclick="showView('view-login')"><i class="fas fa-user-graduate"></i> Espace Étudiant</button>
     </div>
   </header>
 
-  <section id="simulateur" class="bt-simulator">
-    <div style="text-align:center; margin-bottom:40px;">
-      <h2 class="bt-section-title" style="color:var(--bt-white);">
-        Simulateur Stratégique <span>Gemini</span>
-      </h2>
-      <p style="color:#888; font-size:14px; font-style:italic;">
-        Déployez un Agent Smith-Heffa virtuel pour orienter votre organisation.
-      </p>
+  <!-- 3 FORMATIONS SOFEDUC -->
+  <section id="formations" class="section">
+    <div style="max-width:1100px;margin:0 auto;text-align:center;">
+      <h2 class="section-title">3 Formations en Ligne <span style="color:var(--g)">SOFEDUC</span></h2>
+      <p class="section-sub">Asynchrones · Certifiantes · Taxonomie de Bloom · 27h · 2.7 UEC · 100% en ligne</p>
     </div>
-    <div class="bt-simulator-inner">
-      <div class="bt-simulator-header">
-        <i class="fas fa-terminal" style="font-size:20px;"></i>
+    <div class="courses-grid">
+      <!-- Formation 1 -->
+      <div class="course-card" onclick="openCourse(0)">
+        <span class="course-level gold">12h · Avancé · 1.2 UEC</span>
+        <h3>Visionnaire &amp; Multimodal — Agents IA</h3>
+        <p>Orchestration d'agents IA via Gemini 3.0, vision artificielle, infrastructures NVIDIA NIM et déploiement Cloud Run Montréal.</p>
+        <div class="course-meta">
+          <span><i class="fas fa-layer-group"></i> 6 modules</span>
+          <span><i class="fas fa-clock"></i> 12h</span>
+          <span><i class="fas fa-certificate"></i> 1.2 UEC</span>
+        </div>
+        <span class="bloom-tag">🟠 Créer · Analyser · Appliquer</span>
+      </div>
+      <!-- Formation 2 -->
+      <div class="course-card featured" onclick="openCourse(1)">
+        <span class="course-level">09h · Souverain · 0.9 UEC</span>
+        <h3>IA Responsable &amp; Loi 25 — Gouvernance</h3>
+        <p>Conformité Loi 25 / RGPD, déploiement Cloud Run Montréal, standard SOC2 Type II et gouvernance des données IA au Québec.</p>
+        <div class="course-meta">
+          <span><i class="fas fa-layer-group"></i> 5 modules</span>
+          <span><i class="fas fa-clock"></i> 9h</span>
+          <span><i class="fas fa-certificate"></i> 0.9 UEC</span>
+        </div>
+        <span class="bloom-tag">🔵 Évaluer · Analyser · Comprendre</span>
+      </div>
+      <!-- Formation 3 -->
+      <div class="course-card" onclick="openCourse(2)">
+        <span class="course-level gold">06h · Élite · 0.6 UEC</span>
+        <h3>Productivité Agentique — Méthode P.T.C.F.</h3>
+        <p>Méthode exclusive Persona·Tâche·Contexte·Format, Google Workspace for Education et automatisation Cloud Native.</p>
+        <div class="course-meta">
+          <span><i class="fas fa-layer-group"></i> 4 modules</span>
+          <span><i class="fas fa-clock"></i> 6h</span>
+          <span><i class="fas fa-certificate"></i> 0.6 UEC</span>
+        </div>
+        <span class="bloom-tag">🟠 Appliquer · Créer</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section section-dark" style="padding:64px 32px;">
+    <div class="stats-row">
+      <div class="stat"><span class="stat-val">3</span><span class="stat-lbl">Formations SOFEDUC</span></div>
+      <div class="stat"><span class="stat-val">2.7</span><span class="stat-lbl">UEC totales</span></div>
+      <div class="stat"><span class="stat-val">27h</span><span class="stat-lbl">De formation</span></div>
+      <div class="stat"><span class="stat-val">100%</span><span class="stat-lbl">Asynchrone</span></div>
+    </div>
+  </section>
+
+  <!-- SIMULATEUR -->
+  <section id="simulateur" class="section section-dark">
+    <div style="text-align:center;margin-bottom:36px;">
+      <h2 class="section-title" style="color:var(--w);">Simulateur Stratégique <span>Gemini</span></h2>
+      <p style="color:#777;font-size:13px;font-style:italic;">Agent Smith-Heffa — Assistance pédagogique IA certifiée SOFEDUC</p>
+    </div>
+    <div class="sim-wrap">
+      <div class="sim-head">
+        <i class="fas fa-terminal" style="font-size:18px;"></i>
         <div>
           <h2>Smith-Heffa Agent Console</h2>
-          <p>Powered by Gemini · Cloud Run Montréal · 24ms avg</p>
+          <p style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;opacity:.7;margin:0;">Powered by Gemini · Cloud Run Montréal · SOC2 Type II</p>
         </div>
       </div>
-      <div class="bt-simulator-body">
-        <input type="text" id="academyPrompt"
-          placeholder="Ex : Défi logistique municipal, stratégie IA, conformité Loi 25..." />
-        <button id="academyBtn">
-          <i class="fas fa-robot" style="margin-right:8px;"></i>
-          Simuler l'architecture avec Gemini
-        </button>
-        <pre id="academyOut">Prêt. Entrez votre défi stratégique.</pre>
-        <div class="bt-sim-footer">
-          Inférence validée · Cloud Run Montréal · NVIDIA NIM · SOC2 Type II
-        </div>
+      <div class="sim-body">
+        <input type="text" id="academyPrompt" placeholder="Ex : Comment appliquer la Loi 25 dans ma formation IA ?" />
+        <button id="academyBtn"><i class="fas fa-robot" style="margin-right:6px;"></i>Simuler avec Gemini — Agent Smith-Heffa</button>
+        <pre id="academyOut">Prêt. Posez votre question pédagogique ou stratégique.</pre>
       </div>
     </div>
   </section>
 
-  <section id="parcours" class="bt-parcours">
-    <div style="max-width:1100px; margin:0 auto;">
-      <div style="text-align:center; margin-bottom:48px;">
-        <h2 class="bt-section-title">Parcours Certifiés <span>SOFEDUC</span></h2>
-        <p style="color:var(--bt-gray-md); font-style:italic; font-size:14px;">
-          Session Janvier 2026 · Unités d'Éducation Continue (UEC) reconnues
-        </p>
-      </div>
-      <div class="bt-parcours-grid">
-        <div class="bt-card">
-          <div class="bt-card-tag">12h · Niveau Avancé</div>
-          <h3>Visionnaire &amp; Multimodal</h3>
-          <ul>
-            <li>Orchestration d'Agents IA via Gemini</li>
-            <li>Vision Artificielle &amp; Infrastructures</li>
-            <li>Inférence NVIDIA NIM Validée</li>
-            <li>Architecture Cloud Native GCP</li>
-          </ul>
-        </div>
-        <div class="bt-card bt-card-featured">
-          <div class="bt-card-tag">09h · Priorité Souveraine</div>
-          <h3>IA Responsable &amp; Loi 25</h3>
-          <ul>
-            <li>Conformité Loi 25 / RGPD</li>
-            <li>Déploiement Cloud Run Montréal</li>
-            <li>Standard SOC2 Type II</li>
-            <li>Gouvernance des données IA</li>
-          </ul>
-        </div>
-        <div class="bt-card">
-          <div class="bt-card-tag">06h · Productivité Élite</div>
-          <h3>Productivité Agentique</h3>
-          <ul>
-            <li>Méthode exclusive Prompt P.T.C.F.</li>
-            <li>Google Workspace for Education</li>
-            <li>Automatisation Cloud Native</li>
-            <li>Déploiement en production Vercel</li>
-          </ul>
-        </div>
-      </div>
+  <!-- PAYGATE -->
+  <section id="certification" class="section" style="text-align:center;">
+    <div style="max-width:1100px;margin:0 auto;">
+      <h2 class="section-title" style="margin-bottom:48px;">Inscription &amp; <span style="color:var(--g)">Certification</span></h2>
     </div>
-  </section>
-
-  <section class="bt-stats">
-    <div class="bt-stats-grid">
-      <div class="bt-stat">
-        <span class="bt-stat-value">100%</span>
-        <span class="bt-stat-label">Equity Souverain</span>
-      </div>
-      <div class="bt-stat">
-        <span class="bt-stat-value">UEC</span>
-        <span class="bt-stat-label">Certifié SOFEDUC</span>
-      </div>
-      <div class="bt-stat">
-        <span class="bt-stat-value">V.3.0</span>
-        <span class="bt-stat-label">Core Gemini</span>
-      </div>
-      <div class="bt-stat">
-        <span class="bt-stat-value">24ms</span>
-        <span class="bt-stat-label">Cloud Run Montréal</span>
-      </div>
-    </div>
-  </section>
-
-  <section id="certification" class="bt-paygate">
-    <div class="bt-paygate-inner">
-      <span class="bt-price-label">Bundle Quintessence IA · Session Janvier 2026</span>
-      <span class="bt-price"><sup>$</sup>399</span>
-      <p class="bt-price-desc">
-        Accès complet aux 3 parcours certifiants · Certification SOFEDUC incluse · Paiement sécurisé
-      </p>
-      <ul class="bt-price-features">
-        <li>27h de formation certifiante (UEC)</li>
-        <li>Accès au Simulateur Stratégique Gemini</li>
-        <li>Attestation SOFEDUC officielle</li>
+    <div class="paygate-box">
+      <span class="price-lbl">Bundle Quintessence IA · Session Janvier 2026 · SOFEDUC</span>
+      <span class="price-big"><sup>$</sup>399</span>
+      <p class="price-desc">3 formations certifiantes · 27h · 2.7 UEC · Paiement sécurisé</p>
+      <ul class="price-list">
+        <li>3 formations asynchrones certifiantes (27h · 2.7 UEC)</li>
+        <li>Accès à l'Espace Étudiant LMS en ligne</li>
+        <li>Attestations officielles SOFEDUC par formation</li>
         <li>Conformité Loi 25 &amp; RGPD documentée</li>
-        <li>Support Agent Smith-Heffa inclus</li>
+        <li>Accès au Simulateur Gemini Agent Smith-Heffa</li>
+        <li>Support pédagogique IA inclus</li>
       </ul>
-      <a href="https://smith-heffa-paygate.vercel.app" target="_blank"
-         class="bt-btn-gold" style="font-size:14px; padding:20px 56px;">
-        <i class="fas fa-lock" style="margin-right:10px;"></i>
-        Paiement sécurisé · S'inscrire maintenant
+      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn btn-xl btn-gold">
+        <i class="fas fa-lock"></i> Paiement sécurisé · S'inscrire maintenant
       </a>
-      <p style="font-size:10px; color:var(--bt-gray-md); margin-top:20px; letter-spacing:0.1em;">
-        PAIEMENT SÉCURISÉ · SSL · SOFEDUC ACCRÉDITÉ
-      </p>
+      <p style="font-size:9px;color:var(--gm);margin-top:16px;letter-spacing:.1em;">SSL · SOFEDUC ACCRÉDITÉ · NVIDIA INCEPTION · GOOGLE FOR EDUCATION</p>
     </div>
   </section>
 
-  <footer class="bt-footer">
-    <div class="bt-footer-inner">
-      <div class="bt-footer-top">
-        <div class="bt-footer-brand">
-          <span>Buttertech Academy</span>
-          <span>Architecture Gemini 3.0 · Région Montréal · SOFEDUC</span>
-        </div>
-        <div class="bt-footer-links">
-          <a href="#">Confidentialité (Loi 25)</a>
-          <a href="#">Audit SOFEDUC 2026</a>
-          <a href="#simulateur">Simulateur</a>
-          <a href="https://smith-heffa-paygate.vercel.app" target="_blank">Inscription</a>
-        </div>
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <b>Buttertech Academy</b>
+        <small>Architecture Gemini 3.0 · Région Montréal · SOFEDUC 2026</small>
       </div>
-      <div class="bt-footer-bottom">
-        © 2026 Buttertech Inc. · Tous droits réservés · buttertech.io
-        · NVIDIA Inception Partner · Google for Education Partner
+      <div class="foot-links">
+        <a href="#">Confidentialité (Loi 25)</a>
+        <a href="#">Audit SOFEDUC 2026</a>
+        <a href="#formations">Formations</a>
+        <a href="https://smith-heffa-paygate.vercel.app" target="_blank">Inscription</a>
       </div>
+      <div class="foot-copy">© 2026 Buttertech Inc. · buttertech.io · NVIDIA Inception Partner · Google for Education Partner</div>
     </div>
   </footer>
+</div>
 
-  <script>
-    (function () {
-      "use strict";
-      var btn    = document.getElementById("academyBtn");
-      var input  = document.getElementById("academyPrompt");
-      var output = document.getElementById("academyOut");
-      if (!btn || !input || !output) return;
+<!-- ═══ VIEW 2 — LOGIN ═══ -->
+<div id="view-login" class="view">
+  <div class="login-page">
+    <div class="login-box">
+      <div style="text-align:center;margin-bottom:28px;">
+        <div class="logo-icon" style="margin:0 auto 12px;width:48px;height:48px;font-size:22px;">B</div>
+        <div class="login-title">Espace Étudiant</div>
+        <div class="login-sub">Buttertech Academy LMS · SOFEDUC 2026</div>
+      </div>
+      <div class="field">
+        <label>Courriel</label>
+        <input type="email" id="login-email" placeholder="prenom.nom@organisation.ca" value="etudiant@buttertech.io" />
+      </div>
+      <div class="field">
+        <label>Mot de passe</label>
+        <input type="password" id="login-pass" placeholder="••••••••" value="buttertech2026" />
+      </div>
+      <button class="btn btn-lg btn-black" style="width:100%;justify-content:center;" onclick="doLogin()">
+        <i class="fas fa-sign-in-alt"></i> Accéder à mes formations
+      </button>
+      <p class="login-hint">Pas encore inscrit ? <span onclick="showView('view-landing');setTimeout(function(){document.getElementById('certification').scrollIntoView({behavior:'smooth'});},100)">S'inscrire pour 399$</span></p>
+      <p class="login-hint" style="margin-top:8px;"><span onclick="showView('view-landing')">← Retour au site</span></p>
+    </div>
+  </div>
+</div>
 
-      async function callGemini(prompt) {
-        var res = await fetch("/api/gemini", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            prompt: prompt,
-            system: "Tu es l'Agent Smith-Heffa de Buttertech Academy, assistant IA certifié SOFEDUC. Réponds en français, de façon structurée, concise et actionnable."
-          })
-        });
-        return await res.json();
-      }
+<!-- ═══ VIEW 3 — DASHBOARD ═══ -->
+<div id="view-dashboard" class="view">
+  <div class="dash-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo" onclick="showView('view-landing')">
+        <div class="logo-icon" style="width:36px;height:36px;font-size:16px;">B</div>
+        <div class="logo-txt"><b style="color:var(--w);font-size:13px;">Buttertech</b><small>Academy LMS</small></div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">Navigation</div>
+        <div class="sidebar-link active" onclick="showDash('overview')"><i class="fas fa-th-large"></i> Tableau de bord</div>
+        <div class="sidebar-link" onclick="showDash('courses')"><i class="fas fa-book-open"></i> Mes formations</div>
+        <div class="sidebar-link" onclick="showDash('progress')"><i class="fas fa-chart-line"></i> Ma progression</div>
+        <div class="sidebar-link" onclick="showDash('certificates')"><i class="fas fa-award"></i> Mes attestations</div>
+        <div class="sidebar-section" style="margin-top:12px;">Outils</div>
+        <div class="sidebar-link" onclick="showDash('simulator')"><i class="fas fa-robot"></i> Simulateur Gemini</div>
+        <div class="sidebar-link"><i class="fas fa-file-alt"></i> Docs SOFEDUC</div>
+        <div class="sidebar-link"><i class="fas fa-shield-alt"></i> Loi 25 &amp; RGPD</div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="avatar" id="dash-avatar">É</div>
+          <div style="flex:1;min-width:0;">
+            <span class="user-name" id="dash-username">Étudiant</span>
+            <span class="user-role">Certifié SOFEDUC</span>
+          </div>
+          <i class="fas fa-sign-out-alt" onclick="showView('view-login')" style="color:#444;cursor:pointer;font-size:13px;"></i>
+        </div>
+      </div>
+    </aside>
+    <main class="dash-main">
+      <div id="dash-overview">
+        <div class="dash-header"><h2>Tableau de Bord</h2><span style="font-size:11px;color:var(--gm);">Session Janvier 2026 · SOFEDUC</span></div>
+        <div class="dash-content">
+          <div class="kpi-row">
+            <div class="kpi"><span class="kpi-val">1</span><span class="kpi-lbl">Complété</span></div>
+            <div class="kpi"><span class="kpi-val">1</span><span class="kpi-lbl">En cours</span></div>
+            <div class="kpi"><span class="kpi-val">1.2</span><span class="kpi-lbl">UEC acquises</span></div>
+            <div class="kpi"><span class="kpi-val">44%</span><span class="kpi-lbl">Complétion</span></div>
+          </div>
+          <div class="progress-card">
+            <h3>Progression par Formation SOFEDUC</h3>
+            <div class="prog-item"><div class="prog-header"><span>Formation 1 · Visionnaire &amp; Multimodal</span><span>100%</span></div><div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div></div>
+            <div class="prog-item"><div class="prog-header"><span>Formation 2 · IA Responsable &amp; Loi 25</span><span>55%</span></div><div class="prog-bar"><div class="prog-fill" style="width:55%"></div></div></div>
+            <div class="prog-item"><div class="prog-header"><span>Formation 3 · Productivité Agentique P.T.C.F.</span><span>0%</span></div><div class="prog-bar"><div class="prog-fill" style="width:0%"></div></div></div>
+          </div>
+          <h3 style="font-family:'Times New Roman',serif;font-style:italic;text-transform:uppercase;font-size:15px;margin-bottom:14px;">Mes Formations</h3>
+          <div id="dash-course-list"></div>
+        </div>
+      </div>
+      <div id="dash-courses" style="display:none;">
+        <div class="dash-header"><h2>Mes Formations</h2><span style="font-size:11px;color:var(--gm);">3 formations · 27h · 2.7 UEC</span></div>
+        <div class="dash-content"><div id="dash-all-courses"></div></div>
+      </div>
+      <div id="dash-progress" style="display:none;">
+        <div class="dash-header"><h2>Ma Progression</h2></div>
+        <div class="dash-content">
+          <div class="progress-card">
+            <h3>Taxonomie de Bloom — Compétences acquises</h3>
+            <div class="prog-item"><div class="prog-header"><span>🟣 Mémoriser</span><span>90%</span></div><div class="prog-bar"><div class="prog-fill" style="width:90%;background:#9c4de5;"></div></div></div>
+            <div class="prog-item"><div class="prog-header"><span>🔵 Comprendre</span><span>75%</span></div><div class="prog-bar"><div class="prog-fill" style="width:75%;background:#4a9ede;"></div></div></div>
+            <div class="prog-item"><div class="prog-header"><span>🔴 Appliquer</span><span>60%</span></div><div class="prog-bar"><div class="prog-fill" style="width:60%;background:#e57373;"></div></div></div>
+            <div class="prog-item"><div class="prog-header"><span>🟢 Analyser</span><span>50%</span></div><div class="prog-bar"><div class="prog-fill" style="width:50%;background:#4a8c4a;"></div></div></div>
+            <div class="prog-item"><div class="prog-header"><span>🟡 Évaluer</span><span>30%</span></div><div class="prog-bar"><div class="prog-fill" style="width:30%;background:#c9a84c;"></div></div></div>
+            <div class="prog-item"><div class="prog-header"><span>🟠 Créer</span><span>15%</span></div><div class="prog-bar"><div class="prog-fill" style="width:15%;background:#e09030;"></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div id="dash-certificates" style="display:none;">
+        <div class="dash-header"><h2>Mes Attestations</h2></div>
+        <div class="dash-content">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
+            <div class="cert-card"><i class="fas fa-award" style="font-size:36px;color:var(--g);margin-bottom:12px;display:block;"></i><div style="font-size:8px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-bottom:8px;">SOFEDUC · Attestation</div><div style="font-family:'Times New Roman',serif;font-size:15px;font-weight:900;font-style:italic;text-transform:uppercase;margin-bottom:6px;line-height:1.3;">Visionnaire &amp; Multimodal</div><div style="font-size:10px;color:var(--gm);margin-bottom:14px;">12h · 1.2 UEC · Janvier 2026</div><button class="btn btn-sm btn-black"><i class="fas fa-download"></i> Télécharger PDF</button></div>
+          </div>
+          <p style="font-size:12px;color:var(--gm);margin-top:20px;font-style:italic;">Les attestations des formations en cours seront disponibles après complétion.</p>
+        </div>
+      </div>
+      <div id="dash-simulator" style="display:none;">
+        <div class="dash-header"><h2>Simulateur Gemini</h2></div>
+        <div class="dash-content">
+          <div class="sim-wrap" style="max-width:680px;">
+            <div class="sim-head"><i class="fas fa-robot"></i><div><h2>Agent Smith-Heffa</h2><p style="font-size:9px;opacity:.7;margin:0;letter-spacing:.1em;text-transform:uppercase;">Assistant pédagogique SOFEDUC</p></div></div>
+            <div class="sim-body">
+              <input type="text" id="dash-prompt" placeholder="Posez une question sur vos formations SOFEDUC..." style="width:100%;background:#111;border:1px solid var(--g);color:var(--w);padding:13px 16px;font-family:Arial,sans-serif;font-size:13px;border-radius:2px;outline:none;margin-bottom:10px;">
+              <button id="dash-sim-btn" onclick="runDashSim()" style="width:100%;background:var(--g);color:var(--b);border:none;padding:13px;font-family:Arial,sans-serif;font-weight:900;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border-radius:2px;margin-bottom:16px;"><i class="fas fa-robot" style="margin-right:6px;"></i>Demander à Gemini</button>
+              <pre id="dash-sim-out" style="background:#000;border:1px solid #222;border-left:3px solid var(--g);color:#ccc;font-family:'Courier New',monospace;font-size:12px;padding:16px;min-height:80px;white-space:pre-wrap;line-height:1.6;">Prêt.</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
 
-      async function onSimulate() {
-        var prompt = input.value.trim();
-        if (!prompt) { output.textContent = "Veuillez entrer un défi stratégique."; return; }
-        btn.disabled = true;
-        output.textContent = "[ Agent Smith-Heffa ] Analyse en cours...";
-        try {
-          var result = await callGemini(prompt);
-          var prefix = result.mode === "live"
-            ? "[LIVE · " + (result.model || "Gemini") + "]\n\n"
-            : "[DEMO · Mode hors ligne]\n\n";
-          output.textContent = prefix + (result.text || "Aucune réponse.");
-        } catch (err) {
-          output.textContent = "[ERREUR] Gemini indisponible.";
-        } finally {
-          btn.disabled = false;
-        }
-      }
+<!-- ═══ VIEW 4 — COURS ═══ -->
+<div id="view-course" class="view">
+  <div class="course-page">
+    <div class="course-nav">
+      <button class="course-nav-back" onclick="backFromCourse()"><i class="fas fa-arrow-left"></i> Retour</button>
+      <span class="course-nav-title" id="course-nav-title">Formation</span>
+    </div>
+    <div class="course-layout">
+      <aside class="course-sidebar-panel">
+        <div class="module-list">
+          <div class="module-title-bar">Modules du cours</div>
+          <div id="module-list-items"></div>
+        </div>
+      </aside>
+      <main class="course-main-panel" id="course-main-content"></main>
+    </div>
+  </div>
+</div>
 
-      btn.addEventListener("click", onSimulate);
-      input.addEventListener("keydown", function(e) {
-        if (e.key === "Enter") { e.preventDefault(); onSimulate(); }
-      });
-    })();
-  </script>
-
+<script>
+(function(){
+"use strict";
+var COURSES=[
+  {id:0,title:"Visionnaire & Multimodal — Agents IA",hours:"12h",uec:"1.2",bloom:"Créer · Analyser · Appliquer",bloomClass:"create",
+   modules:[
+    {title:"Architecture des Agents IA Gemini 3.0",type:"video",done:true},
+    {title:"Vision Artificielle & Infrastructures NVIDIA NIM",type:"text",done:true},
+    {title:"Orchestration Multi-Agents — Lab pratique",type:"text",done:true},
+    {title:"Déploiement Cloud Run Montréal",type:"text",done:true},
+    {title:"Inférence NVIDIA NIM Validée — Exercices",type:"text",done:false},
+    {title:"Quiz final — Visionnaire & Multimodal",type:"quiz",done:false}
+   ],status:"done"},
+  {id:1,title:"IA Responsable & Loi 25 — Gouvernance",hours:"9h",uec:"0.9",bloom:"Évaluer · Analyser · Comprendre",bloomClass:"evaluate",
+   modules:[
+    {title:"Loi 25 — Principes fondamentaux au Québec",type:"video",done:true},
+    {title:"RGPD & Équivalences québécoises",type:"text",done:true},
+    {title:"Déploiement Cloud Run Montréal — SOC2 Type II",type:"text",done:false},
+    {title:"Audit de conformité IA en organisation",type:"text",done:false},
+    {title:"Quiz final — Gouvernance & Conformité",type:"quiz",done:false}
+   ],status:"progress"},
+  {id:2,title:"Productivité Agentique — Méthode P.T.C.F.",hours:"6h",uec:"0.6",bloom:"Appliquer · Créer",bloomClass:"apply",
+   modules:[
+    {title:"Introduction à la méthode P.T.C.F.",type:"video",done:false},
+    {title:"Persona · Tâche · Contexte · Format — Maîtrise",type:"text",done:false},
+    {title:"Google Workspace for Education — Cas réels",type:"text",done:false},
+    {title:"Quiz final — Productivité Agentique",type:"quiz",done:false}
+   ],status:"new"}
+];
+var LESSONS=[
+  {title:"Architecture des Agents IA Gemini 3.0",bloom:"create",bloomLabel:"Créer",tag:"Formation 1 · Module 1/6",
+   content:"L'orchestration d'agents IA via Gemini 3.0 représente le niveau le plus avancé de la certification Buttertech Academy. Cette formation couvre l'architecture multi-agents, le déploiement sur Cloud Run Montréal et l'inférence NVIDIA NIM validée.",
+   points:["Architecture multi-agents : orchestrateur + agents spécialisés Gemini 3.0","Déploiement serverless sur Cloud Run Montréal (northamerica-northeast1 — 24ms)","Inférence NVIDIA NIM : GPU H100 validé pour la production","Intégration Google Workspace for Education et outils SOFEDUC certifiés"],
+   quiz:{q:"Dans une architecture multi-agents Gemini 3.0, quel composant coordonne les agents spécialisés ?",opts:["L'agent de vision","L'orchestrateur principal","Le registre SOFEDUC","Le proxy Cloud Run"],correct:1}},
+  {title:"Loi 25 — Principes Fondamentaux",bloom:"evaluate",bloomLabel:"Évaluer",tag:"Formation 2 · Module 1/5",
+   content:"La Loi 25 (Loi modernisant des dispositions législatives en matière de protection des renseignements personnels) est en vigueur depuis septembre 2023 au Québec. Elle impose des obligations strictes aux organisations qui collectent et traitent des données personnelles, incluant les plateformes de formation en ligne.",
+   points:["Consentement explicite et éclairé requis avant toute collecte de données","Droit d'accès, de rectification et de retrait du consentement (tout apprenant)","Nomination obligatoire d'un responsable de la protection des renseignements personnels","Déclaration des incidents de confidentialité à la Commission d'accès à l'information (CAI)"],
+   quiz:{q:"Selon la liste SOFEDUC pour l'audit, que doit-on remplacer dans les CV soumis pour respecter la Loi 25 ?",opts:["Les titres académiques","Toute information personnelle par les coordonnées de l'organisation","Les expériences professionnelles","Les formations suivies"],correct:1}},
+  {title:"Introduction à la Méthode P.T.C.F.",bloom:"apply",bloomLabel:"Appliquer",tag:"Formation 3 · Module 1/4",
+   content:"La méthode P.T.C.F. (Persona · Tâche · Contexte · Format) est la méthode de prompting exclusive de Buttertech Academy, alignée sur le Google Workspace Prompting Guide 101. Les prompts efficaces comptent en moyenne 21 mots avec contexte pertinent.",
+   points:["Persona : définir le rôle que l'IA doit jouer — ex : 'Tu es un expert SOFEDUC en Loi 25'","Tâche : spécifier l'action avec un verbe précis — c'est le composant le plus important du prompt","Contexte : fournir les informations nécessaires pour une réponse pertinente et actionnable","Format : préciser la forme de sortie souhaitée — liste, tableau, paragraphe, code, rapport"],
+   quiz:{q:"Dans la méthode P.T.C.F., quel élément est décrit comme 'le composant le plus important d'un prompt' ?",opts:["Le Persona","La Tâche (avec un verbe d'action)","Le Contexte","Le Format"],correct:1}}
+];
+var currentCourseId=0,currentLesson=0,fromDash=false,quizAnswered=false;
+window.showView=function(id){document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);};
+window.doLogin=function(){var email=document.getElementById('login-email').value||'etudiant@buttertech.io';var name=email.split('@')[0].replace('.',' ');var initials=name.split(' ').map(function(w){return w[0].toUpperCase();}).join('').slice(0,2)||'É';document.getElementById('dash-username').textContent=name;document.getElementById('dash-avatar').textContent=initials;buildDashboard();showView('view-dashboard');showDash('overview');};
+window.showDash=function(panel){['overview','courses','progress','certificates','simulator'].forEach(function(p){var el=document.getElementById('dash-'+p);if(el)el.style.display=(p===panel)?'block':'none';});var links=document.querySelectorAll('.sidebar-link');links.forEach(function(l){l.classList.remove('active');});var map={overview:0,courses:1,progress:2,certificates:3,simulator:4};if(links[map[panel]])links[map[panel]].classList.add('active');};
+function buildDashboard(){var listEl=document.getElementById('dash-course-list');var allEl=document.getElementById('dash-all-courses');listEl.innerHTML='';allEl.innerHTML='';COURSES.forEach(function(c){listEl.appendChild(makeCLI(c));allEl.appendChild(makeCLI(c));});}
+function makeCLI(c){var item=document.createElement('div');item.className='course-list-item';item.onclick=function(){fromDash=true;openCourse(c.id);};var sm={done:'status-done',progress:'status-progress',new:'status-new'};var sl={done:'Complété',progress:'En cours',new:'À commencer'};item.innerHTML='<div class="course-num">'+(c.id+1)+'</div><div class="course-info"><h4>'+c.title+'</h4><p>'+c.hours+' · '+c.uec+' UEC · Bloom : '+c.bloom+'</p></div><span class="course-status '+sm[c.status]+'">'+sl[c.status]+'</span>';return item;}
+window.openCourse=function(id){currentCourseId=id;currentLesson=0;quizAnswered=false;var c=COURSES[id];document.getElementById('course-nav-title').textContent='Formation '+(id+1)+' · '+c.title;buildModuleList(c);loadLesson(id,0);showView('view-course');};
+function buildModuleList(c){var el=document.getElementById('module-list-items');el.innerHTML='';c.modules.forEach(function(m,i){var item=document.createElement('div');item.className='module-item'+(i===0?' active':'');var icon=m.type==='video'?'fa-play-circle':(m.type==='quiz'?'fa-question-circle':'fa-file-alt');item.innerHTML='<i class="fas '+icon+' mod-icon"></i><span style="flex:1;">'+m.title+'</span>'+(m.done?'<i class="fas fa-check-circle mod-done"></i>':'');item.onclick=(function(idx){return function(){loadLesson(currentCourseId,idx);};})(i);el.appendChild(item);});}
+window.loadLesson=function(courseId,moduleIdx){currentLesson=moduleIdx;quizAnswered=false;var c=COURSES[courseId];var m=c.modules[moduleIdx];document.querySelectorAll('.module-item').forEach(function(el,i){el.classList.toggle('active',i===moduleIdx);});var ld=LESSONS[courseId]||{title:m.title,bloom:c.bloomClass,bloomLabel:c.bloom.split(' · ')[0],tag:'Formation '+(courseId+1)+' · Module '+(moduleIdx+1)+'/'+c.modules.length,content:'Ce module couvre les aspects essentiels de "'+m.title+'". Contenu conforme aux directives SOFEDUC.',points:['Objectifs pédagogiques alignés SOFEDUC','Activités d\'apprentissage asynchrones certifiantes','Évaluation formative intégrée','Conformité Loi 25 et RGPD'],quiz:{q:'Question de validation — Formation '+(courseId+1),opts:['Réponse A','Réponse B','Réponse C (correcte)','Réponse D'],correct:2}};
+var html='<div class="lesson-card"><span class="lesson-tag">'+ld.tag+'</span><span class="bloom-badge '+ld.bloom+'"><i class="fas fa-brain"></i> Bloom : '+ld.bloomLabel+'</span><h2>'+m.title+'</h2>';
+if(m.type==='video'){html+='<div class="video-placeholder"><i class="fas fa-play-circle"></i><p>Vidéo de formation asynchrone · Durée estimée : 20–45 min<br>Hébergée sur Cloud Run Montréal · Sous-titrée FR/EN · SOC2 Type II</p></div>';}
+html+='<p>'+ld.content+'</p><ul>';ld.points.forEach(function(pt){html+='<li>'+pt+'</li>';});html+='</ul></div>';
+html+='<div class="quiz-block"><h3><i class="fas fa-check-square" style="color:var(--g);margin-right:8px;"></i>Évaluation Formative</h3><p class="quiz-q">'+ld.quiz.q+'</p>';
+ld.quiz.opts.forEach(function(opt,i){html+='<div class="quiz-opt" id="qopt-'+i+'" onclick="checkAnswer('+i+','+ld.quiz.correct+')">'+opt+'</div>';});
+html+='<div id="quiz-feedback" style="margin-top:10px;font-size:12px;font-weight:700;display:none;"></div>';
+html+='<div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">'+(moduleIdx<c.modules.length-1?'<button class="btn btn-md btn-gold" onclick="loadLesson('+courseId+','+(moduleIdx+1)+')"><i class="fas fa-arrow-right"></i> Module suivant</button>':'<button class="btn btn-md btn-gold" onclick="backFromCourse()"><i class="fas fa-flag-checkered"></i> Terminer la formation</button>')+(moduleIdx>0?'<button class="btn btn-md btn-outline" onclick="loadLesson('+courseId+','+(moduleIdx-1)+')"><i class="fas fa-arrow-left"></i> Précédent</button>':'')+'</div></div>';
+document.getElementById('course-main-content').innerHTML=html;};
+window.checkAnswer=function(idx,correct){if(quizAnswered)return;quizAnswered=true;document.querySelectorAll('.quiz-opt').forEach(function(o,i){if(i===correct)o.classList.add('correct');else if(i===idx&&idx!==correct)o.classList.add('wrong');});var fb=document.getElementById('quiz-feedback');fb.style.display='block';fb.style.color=idx===correct?'#2d6a2d':'#c62828';fb.textContent=idx===correct?'✓ Bonne réponse ! Compétence validée.':'✗ Réponse incorrecte. La bonne réponse est indiquée en vert.';};
+window.backFromCourse=function(){if(fromDash){fromDash=false;showView('view-dashboard');}else{showView('view-landing');}};
+/* Gemini Landing */
+var btn=document.getElementById('academyBtn'),inp=document.getElementById('academyPrompt'),out=document.getElementById('academyOut');
+if(btn&&inp&&out){
+  async function callG(p){var r=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p,system:"Tu es l'Agent Smith-Heffa de Buttertech Academy, assistant IA certifié SOFEDUC. Réponds en français, structuré, concis, actionnable."})});return await r.json();}
+  async function onSim(){var p=inp.value.trim();if(!p){out.textContent="Entrez un défi ou une question.";return;}btn.disabled=true;out.textContent="[ Smith-Heffa ] Analyse en cours...";try{var r=await callG(p);out.textContent=(r.mode==='live'?'[LIVE · '+(r.model||'Gemini')+']\n\n':'[DEMO]\n\n')+(r.text||'Aucune réponse.');}catch(e){out.textContent="[ERREUR] Gemini indisponible.";}finally{btn.disabled=false;}}
+  btn.addEventListener('click',onSim);inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();onSim();}});
+}
+/* Gemini Dashboard */
+window.runDashSim=function(){var p=document.getElementById('dash-prompt'),o=document.getElementById('dash-sim-out'),b=document.getElementById('dash-sim-btn');if(!p||!o||!b)return;var prompt=p.value.trim();if(!prompt){o.textContent="Entrez votre question.";return;}b.disabled=true;o.textContent="Analyse...";fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,system:"Tu es un assistant pédagogique SOFEDUC. Réponds en français, concis."})}).then(function(r){return r.json();}).then(function(d){o.textContent=(d.mode==='live'?'[LIVE]\n\n':'[DEMO]\n\n')+(d.text||'');}).catch(function(){o.textContent="[ERREUR] Gemini indisponible.";}).finally(function(){b.disabled=false;});};
+})();
+</script>
 </body>
 </html>
