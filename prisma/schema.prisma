@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Formation {
+  id          String    @id @default(cuid())
+  code        String    @unique
+  titre       String
+  dureeHeures Float
+  uec         Float
+  bloomNiveau Int
+  version     String    @default("1.0")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  @@map("formations")
+}
+
+model Attestation {
+  id            String   @id @default(cuid())
+  certificatNum String   @unique
+  formation     String
+  prenom        String
+  nom           String
+  email         String
+  score         Int
+  type          String   @default("reussite")
+  issuedAt      DateTime @default(now())
+  expiresAt     DateTime
+  archiveUntil  DateTime
+  gcsPath       String?
+  @@index([email])
+  @@index([certificatNum])
+  @@map("attestations")
+}
+
+model Sondage {
+  id          String   @id @default(cuid())
+  formation   String
+  email       String?
+  q1 Int q2 Int q3 Int q4 Int q5 Int q6 Int q7 Int q8 Int
+  avgScore    Float
+  commentaire String?
+  submittedAt DateTime @default(now())
+  @@map("sondages")
+}

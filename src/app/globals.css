@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --or: #C9A84C;
+  --or-light: #E8C96A;
+  --noir: #0A0A0A;
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-[#C9A84C] text-black font-black text-xs px-8 py-3 tracking-widest uppercase transition-all hover:bg-[#E8C96A] cursor-pointer inline-block;
+  }
+  .btn-black {
+    @apply bg-black text-[#C9A84C] font-black text-xs px-8 py-3 tracking-widest uppercase border-2 border-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-black cursor-pointer inline-block;
+  }
+  .bloom-badge {
+    @apply bg-[#C9A84C] text-black text-[10px] font-black px-3 py-1 tracking-widest uppercase;
+  }
+  .section-title {
+    @apply text-3xl font-black tracking-tighter;
+  }
+  .gold { color: var(--or); }
+  .bg-gold { background: var(--or); }
+  .border-gold { border-color: var(--or); }
+}
+
+@media print {
+  .no-print { display: none !important; }
+}

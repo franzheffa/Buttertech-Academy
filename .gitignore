@@ -1,10 +1,24 @@
+# Dependencies
+node_modules/
+.npm
+
+# Next.js
+.next/
+out/
+
+# Env
+.env
+.env.local
+.env.production
+.env*.local
+
+# Vercel
 .vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS
 .DS_Store
-*.bak
-index.html.bak
-smith_*.sh
-agent smith fraud detection /
-.DS_Store
-*.bak
-index.html.bak
-smith_*.sh
+*.pem

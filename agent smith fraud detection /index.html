@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign AI Shield - Buttertech Control v2.5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --nv-green: #76b900;
+            --gcp-blue: #1a73e8;
+            --mandiant-red: #ff4b4b;
+        }
+
+        body {
+            background-color: #0b0e14;
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+        }
+
+        .glass-panel {
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .code-font { font-family: 'JetBrains Mono', monospace; }
+
+        .orchestrator-node {
+            transition: all 0.3s ease;
+        }
+        .orchestrator-node:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+        }
+
+        .flow-line {
+            stroke-dasharray: 5;
+            animation: dash 2s linear infinite;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: -20; }
+        }
+
+        .scanning-active {
+            position: relative;
+            overflow: hidden;
+        }
+        .scanning-active::after {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(26, 115, 232, 0.1), transparent);
+            animation: scan-vertical 3s linear infinite;
+        }
+        @keyframes scan-vertical {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="h-14 border-b border-gray-800 flex items-center justify-between px-6 bg-[#0d1117] z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-7 h-7 bg-blue-600 rounded flex items-center justify-center">
+                <i class="fas fa-shield-halved text-white text-sm"></i>
+            </div>
+            <h1 class="text-md font-bold tracking-tight text-blue-400">SMITH-HEFFA <span class="text-gray-500 font-normal">| SOVEREIGN ORCHESTRATOR</span></h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-[10px] font-bold text-green-500 uppercase">Système Buttertech: Protégé</span>
+            </div>
+            <div class="text-[10px] text-gray-500 code-font border border-gray-800 px-2 py-1 rounded">SOUVERAINETÉ_FR_NODE_01</div>
+        </div>
+    </header>
+
+    <main class="flex-1 flex overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 border-r border-gray-800 bg-[#0d1117] p-4 flex flex-col gap-6">
+            <nav class="space-y-2">
+                <button class="w-full text-left px-3 py-2 rounded-lg bg-blue-600/10 text-blue-400 border border-blue-500/30 text-xs font-bold">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Dashboard Global
+                </button>
+                <button class="w-full text-left px-3 py-2 rounded-lg text-gray-500 hover:bg-gray-800 hover:text-white transition text-xs font-bold">
+                    <i class="fas fa-microchip mr-2 text-[#76b900]"></i>NVIDIA NIM Status
+                </button>
+                <button class="w-full text-left px-3 py-2 rounded-lg text-gray-500 hover:bg-gray-800 hover:text-white transition text-xs font-bold">
+                    <i class="fas fa-user-shield mr-2 text-red-500"></i>Mandiant Intel
+                </button>
+            </nav>
+
+            <div class="p-3 rounded-lg border border-blue-900/30 bg-blue-900/10 mt-auto">
+                <div class="flex items-center gap-2 mb-1">
+                    <i class="fas fa-lock text-[10px] text-blue-400"></i>
+                    <span class="text-[10px] font-bold uppercase text-blue-400">Model Armor v25</span>
+                </div>
+                <p class="text-[9px] text-gray-500 leading-tight">Filtrage prompt/réponse actif sur tous les endpoints GKE.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 p-6 overflow-y-auto bg-[#0b0e14]">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+                
+                <!-- Left Column: Security & Fraud Simulator -->
+                <div class="lg:col-span-1 space-y-6 flex flex-col">
+                    <div class="card glass-panel rounded-xl p-5 border-blue-500/20 scanning-active">
+                        <h3 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-4 flex items-center">
+                            <i class="fas fa-flask mr-2"></i>Simulateur de Fraude IA
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-[10px] text-gray-500 uppercase mb-1 block">ID Transaction / Prompt</label>
+                                <input id="sim-input" type="text" value="Transfert urgent: 50,000 EUR vers node_external_09" class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs code-font outline-none focus:border-blue-500">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[10px] text-gray-500 uppercase mb-1 block">Source IP</label>
+                                    <input type="text" value="192.168.1.1" class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs code-font">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-gray-500 uppercase mb-1 block">Priorité</label>
+                                    <select class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs">
+                                        <option>Haute (Souverain)</option>
+                                        <option>Standard</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button onclick="runSimulation()" class="w-full bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold py-2 rounded transition uppercase">
+                                Lancer l'Analyse d'Orchestration
+                            </button>
+                        </div>
+
+                        <div id="sim-results" class="mt-6 space-y-3 hidden">
+                            <div class="p-3 rounded bg-black/40 border-l-2 border-nv-green">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[10px] font-bold uppercase text-nv-green">NVIDIA GNN NIM</span>
+                                    <span class="text-[10px] code-font text-white">Score: 0.89</span>
+                                </div>
+                                <div class="w-full bg-gray-800 h-1 rounded-full">
+                                    <div class="bg-nv-green h-full w-[89%]"></div>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded bg-black/40 border-l-2 border-blue-400">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[10px] font-bold uppercase text-blue-400">Model Armor (Google)</span>
+                                    <span class="text-[10px] code-font text-white">PROMPT_OK</span>
+                                </div>
+                                <p class="text-[9px] text-gray-500 italic">Aucune tentative d'injection détectée.</p>
+                            </div>
+                            <div class="p-3 rounded bg-red-900/10 border-l-2 border-mandiant-red">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[10px] font-bold uppercase text-mandiant-red">Mandiant TI</span>
+                                    <span class="text-[10px] text-red-400">VULNÉRABLE</span>
+                                </div>
+                                <p class="text-[9px] text-red-300">IP liée à un cluster d'exfiltration identifié.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Log Stream -->
+                    <div class="flex-1 card glass-panel rounded-xl p-4 overflow-hidden flex flex-col">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase mb-3">Télémétrie de l'Orchestrateur</h4>
+                        <div class="flex-1 code-font text-[9px] text-gray-500 space-y-1 overflow-y-auto">
+                            <div>[10:04:22] SCC_DISCOVERY: Nouveau nœud NVIDIA détecté.</div>
+                            <div>[10:04:25] MODEL_ARMOR: Chargement template 'sovereign-policy'.</div>
+                            <div>[10:05:01] TRITON: Inférence active sur GNN-Fraud-v4.</div>
+                            <div class="text-blue-400 animate-pulse">[10:05:12] SYSTEM: Orchestration en attente de simulation...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Sovereign Orchestrator Schema -->
+                <div class="lg:col-span-2 flex flex-col gap-6">
+                    <div class="flex-1 card glass-panel rounded-xl p-6 relative flex flex-col">
+                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 flex justify-between items-center">
+                            <span>Schéma de l'Orchestrateur Souverain (Buttertech Core)</span>
+                            <span class="text-[10px] font-normal text-gray-600 italic">Vision Native Google + NVIDIA</span>
+                        </h3>
+
+                        <!-- Orchestrator SVG Diagram -->
+                        <div class="flex-1 flex items-center justify-center">
+                            <svg viewBox="0 0 800 450" class="w-full h-full max-h-[400px]">
+                                <!-- Central Orchestrator -->
+                                <g class="orchestrator-node" transform="translate(400, 225)">
+                                    <rect x="-100" y="-40" width="200" height="80" rx="10" fill="#1a73e8" fill-opacity="0.2" stroke="#1a73e8" stroke-width="2" />
+                                    <text y="5" text-anchor="middle" fill="white" font-weight="bold" font-size="14">ORCHESTRATEUR SCC</text>
+                                    <text y="22" text-anchor="middle" fill="#58a6ff" font-size="9">(Case Management & SOAR)</text>
+                                </g>
+
+                                <!-- NVIDIA Side -->
+                                <g class="orchestrator-node" transform="translate(150, 100)">
+                                    <circle r="45" fill="#76b900" fill-opacity="0.1" stroke="#76b900" stroke-width="1.5" />
+                                    <text text-anchor="middle" fill="#76b900" font-weight="bold" font-size="11">NVIDIA NIM</text>
+                                    <text y="15" text-anchor="middle" fill="#e2e8f0" font-size="8">Inférence GNN</text>
+                                </g>
+
+                                <g class="orchestrator-node" transform="translate(150, 350)">
+                                    <circle r="45" fill="#76b900" fill-opacity="0.1" stroke="#76b900" stroke-width="1.5" />
+                                    <text text-anchor="middle" fill="#76b900" font-weight="bold" font-size="11">TRITON SERVER</text>
+                                    <text y="15" text-anchor="middle" fill="#e2e8f0" font-size="8">Modèles de Graphes</text>
+                                </g>
+
+                                <!-- Google Side -->
+                                <g class="orchestrator-node" transform="translate(650, 100)">
+                                    <circle r="45" fill="#1a73e8" fill-opacity="0.1" stroke="#1a73e8" stroke-width="1.5" />
+                                    <text text-anchor="middle" fill="#1a73e8" font-weight="bold" font-size="11">MODEL ARMOR</text>
+                                    <text y="15" text-anchor="middle" fill="#e2e8f0" font-size="8">Sécurisation LLM</text>
+                                </g>
+
+                                <g class="orchestrator-node" transform="translate(650, 350)">
+                                    <circle r="45" fill="#ff4b4b" fill-opacity="0.1" stroke="#ff4b4b" stroke-width="1.5" />
+                                    <text text-anchor="middle" fill="#ff4b4b" font-weight="bold" font-size="11">MANDIANT</text>
+                                    <text y="15" text-anchor="middle" fill="#e2e8f0" font-size="8">Threat Intel Sync</text>
+                                </g>
+
+                                <!-- Flow Lines -->
+                                <path d="M 195 100 L 300 200" stroke="#76b900" fill="none" class="flow-line" />
+                                <path d="M 195 350 L 300 250" stroke="#76b900" fill="none" class="flow-line" />
+                                <path d="M 605 100 L 500 200" stroke="#1a73e8" fill="none" class="flow-line" />
+                                <path d="M 605 350 L 500 250" stroke="#ff4b4b" fill="none" class="flow-line" />
+
+                                <!-- Data Storage Link -->
+                                <path d="M 400 265 L 400 380" stroke="#58a6ff" stroke-width="2" stroke-dasharray="4" />
+                                <g transform="translate(400, 400)">
+                                    <rect x="-60" y="-15" width="120" height="30" rx="5" fill="#161b22" stroke="#30363d" />
+                                    <text y="5" text-anchor="middle" fill="#58a6ff" font-weight="bold" font-size="10">BASE DE DONNÉES SOUVERAINE</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- Explainer Text -->
+                        <div class="mt-4 grid grid-cols-2 gap-4">
+                            <div class="p-3 rounded bg-gray-900/50 border border-gray-800">
+                                <h5 class="text-[10px] font-bold text-nv-green uppercase mb-1">Côté NVIDIA NIM</h5>
+                                <p class="text-[9px] text-gray-500 leading-tight">Traitement massif des relations via Graph Neural Networks. Détecte les clusters de fraude par similarité comportementale.</p>
+                            </div>
+                            <div class="p-3 rounded bg-gray-900/50 border border-gray-800">
+                                <h5 class="text-[10px] font-bold text-blue-400 uppercase mb-1">Côté Google SCC</h5>
+                                <p class="text-[9px] text-gray-500 leading-tight">Orchestration des alertes, corrélation avec Mandiant et déploiement des filtres Model Armor en temps réel.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Analysis Summary -->
+                    <div class="card glass-panel rounded-xl p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="text-xs font-bold uppercase text-gray-400">Analyse de Combinaisons Toxiques</h4>
+                            <span class="text-[10px] font-bold bg-red-600/20 text-red-500 px-2 py-0.5 rounded border border-red-500/30">RISQUE ÉLEVÉ DÉTECTÉ</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-1 flex gap-3 items-start">
+                                <div class="p-2 bg-gray-800 rounded text-blue-400"><i class="fas fa-route"></i></div>
+                                <div>
+                                    <div class="text-[11px] font-bold text-white">Chokepoint identifié: Bucket Training</div>
+                                    <p class="text-[9px] text-gray-500">Un accès non-autorisé sur le bucket d'entraînement NVIDIA a été corrélé avec une IP Mandiant suspecte.</p>
+                                </div>
+                            </div>
+                            <div class="w-32 flex flex-col items-center justify-center border-l border-gray-800 pl-4">
+                                <div class="text-[14px] font-bold text-red-400">Score 8.4</div>
+                                <div class="text-[8px] uppercase text-gray-500">Impact critique</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="h-10 border-t border-gray-800 bg-[#0d1117] flex items-center justify-between px-6 text-[9px] text-gray-600">
+        <div class="flex gap-4">
+            <span>Powered by NVIDIA Financial Fraud NIM</span>
+            <span>Google Cloud Security Command Center Enterprise</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-blue-500 font-bold">VÉRIFICATION SOUVERAINE TERMINÉE</span>
+            <i class="fas fa-check-double text-blue-500"></i>
+        </div>
+    </footer>
+
+    <script>
+        function runSimulation() {
+            const results = document.getElementById('sim-results');
+            const input = document.getElementById('sim-input').value;
+            
+            // Simulation logic
+            results.classList.remove('hidden');
+            results.classList.add('animate-pulse');
+            
+            setTimeout(() => {
+                results.classList.remove('animate-pulse');
+                // Real-time log update
+                const logs = document.querySelector('.flex-1.code-font');
+                const newLog = document.createElement('div');
+                newLog.innerHTML = `[${new Date().toLocaleTimeString()}] SIM_RESULT: Input "${input.substring(0, 15)}..." analysé. Alerte Mandiant levée.`;
+                newLog.className = "text-red-400";
+                logs.prepend(newLog);
+            }, 1000);
+        }
+
+        // Animated flow effects
+        setInterval(() => {
+            const flows = document.querySelectorAll('.flow-line');
+            flows.forEach(f => {
+                f.style.opacity = Math.random() * 0.5 + 0.5;
+            });
+        }, 100);
+    </script>
+</body>
+</html>
