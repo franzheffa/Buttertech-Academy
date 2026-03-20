@@ -3,563 +3,969 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buttertech Academy | LMS IA Certifié SOFEDUC 2026</title>
+  <title>Buttertech Academy | SOFEDUC Agréé · IA Responsable & Loi 25</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root{--w:#FFFFFF;--b:#000000;--g:#C9A84C;--gl:#E8C96E;--gd:#A07830;--gr:#F5F5F5;--gm:#888888;--border:#E0E0E0;--dark:#0a0a0a;}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;}
-    body{background:var(--w);color:var(--b);font-family:Arial,'Times New Roman',sans-serif;}
-    .view{display:none;min-height:100vh;}
-    .view.active{display:block;}
-    .btn{display:inline-flex;align-items:center;gap:6px;font-family:Arial,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.15em;border-radius:3px;cursor:pointer;transition:all .2s;text-decoration:none;border:2px solid transparent;}
-    .btn-sm{font-size:9px;padding:8px 18px;}
-    .btn-md{font-size:10px;padding:12px 26px;}
-    .btn-lg{font-size:12px;padding:16px 40px;}
-    .btn-xl{font-size:13px;padding:20px 56px;}
-    .btn-black{background:var(--b);color:var(--g);border-color:var(--b);}
-    .btn-black:hover{background:var(--g);color:var(--b);border-color:var(--g);}
-    .btn-gold{background:var(--g);color:var(--b);border-color:var(--g);}
-    .btn-gold:hover{background:var(--b);color:var(--g);border-color:var(--b);}
-    .btn-outline{background:transparent;color:var(--b);border-color:var(--b);}
-    .btn-outline:hover{background:var(--b);color:var(--w);}
-    /* LANDING */
-    .banner{background:var(--b);color:var(--g);font-size:10px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;text-align:center;padding:10px;border-bottom:2px solid var(--g);}
-    .nav{background:var(--w);border-bottom:2px solid var(--b);padding:14px 32px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
-    .logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
-    .logo-icon{background:var(--b);color:var(--g);width:40px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Times New Roman',serif;font-size:20px;font-weight:900;font-style:italic;}
-    .logo-txt{display:flex;flex-direction:column;}
-    .logo-txt b{font-family:'Times New Roman',serif;font-size:18px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.04em;}
-    .logo-txt small{font-size:7px;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--g);}
-    .nav-links{display:flex;gap:28px;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;}
-    .nav-links a{text-decoration:none;color:var(--gm);transition:color .2s;}
-    .nav-links a:hover{color:var(--g);}
-    .nav-right{display:flex;gap:10px;align-items:center;}
-    .hero{background:var(--w);border-bottom:2px solid var(--b);padding:80px 32px 64px;text-align:center;}
-    .badge{display:inline-flex;align-items:center;gap:8px;background:var(--b);color:var(--g);padding:7px 18px;font-size:9px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;border-radius:2px;margin-bottom:28px;}
-    .hero h1{font-family:'Times New Roman',serif;font-size:clamp(44px,8vw,88px);font-weight:900;font-style:italic;letter-spacing:-.04em;line-height:.9;color:var(--b);text-transform:uppercase;margin-bottom:10px;}
-    .hero h1 span{color:var(--g);font-style:normal;}
-    .hero p{font-size:17px;color:var(--gm);max-width:620px;margin:20px auto 36px;line-height:1.6;font-style:italic;}
-    .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-    .section{padding:72px 32px;border-bottom:2px solid var(--b);}
-    .section-dark{background:var(--b);color:var(--w);}
-    .section-title{font-family:'Times New Roman',serif;font-style:italic;font-weight:900;font-size:clamp(26px,4vw,44px);text-transform:uppercase;letter-spacing:-.03em;margin-bottom:6px;}
-    .section-sub{font-size:13px;color:var(--gm);font-style:italic;margin-bottom:48px;}
-    /* COURSE CARDS */
-    .courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1100px;margin:0 auto;border:2px solid var(--b);}
-    .course-card{background:var(--w);padding:36px;border-right:2px solid var(--b);cursor:pointer;transition:background .15s;}
-    .course-card:last-child{border-right:none;}
-    .course-card:hover{background:#fffbf0;}
-    .course-card.featured{background:var(--b);color:var(--w);}
-    .course-card.featured:hover{background:#111;}
-    .course-level{display:inline-block;font-size:8px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;padding:5px 10px;margin-bottom:18px;background:var(--b);color:var(--g);}
-    .course-level.gold{background:var(--g);color:var(--b);}
-    .course-card.featured .course-level{background:var(--g);color:var(--b);}
-    .course-card h3{font-family:'Times New Roman',serif;font-size:20px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.02em;text-decoration:underline;text-decoration-color:var(--g);text-underline-offset:4px;margin-bottom:12px;line-height:1.2;}
-    .course-card p{font-size:13px;color:var(--gm);line-height:1.7;margin-bottom:18px;}
-    .course-card.featured p{color:#aaa;}
-    .course-meta{display:flex;gap:16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gm);}
-    .course-meta span{display:flex;align-items:center;gap:4px;}
-    .course-card.featured .course-meta{color:#666;}
-    .bloom-tag{display:inline-block;font-size:8px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;padding:4px 10px;border-radius:2px;background:var(--gr);color:var(--gm);border:1px solid var(--border);margin-top:12px;}
-    .course-card.featured .bloom-tag{background:#1a1a1a;color:var(--g);border-color:#333;}
-    /* STATS */
-    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #222;max-width:900px;margin:0 auto;}
-    .stat{padding:32px 20px;text-align:center;border-right:1px solid #222;}
-    .stat:last-child{border-right:none;}
-    .stat-val{font-family:'Times New Roman',serif;font-size:40px;font-weight:900;font-style:italic;color:var(--g);display:block;line-height:1;}
-    .stat-lbl{font-size:8px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#666;margin-top:6px;display:block;}
-    /* SIMULATOR */
-    .sim-wrap{max-width:780px;margin:0 auto;border:2px solid var(--g);border-radius:3px;overflow:hidden;}
-    .sim-head{background:var(--g);color:var(--b);padding:16px 28px;display:flex;align-items:center;gap:12px;}
-    .sim-head h2{font-family:'Times New Roman',serif;font-size:16px;font-weight:900;font-style:italic;text-transform:uppercase;margin:0;}
-    .sim-body{padding:32px 28px;background:#080808;}
-    #academyPrompt{width:100%;background:#111;border:1px solid var(--g);color:var(--w);padding:14px 18px;font-family:Arial,sans-serif;font-size:13px;border-radius:2px;outline:none;margin-bottom:10px;}
-    #academyPrompt:focus{border-color:var(--gl);}
-    #academyBtn{width:100%;background:var(--g);color:var(--b);border:none;padding:14px;font-family:Arial,sans-serif;font-weight:900;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background .2s;margin-bottom:18px;}
-    #academyBtn:hover{background:var(--gl);}
-    #academyBtn:disabled{opacity:.5;cursor:not-allowed;}
-    #academyOut{background:#000;border:1px solid #222;border-left:3px solid var(--g);color:#ccc;font-family:'Courier New',monospace;font-size:12px;padding:18px;min-height:90px;white-space:pre-wrap;line-height:1.6;}
-    /* PAYGATE */
-    .paygate-box{max-width:600px;margin:0 auto;border:3px solid var(--b);padding:52px 44px;position:relative;text-align:center;}
-    .paygate-box::after{content:'';position:absolute;top:7px;left:7px;right:-7px;bottom:-7px;background:var(--g);z-index:-1;}
-    .price-lbl{font-size:9px;font-weight:900;letter-spacing:.4em;text-transform:uppercase;color:var(--g);display:block;margin-bottom:10px;}
-    .price-big{font-family:'Times New Roman',serif;font-size:80px;font-weight:900;font-style:italic;color:var(--b);line-height:1;display:block;}
-    .price-big sup{font-size:34px;vertical-align:top;margin-top:18px;}
-    .price-desc{font-size:12px;color:var(--gm);margin:14px 0 28px;font-style:italic;}
-    .price-list{list-style:none;text-align:left;font-size:13px;line-height:2.2;margin-bottom:36px;}
-    .price-list li::before{content:"✓ ";color:var(--g);font-weight:900;}
-    footer{background:var(--b);color:var(--w);padding:36px 32px;}
-    .foot-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
-    .foot-brand b{font-family:'Times New Roman',serif;font-size:18px;font-weight:900;font-style:italic;text-transform:uppercase;display:block;}
-    .foot-brand small{font-size:10px;color:var(--g);font-style:italic;}
-    .foot-links{display:flex;gap:20px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
-    .foot-links a{color:#555;text-decoration:none;transition:color .2s;}
-    .foot-links a:hover{color:var(--g);}
-    .foot-copy{font-size:9px;color:#333;letter-spacing:.1em;width:100%;text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid #1a1a1a;}
-    /* LOGIN */
-    .login-page{background:var(--b);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px;}
-    .login-box{background:var(--w);border:3px solid var(--g);padding:52px 48px;width:100%;max-width:420px;position:relative;}
-    .login-box::after{content:'';position:absolute;top:8px;left:8px;right:-8px;bottom:-8px;background:var(--g);z-index:-1;}
-    .login-title{font-family:'Times New Roman',serif;font-size:22px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.02em;text-align:center;margin-bottom:4px;}
-    .login-sub{font-size:10px;color:var(--gm);text-align:center;letter-spacing:.2em;text-transform:uppercase;margin-bottom:32px;}
-    .field{margin-bottom:16px;}
-    .field label{display:block;font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;}
-    .field input{width:100%;background:var(--gr);border:2px solid var(--border);padding:12px 16px;font-family:Arial,sans-serif;font-size:13px;border-radius:2px;outline:none;transition:border-color .2s;}
-    .field input:focus{border-color:var(--g);}
-    .login-hint{font-size:10px;color:var(--gm);text-align:center;margin-top:14px;}
-    .login-hint span{color:var(--g);font-weight:700;cursor:pointer;}
-    /* DASHBOARD */
-    .dash-layout{display:flex;min-height:100vh;}
-    .sidebar{width:240px;background:var(--b);color:var(--w);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;}
-    .sidebar-logo{padding:22px 18px;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;gap:10px;cursor:pointer;}
-    .sidebar-nav{padding:12px 0;flex:1;}
-    .sidebar-section{font-size:8px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;color:#444;padding:14px 18px 6px;}
-    .sidebar-link{display:flex;align-items:center;gap:10px;padding:10px 18px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#777;cursor:pointer;transition:all .15s;}
-    .sidebar-link:hover,.sidebar-link.active{color:var(--g);background:rgba(201,168,76,.08);border-left:3px solid var(--g);padding-left:15px;}
-    .sidebar-link i{width:16px;text-align:center;font-size:13px;}
-    .sidebar-footer{padding:16px 18px;border-top:1px solid #1a1a1a;}
-    .user-info{display:flex;align-items:center;gap:10px;}
-    .avatar{width:34px;height:34px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--b);flex-shrink:0;}
-    .user-name{font-size:11px;font-weight:700;color:var(--w);display:block;}
-    .user-role{font-size:8px;color:var(--g);letter-spacing:.1em;text-transform:uppercase;}
-    .dash-main{flex:1;background:var(--gr);overflow-y:auto;}
-    .dash-header{background:var(--w);border-bottom:2px solid var(--b);padding:18px 28px;display:flex;justify-content:space-between;align-items:center;}
-    .dash-header h2{font-family:'Times New Roman',serif;font-size:20px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.02em;}
-    .dash-content{padding:28px;}
-    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:28px;border:2px solid var(--b);}
-    .kpi{background:var(--w);padding:22px;border-right:2px solid var(--b);text-align:center;}
-    .kpi:last-child{border-right:none;}
-    .kpi-val{font-family:'Times New Roman',serif;font-size:30px;font-weight:900;font-style:italic;color:var(--g);display:block;}
-    .kpi-lbl{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gm);margin-top:4px;display:block;}
-    .progress-card{background:var(--w);border:2px solid var(--b);padding:22px;margin-bottom:22px;}
-    .progress-card h3{font-family:'Times New Roman',serif;font-size:15px;font-weight:900;font-style:italic;text-transform:uppercase;margin-bottom:14px;}
-    .prog-item{margin-bottom:14px;}
-    .prog-header{display:flex;justify-content:space-between;margin-bottom:5px;font-size:11px;font-weight:700;}
-    .prog-bar{height:5px;background:var(--border);}
-    .prog-fill{height:100%;background:var(--g);transition:width .6s;}
-    .course-list-item{background:var(--w);border:2px solid var(--b);padding:18px 22px;margin-bottom:2px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:background .15s;}
-    .course-list-item:hover{background:#fffbf0;}
-    .course-num{width:38px;height:38px;background:var(--b);color:var(--g);display:flex;align-items:center;justify-content:center;font-family:'Times New Roman',serif;font-size:15px;font-weight:900;font-style:italic;flex-shrink:0;}
-    .course-info{flex:1;}
-    .course-info h4{font-family:'Times New Roman',serif;font-size:14px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:3px;}
-    .course-info p{font-size:11px;color:var(--gm);}
-    .course-status{font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;padding:5px 10px;flex-shrink:0;}
-    .status-done{background:var(--b);color:var(--g);}
-    .status-progress{background:var(--g);color:var(--b);}
-    .status-new{background:var(--gr);color:var(--gm);border:1px solid var(--border);}
-    /* COURSE PAGE */
-    .course-page{background:var(--gr);min-height:100vh;}
-    .course-nav{background:var(--b);color:var(--w);padding:14px 28px;display:flex;align-items:center;gap:14px;border-bottom:3px solid var(--g);}
-    .course-nav-back{background:none;border:none;color:var(--g);cursor:pointer;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
-    .course-nav-title{font-family:'Times New Roman',serif;font-size:14px;font-weight:900;font-style:italic;text-transform:uppercase;color:var(--w);}
-    .course-layout{display:flex;max-width:1200px;margin:0 auto;padding:28px;gap:24px;}
-    .course-sidebar-panel{width:270px;flex-shrink:0;}
-    .module-list{background:var(--w);border:2px solid var(--b);}
-    .module-title-bar{background:var(--b);color:var(--g);padding:12px 16px;font-size:9px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;}
-    .module-item{padding:11px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;font-weight:700;transition:background .15s;}
-    .module-item:hover{background:var(--gr);}
-    .module-item.active{background:#fffbf0;border-left:3px solid var(--g);padding-left:13px;}
-    .mod-icon{font-size:12px;color:var(--g);width:14px;flex-shrink:0;}
-    .mod-done{margin-left:auto;color:var(--g);font-size:11px;}
-    .course-main-panel{flex:1;}
-    .lesson-card{background:var(--w);border:2px solid var(--b);padding:36px;margin-bottom:20px;}
-    .lesson-tag{display:inline-block;background:var(--b);color:var(--g);font-size:8px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;padding:5px 12px;margin-bottom:18px;}
-    .lesson-card h2{font-family:'Times New Roman',serif;font-size:24px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.03em;margin-bottom:18px;text-decoration:underline;text-decoration-color:var(--g);text-underline-offset:4px;}
-    .lesson-card p{font-size:14px;line-height:1.8;color:#333;margin-bottom:14px;}
-    .lesson-card ul{padding-left:20px;margin-bottom:14px;}
-    .lesson-card ul li{font-size:13px;line-height:2;color:#333;}
-    .lesson-card ul li::marker{color:var(--g);}
-    .bloom-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gr);border:1px solid var(--border);font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;padding:6px 14px;margin-bottom:18px;color:var(--gm);}
-    .bloom-badge.create{background:#fff3cd;border-color:var(--g);color:var(--gd);}
-    .bloom-badge.evaluate{background:#e8f4fd;border-color:#4a9ede;color:#1a6fa8;}
-    .bloom-badge.analyze{background:#e8f8e8;border-color:#4a8c4a;color:#2d6a2d;}
-    .bloom-badge.apply{background:#fdecea;border-color:#e57373;color:#c62828;}
-    .video-placeholder{background:var(--dark);border:2px solid var(--b);padding:56px 20px;text-align:center;color:var(--w);margin-bottom:18px;}
-    .video-placeholder i{font-size:44px;color:var(--g);display:block;margin-bottom:10px;}
-    .video-placeholder p{font-size:12px;color:#666;}
-    .quiz-block{background:var(--gr);border:2px solid var(--b);padding:26px;margin-top:20px;}
-    .quiz-block h3{font-family:'Times New Roman',serif;font-size:17px;font-weight:900;font-style:italic;text-transform:uppercase;margin-bottom:14px;}
-    .quiz-q{font-size:14px;font-weight:700;margin-bottom:12px;}
-    .quiz-opt{display:block;padding:10px 14px;background:var(--w);border:2px solid var(--border);margin-bottom:7px;cursor:pointer;font-size:12px;transition:all .15s;border-radius:2px;}
-    .quiz-opt:hover{border-color:var(--g);background:#fffbf0;}
-    .quiz-opt.correct{border-color:#4a8c4a;background:#e8f8e8;color:#2d6a2d;}
-    .quiz-opt.wrong{border-color:#e57373;background:#fdecea;color:#c62828;}
-    /* Certificates */
-    .cert-card{background:var(--w);border:3px solid var(--b);padding:28px;text-align:center;position:relative;}
-    .cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g);}
-    @media(max-width:900px){
-      .sidebar{display:none;}
-      .kpi-row{grid-template-columns:repeat(2,1fr);}
-      .stats-row{grid-template-columns:repeat(2,1fr);}
-      .nav-links{display:none;}
-      .courses-grid{grid-template-columns:1fr;}
-      .course-layout{flex-direction:column;padding:16px;}
-      .course-sidebar-panel{width:100%;}
-    }
+    :root { --or: #C9A84C; --or2: #E8C96A; --noir: #0A0A0A; }
+    * { box-sizing: border-box; }
+    .gold { color: var(--or); }
+    .bg-gold { background: var(--or); }
+    .border-gold { border-color: var(--or); }
+    .btn-gold { background: var(--or); color: #000; font-weight: 900; padding: 14px 40px; border-radius: 4px; text-decoration: none; display: inline-block; letter-spacing: 0.1em; text-transform: uppercase; font-size: 12px; transition: all .2s; cursor: pointer; border: none; }
+    .btn-gold:hover { background: var(--or2); }
+    .btn-black { background: #000; color: var(--or); font-weight: 900; padding: 14px 40px; border-radius: 4px; text-decoration: none; display: inline-block; letter-spacing: 0.1em; text-transform: uppercase; font-size: 12px; border: 2px solid var(--or); transition: all .2s; cursor: pointer; }
+    .btn-black:hover { background: var(--or); color: #000; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .module-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 12px; cursor: pointer; transition: all .2s; }
+    .module-card:hover { border-color: var(--or); box-shadow: 0 2px 12px rgba(201,168,76,.15); }
+    .module-card.done { border-color: #1A7A4A; background: #f0fdf4; }
+    .quiz-opt { width: 100%; text-align: left; padding: 14px 18px; border: 1px solid #e5e7eb; border-radius: 6px; margin-bottom: 8px; cursor: pointer; background: white; font-size: 14px; transition: all .2s; }
+    .quiz-opt:hover { border-color: var(--or); background: #fffbeb; }
+    .quiz-opt.selected { border-color: var(--or); background: #fffbeb; font-weight: 600; }
+    .quiz-opt.correct { border-color: #1A7A4A; background: #f0fdf4; color: #1A7A4A; font-weight: 700; }
+    .quiz-opt.wrong { border-color: #c0392b; background: #fef2f2; color: #c0392b; }
+    .progress-bar { height: 6px; background: #e5e7eb; border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--or); border-radius: 99px; transition: width .4s; }
+    .bloom-badge { background: var(--or); color: #000; font-size: 10px; font-weight: 900; padding: 3px 10px; letter-spacing: .1em; text-transform: uppercase; display: inline-block; }
+    .nav-tab { padding: 8px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; cursor: pointer; color: #6b7280; border-bottom: 2px solid transparent; transition: all .2s; }
+    .nav-tab.active { color: var(--or); border-bottom-color: var(--or); }
+    .sofeduc-header { background: #000; color: var(--or); text-align: center; padding: 8px; font-size: 10px; font-weight: 900; letter-spacing: .3em; text-transform: uppercase; border-bottom: 2px solid var(--or); }
+    @media print { .no-print { display: none !important; } }
   </style>
 </head>
-<body>
+<body class="bg-white text-gray-900 font-sans">
 
-<!-- ═══ VIEW 1 — LANDING ═══ -->
-<div id="view-landing" class="view active">
-  <div class="banner">Audit 2026 · IA Souveraine Certifiée SOFEDUC · Loi 25 &amp; RGPD · Montréal · Asynchrone En Ligne</div>
-  <nav class="nav">
-    <div class="logo" onclick="showView('view-landing')">
-      <div class="logo-icon">B</div>
-      <div class="logo-txt"><b>Buttertech</b><small>Academy LMS</small></div>
-    </div>
-    <div class="nav-links">
-      <a href="#formations">3 Formations</a>
-      <a href="#simulateur">Simulateur IA</a>
-      <a href="#certification">Certification</a>
-    </div>
-    <div class="nav-right">
-      <button class="btn btn-sm btn-outline" onclick="showView('view-login')"><i class="fas fa-user-graduate"></i> Espace Étudiant</button>
-      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn btn-sm btn-gold">S'inscrire — 399$</a>
-    </div>
-  </nav>
+<!-- ══════════════════════════════════════════════════════
+     BARRE SOFEDUC
+══════════════════════════════════════════════════════ -->
+<div class="sofeduc-header no-print">
+  BUTTERTECH ACADEMY · SOFEDUC AGRÉÉ · NVIDIA INCEPTION · GOOGLE FOR EDUCATION · LOI 25 · SOC2 TYPE II
+</div>
 
-  <header class="hero">
-    <div class="badge"><i class="fas fa-certificate"></i> Leader IA Réglementée · Google &amp; NVIDIA Partner · SOFEDUC Accrédité</div>
-    <h1>L'IA DE CONFIANCE.<br><span>Certifiée.</span></h1>
-    <p>3 formations asynchrones certifiantes, alignées sur les Normes SOFEDUC et la Taxonomie de Bloom revisitée. Apprenez à votre rythme, certifié <strong>NVIDIA Inception</strong> &amp; <strong>Google for Education</strong>.</p>
-    <div class="hero-ctas">
-      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn btn-lg btn-gold"><i class="fas fa-bolt"></i> Démarrer ma certification — 399$</a>
-      <button class="btn btn-lg btn-outline" onclick="showView('view-login')"><i class="fas fa-user-graduate"></i> Espace Étudiant</button>
+<!-- ══════════════════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════════════════ -->
+<nav class="sticky top-0 z-50 bg-white border-b-2 border-black no-print" style="border-bottom-color: var(--or);">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+    <button onclick="showPage('home')" class="flex items-center gap-2">
+      <div class="w-9 h-9 bg-black flex items-center justify-center text-white font-black text-lg">B</div>
+      <div>
+        <div class="font-black text-lg leading-none tracking-tighter">BUTTERTECH</div>
+        <div class="text-xs font-bold tracking-widest" style="color:var(--or)">ACADEMY</div>
+      </div>
+    </button>
+    <div class="hidden md:flex items-center gap-1">
+      <button onclick="showPage('home')" class="nav-tab" id="tab-home">Accueil</button>
+      <button onclick="showPage('formations')" class="nav-tab" id="tab-formations">Formations</button>
+      <button onclick="showPage('lms')" class="nav-tab" id="tab-lms">Mon Espace</button>
+      <button onclick="showPage('simulateur')" class="nav-tab" id="tab-simulateur">Simulateur IA</button>
+    </div>
+    <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn-gold text-xs">399$ · S'inscrire</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE : HOME
+══════════════════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+  <!-- Hero -->
+  <header class="bg-black text-white py-20 px-6 text-center">
+    <div class="max-w-4xl mx-auto">
+      <div class="inline-block border border-yellow-600 text-yellow-500 text-xs font-black px-4 py-2 tracking-widest uppercase mb-8">
+        Leader IA Réglementée · Google & NVIDIA Partner · SOFEDUC Agréé
+      </div>
+      <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-tight mb-6" style="font-style:italic">
+        L'IA DE CONFIANCE.<br><span style="color:var(--or)">CERTIFIÉE.</span>
+      </h1>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
+        NVIDIA Inception · Google for Education · Rigueur académique SOFEDUC · Conformité Loi 25 & RGPD
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="showPage('formations')" class="btn-gold text-sm">Voir les formations →</button>
+        <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn-black text-sm">Bundle Quintessence 399$</a>
+      </div>
     </div>
   </header>
 
-  <!-- 3 FORMATIONS SOFEDUC -->
-  <section id="formations" class="section">
-    <div style="max-width:1100px;margin:0 auto;text-align:center;">
-      <h2 class="section-title">3 Formations en Ligne <span style="color:var(--g)">SOFEDUC</span></h2>
-      <p class="section-sub">Asynchrones · Certifiantes · Taxonomie de Bloom · 27h · 2.7 UEC · 100% en ligne</p>
+  <!-- Stats -->
+  <section class="py-12 bg-black border-t-2" style="border-color:var(--or)">
+    <div class="max-w-4xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div><div class="text-3xl font-black" style="color:var(--or)">3</div><div class="text-gray-400 text-xs font-bold tracking-widest uppercase mt-1">Formations SOFEDUC</div></div>
+      <div><div class="text-3xl font-black" style="color:var(--or)">2.7</div><div class="text-gray-400 text-xs font-bold tracking-widest uppercase mt-1">UEC Certifiées</div></div>
+      <div><div class="text-3xl font-black" style="color:var(--or)">24ms</div><div class="text-gray-400 text-xs font-bold tracking-widest uppercase mt-1">Cloud Run Montréal</div></div>
+      <div><div class="text-3xl font-black" style="color:var(--or)">SOC2</div><div class="text-gray-400 text-xs font-bold tracking-widest uppercase mt-1">Type II · Loi 25</div></div>
     </div>
-    <div class="courses-grid">
-      <!-- Formation 1 -->
-      <div class="course-card" onclick="openCourse(0)">
-        <span class="course-level gold">12h · Avancé · 1.2 UEC</span>
-        <h3>Visionnaire &amp; Multimodal — Agents IA</h3>
-        <p>Orchestration d'agents IA via Gemini 3.0, vision artificielle, infrastructures NVIDIA NIM et déploiement Cloud Run Montréal.</p>
-        <div class="course-meta">
-          <span><i class="fas fa-layer-group"></i> 6 modules</span>
-          <span><i class="fas fa-clock"></i> 12h</span>
-          <span><i class="fas fa-certificate"></i> 1.2 UEC</span>
+  </section>
+
+  <!-- 3 formations aperçu -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-black text-center tracking-tighter mb-3">Parcours Certifiés SOFEDUC</h2>
+      <p class="text-center text-gray-500 mb-14 text-sm">Taxonomie de Bloom · Session Mars 2026</p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- F1 -->
+        <div class="border border-gray-200 rounded-lg p-8 hover:border-yellow-500 hover:shadow-lg transition-all">
+          <div class="flex justify-between mb-6">
+            <span class="bloom-badge">Bloom 1→6 · 0.6 UEC</span>
+            <i class="fab fa-nvidia text-2xl text-gray-300"></i>
+          </div>
+          <h3 class="text-xl font-black tracking-tighter mb-4">Formation 1<br>Agents IA Gemini 3.0</h3>
+          <ul class="text-sm text-gray-600 space-y-2 mb-6">
+            <li>✓ Architecture multi-agents</li>
+            <li>✓ NVIDIA NIM H100 · Cloud Run MTL</li>
+            <li>✓ Orchestration & déploiement</li>
+          </ul>
+          <div class="text-xs text-gray-400 mb-4">6 modules · 20–45 min chacun</div>
+          <button onclick="startFormation(1)" class="btn-black w-full text-center">Commencer →</button>
         </div>
-        <span class="bloom-tag">🟠 Créer · Analyser · Appliquer</span>
-      </div>
-      <!-- Formation 2 -->
-      <div class="course-card featured" onclick="openCourse(1)">
-        <span class="course-level">09h · Souverain · 0.9 UEC</span>
-        <h3>IA Responsable &amp; Loi 25 — Gouvernance</h3>
-        <p>Conformité Loi 25 / RGPD, déploiement Cloud Run Montréal, standard SOC2 Type II et gouvernance des données IA au Québec.</p>
-        <div class="course-meta">
-          <span><i class="fas fa-layer-group"></i> 5 modules</span>
-          <span><i class="fas fa-clock"></i> 9h</span>
-          <span><i class="fas fa-certificate"></i> 0.9 UEC</span>
+        <!-- F2 -->
+        <div class="border-2 rounded-lg p-8 shadow-xl scale-105 bg-black text-white" style="border-color:var(--or)">
+          <div class="absolute-top"></div>
+          <div class="flex justify-between mb-6">
+            <span class="bloom-badge">Bloom 2→5 · 0.7 UEC</span>
+            <i class="fas fa-shield-halved text-2xl" style="color:var(--or)"></i>
+          </div>
+          <h3 class="text-xl font-black tracking-tighter mb-4" style="color:var(--or)">Formation 2<br>IA Responsable & Loi 25</h3>
+          <ul class="text-sm text-gray-400 space-y-2 mb-6">
+            <li>✓ Loi 25 · RGPD · AI Act UE</li>
+            <li>✓ Conformité mondiale IA</li>
+            <li>✓ Audit SOFEDUC 25 critères</li>
+          </ul>
+          <div class="text-xs text-gray-500 mb-4">5 modules · Quiz final 20Q</div>
+          <button onclick="startFormation(2)" class="btn-gold w-full text-center">Commencer →</button>
         </div>
-        <span class="bloom-tag">🔵 Évaluer · Analyser · Comprendre</span>
-      </div>
-      <!-- Formation 3 -->
-      <div class="course-card" onclick="openCourse(2)">
-        <span class="course-level gold">06h · Élite · 0.6 UEC</span>
-        <h3>Productivité Agentique — Méthode P.T.C.F.</h3>
-        <p>Méthode exclusive Persona·Tâche·Contexte·Format, Google Workspace for Education et automatisation Cloud Native.</p>
-        <div class="course-meta">
-          <span><i class="fas fa-layer-group"></i> 4 modules</span>
-          <span><i class="fas fa-clock"></i> 6h</span>
-          <span><i class="fas fa-certificate"></i> 0.6 UEC</span>
+        <!-- F3 -->
+        <div class="border border-gray-200 rounded-lg p-8 hover:border-yellow-500 hover:shadow-lg transition-all">
+          <div class="flex justify-between mb-6">
+            <span class="bloom-badge">Bloom 3→6 · 0.6 UEC</span>
+            <i class="fab fa-google text-2xl text-gray-300"></i>
+          </div>
+          <h3 class="text-xl font-black tracking-tighter mb-4">Formation 3<br>Productivité Agentique</h3>
+          <ul class="text-sm text-gray-600 space-y-2 mb-6">
+            <li>✓ Méthode P.T.C.F. exclusive</li>
+            <li>✓ Google Workspace for Education</li>
+            <li>✓ Automatisation Cloud Native</li>
+          </ul>
+          <div class="text-xs text-gray-400 mb-4">3 modules · 6 heures</div>
+          <button onclick="startFormation(3)" class="btn-black w-full text-center">Commencer →</button>
         </div>
-        <span class="bloom-tag">🟠 Appliquer · Créer</span>
       </div>
     </div>
   </section>
 
-  <!-- STATS -->
-  <section class="section section-dark" style="padding:64px 32px;">
-    <div class="stats-row">
-      <div class="stat"><span class="stat-val">3</span><span class="stat-lbl">Formations SOFEDUC</span></div>
-      <div class="stat"><span class="stat-val">2.7</span><span class="stat-lbl">UEC totales</span></div>
-      <div class="stat"><span class="stat-val">27h</span><span class="stat-lbl">De formation</span></div>
-      <div class="stat"><span class="stat-val">100%</span><span class="stat-lbl">Asynchrone</span></div>
+  <!-- CTA -->
+  <section class="py-20 bg-black text-white text-center px-6">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="text-3xl font-black tracking-tighter mb-4" style="color:var(--or)">Bundle Quintessence IA</h2>
+      <p class="text-gray-400 mb-2">3 formations · 27 heures · 2.7 UEC SOFEDUC</p>
+      <p class="text-gray-500 text-sm mb-8">Cloud Run Montréal · SOC2 Type II · Loi 25 · RGPD · AI Act UE</p>
+      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn-gold text-base">Accès complet — 399$ CAD</a>
     </div>
   </section>
 
-  <!-- SIMULATEUR -->
-  <section id="simulateur" class="section section-dark">
-    <div style="text-align:center;margin-bottom:36px;">
-      <h2 class="section-title" style="color:var(--w);">Simulateur Stratégique <span>Gemini</span></h2>
-      <p style="color:#777;font-size:13px;font-style:italic;">Agent Smith-Heffa — Assistance pédagogique IA certifiée SOFEDUC</p>
-    </div>
-    <div class="sim-wrap">
-      <div class="sim-head">
-        <i class="fas fa-terminal" style="font-size:18px;"></i>
-        <div>
-          <h2>Smith-Heffa Agent Console</h2>
-          <p style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;opacity:.7;margin:0;">Powered by Gemini · Cloud Run Montréal · SOC2 Type II</p>
-        </div>
+  <footer class="bg-black border-t py-10 px-6" style="border-color:var(--or)">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs font-bold uppercase tracking-widest text-gray-500">
+      <div>
+        <div class="text-white font-black text-base tracking-tighter mb-1">BUTTERTECH ACADEMY</div>
+        <div style="color:var(--or)">Gemini 3.0 · Montréal · SOFEDUC Agréé</div>
       </div>
-      <div class="sim-body">
-        <input type="text" id="academyPrompt" placeholder="Ex : Comment appliquer la Loi 25 dans ma formation IA ?" />
-        <button id="academyBtn"><i class="fas fa-robot" style="margin-right:6px;"></i>Simuler avec Gemini — Agent Smith-Heffa</button>
-        <pre id="academyOut">Prêt. Posez votre question pédagogique ou stratégique.</pre>
+      <div class="flex gap-6 mt-6 md:mt-0">
+        <span>© 2026 Buttertech Inc.</span>
+        <a href="#" class="hover:text-yellow-400">Confidentialité · Loi 25</a>
+        <a href="#" class="hover:text-yellow-400">Audit SOFEDUC 2026</a>
       </div>
-    </div>
-  </section>
-
-  <!-- PAYGATE -->
-  <section id="certification" class="section" style="text-align:center;">
-    <div style="max-width:1100px;margin:0 auto;">
-      <h2 class="section-title" style="margin-bottom:48px;">Inscription &amp; <span style="color:var(--g)">Certification</span></h2>
-    </div>
-    <div class="paygate-box">
-      <span class="price-lbl">Bundle Quintessence IA · Session Janvier 2026 · SOFEDUC</span>
-      <span class="price-big"><sup>$</sup>399</span>
-      <p class="price-desc">3 formations certifiantes · 27h · 2.7 UEC · Paiement sécurisé</p>
-      <ul class="price-list">
-        <li>3 formations asynchrones certifiantes (27h · 2.7 UEC)</li>
-        <li>Accès à l'Espace Étudiant LMS en ligne</li>
-        <li>Attestations officielles SOFEDUC par formation</li>
-        <li>Conformité Loi 25 &amp; RGPD documentée</li>
-        <li>Accès au Simulateur Gemini Agent Smith-Heffa</li>
-        <li>Support pédagogique IA inclus</li>
-      </ul>
-      <a href="https://smith-heffa-paygate.vercel.app" target="_blank" class="btn btn-xl btn-black">
-        <i class="fas fa-lock"></i> Paiement sécurisé · S'inscrire maintenant
-      </a>
-      <p style="font-size:9px;color:var(--gm);margin-top:16px;letter-spacing:.1em;">SSL · SOFEDUC ACCRÉDITÉ · NVIDIA INCEPTION · GOOGLE FOR EDUCATION</p>
-    </div>
-  </section>
-
-  <footer>
-    <div class="foot-inner">
-      <div class="foot-brand">
-        <b>Buttertech Academy</b>
-        <small>Architecture Gemini 3.0 · Région Montréal · SOFEDUC 2026</small>
-      </div>
-      <div class="foot-links">
-        <a href="#">Confidentialité (Loi 25)</a>
-        <a href="#">Audit SOFEDUC 2026</a>
-        <a href="#formations">Formations</a>
-        <a href="https://smith-heffa-paygate.vercel.app" target="_blank">Inscription</a>
-      </div>
-      <div class="foot-copy">© 2026 Buttertech Inc. · buttertech.io · NVIDIA Inception Partner · Google for Education Partner</div>
     </div>
   </footer>
 </div>
 
-<!-- ═══ VIEW 2 — LOGIN ═══ -->
-<div id="view-login" class="view">
-  <div class="login-page">
-    <div class="login-box">
-      <div style="text-align:center;margin-bottom:28px;">
-        <div class="logo-icon" style="margin:0 auto 12px;width:48px;height:48px;font-size:22px;">B</div>
-        <div class="login-title">Espace Étudiant</div>
-        <div class="login-sub">Buttertech Academy LMS · SOFEDUC 2026</div>
+<!-- ══════════════════════════════════════════════════════
+     PAGE : FORMATIONS (hub)
+══════════════════════════════════════════════════════ -->
+<div id="page-formations" class="page">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <div class="mb-2 flex gap-2">
+      <span class="bloom-badge">BTA · SOFEDUC 2026</span>
+    </div>
+    <h1 class="text-3xl font-black tracking-tighter mb-2">Formations SOFEDUC</h1>
+    <p class="text-gray-500 mb-10 text-sm">Taxonomie de Bloom · Conformité Loi 25 · Archivage 7 ans · SOC2 Type II</p>
+
+    <div class="space-y-4">
+      <!-- F1 -->
+      <div class="module-card" onclick="startFormation(1)" id="f1-card">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bloom-badge">Formation 1</span>
+              <span class="text-xs text-gray-400 font-bold">6 modules · 0.6 UEC · Bloom 1→6</span>
+            </div>
+            <h3 class="font-black text-lg">Agents IA Gemini 3.0 — Architecture Multi-Agents</h3>
+            <p class="text-sm text-gray-500 mt-1">NVIDIA NIM H100 · Cloud Run Montréal · Orchestration · Déploiement</p>
+          </div>
+          <div class="text-3xl ml-4">→</div>
+        </div>
+        <div class="progress-bar mt-3">
+          <div class="progress-fill" id="f1-progress" style="width:0%"></div>
+        </div>
+        <div class="text-xs text-gray-400 mt-1" id="f1-progress-label">0 / 6 modules complétés</div>
       </div>
-      <div class="field">
-        <label>Courriel</label>
-        <input type="email" id="login-email" placeholder="prenom.nom@organisation.ca" value="etudiant@buttertech.io" />
+
+      <!-- F2 -->
+      <div class="module-card border-2" style="border-color:var(--or)" onclick="startFormation(2)" id="f2-card">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bloom-badge">Formation 2 ★</span>
+              <span class="text-xs text-gray-400 font-bold">5 modules · 0.7 UEC · Bloom 2→5</span>
+            </div>
+            <h3 class="font-black text-lg">IA Responsable & Loi 25 — Conformité & Gouvernance Mondiale</h3>
+            <p class="text-sm text-gray-500 mt-1">Loi 25 · RGPD · AI Act UE · UK-GDPR · Audit SOFEDUC 25 critères</p>
+          </div>
+          <div class="text-3xl ml-4">→</div>
+        </div>
+        <div class="progress-bar mt-3">
+          <div class="progress-fill" id="f2-progress" style="width:0%"></div>
+        </div>
+        <div class="text-xs text-gray-400 mt-1" id="f2-progress-label">0 / 5 modules complétés</div>
       </div>
-      <div class="field">
-        <label>Mot de passe</label>
-        <input type="password" id="login-pass" placeholder="••••••••" value="buttertech2026" />
+
+      <!-- F3 -->
+      <div class="module-card" onclick="startFormation(3)" id="f3-card">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bloom-badge">Formation 3</span>
+              <span class="text-xs text-gray-400 font-bold">3 modules · 0.6 UEC · Bloom 3→6</span>
+            </div>
+            <h3 class="font-black text-lg">Productivité Agentique — Prompt Engineering P.T.C.F.</h3>
+            <p class="text-sm text-gray-500 mt-1">Google Workspace for Education · Cloud Native · Automatisation</p>
+          </div>
+          <div class="text-3xl ml-4">→</div>
+        </div>
+        <div class="progress-bar mt-3">
+          <div class="progress-fill" id="f3-progress" style="width:0%"></div>
+        </div>
+        <div class="text-xs text-gray-400 mt-1" id="f3-progress-label">0 / 3 modules complétés</div>
       </div>
-      <button class="btn btn-lg btn-black" style="width:100%;justify-content:center;" onclick="doLogin()">
-        <i class="fas fa-sign-in-alt"></i> Accéder à mes formations
-      </button>
-      <p class="login-hint">Pas encore inscrit ? <span onclick="showView('view-landing');setTimeout(function(){document.getElementById('certification').scrollIntoView({behavior:'smooth'});},100)">S'inscrire pour 399$</span></p>
-      <p class="login-hint" style="margin-top:8px;"><span onclick="showView('view-landing')">← Retour au site</span></p>
     </div>
   </div>
 </div>
 
-<!-- ═══ VIEW 3 — DASHBOARD ═══ -->
-<div id="view-dashboard" class="view">
-  <div class="dash-layout">
-    <aside class="sidebar">
-      <div class="sidebar-logo" onclick="showView('view-landing')">
-        <div class="logo-icon" style="width:36px;height:36px;font-size:16px;">B</div>
-        <div class="logo-txt"><b style="color:var(--w);font-size:13px;">Buttertech</b><small>Academy LMS</small></div>
-      </div>
-      <nav class="sidebar-nav">
-        <div class="sidebar-section">Navigation</div>
-        <div class="sidebar-link active" onclick="showDash('overview')"><i class="fas fa-th-large"></i> Tableau de bord</div>
-        <div class="sidebar-link" onclick="showDash('courses')"><i class="fas fa-book-open"></i> Mes formations</div>
-        <div class="sidebar-link" onclick="showDash('progress')"><i class="fas fa-chart-line"></i> Ma progression</div>
-        <div class="sidebar-link" onclick="showDash('certificates')"><i class="fas fa-award"></i> Mes attestations</div>
-        <div class="sidebar-section" style="margin-top:12px;">Outils</div>
-        <div class="sidebar-link" onclick="showDash('simulator')"><i class="fas fa-robot"></i> Simulateur Gemini</div>
-        <div class="sidebar-link"><i class="fas fa-file-alt"></i> Docs SOFEDUC</div>
-        <div class="sidebar-link"><i class="fas fa-shield-alt"></i> Loi 25 &amp; RGPD</div>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="user-info">
-          <div class="avatar" id="dash-avatar">É</div>
-          <div style="flex:1;min-width:0;">
-            <span class="user-name" id="dash-username">Étudiant</span>
-            <span class="user-role">Certifié SOFEDUC</span>
-          </div>
-          <i class="fas fa-sign-out-alt" onclick="showView('view-login')" style="color:#444;cursor:pointer;font-size:13px;"></i>
-        </div>
+<!-- ══════════════════════════════════════════════════════
+     PAGE : FORMATION 2 (LMS complet)
+══════════════════════════════════════════════════════ -->
+<div id="page-formation2" class="page">
+  <div class="bg-black text-xs font-black tracking-widest uppercase py-2 px-6 no-print" style="color:var(--or)">
+    <button onclick="showPage('formations')" class="hover:underline">← Retour</button>
+    <span class="mx-3">·</span>
+    <span>Formation 2 · BTA-IARG-002 · IA Responsable & Loi 25</span>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-6 py-10 flex gap-8">
+    <!-- Sidebar -->
+    <aside class="w-56 shrink-0 no-print">
+      <div class="bg-gray-50 border border-gray-200 rounded p-4 sticky top-20">
+        <div class="text-xs font-black uppercase tracking-widest text-gray-500 mb-4">Modules du cours</div>
+        <ul class="space-y-1" id="f2-sidebar"></ul>
       </div>
     </aside>
-    <main class="dash-main">
-      <div id="dash-overview">
-        <div class="dash-header"><h2>Tableau de Bord</h2><span style="font-size:11px;color:var(--gm);">Session Janvier 2026 · SOFEDUC</span></div>
-        <div class="dash-content">
-          <div class="kpi-row">
-            <div class="kpi"><span class="kpi-val">1</span><span class="kpi-lbl">Complété</span></div>
-            <div class="kpi"><span class="kpi-val">1</span><span class="kpi-lbl">En cours</span></div>
-            <div class="kpi"><span class="kpi-val">1.2</span><span class="kpi-lbl">UEC acquises</span></div>
-            <div class="kpi"><span class="kpi-val">44%</span><span class="kpi-lbl">Complétion</span></div>
-          </div>
-          <div class="progress-card">
-            <h3>Progression par Formation SOFEDUC</h3>
-            <div class="prog-item"><div class="prog-header"><span>Formation 1 · Visionnaire &amp; Multimodal</span><span>100%</span></div><div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div></div>
-            <div class="prog-item"><div class="prog-header"><span>Formation 2 · IA Responsable &amp; Loi 25</span><span>55%</span></div><div class="prog-bar"><div class="prog-fill" style="width:55%"></div></div></div>
-            <div class="prog-item"><div class="prog-header"><span>Formation 3 · Productivité Agentique P.T.C.F.</span><span>0%</span></div><div class="prog-bar"><div class="prog-fill" style="width:0%"></div></div></div>
-          </div>
-          <h3 style="font-family:'Times New Roman',serif;font-style:italic;text-transform:uppercase;font-size:15px;margin-bottom:14px;">Mes Formations</h3>
-          <div id="dash-course-list"></div>
-        </div>
-      </div>
-      <div id="dash-courses" style="display:none;">
-        <div class="dash-header"><h2>Mes Formations</h2><span style="font-size:11px;color:var(--gm);">3 formations · 27h · 2.7 UEC</span></div>
-        <div class="dash-content"><div id="dash-all-courses"></div></div>
-      </div>
-      <div id="dash-progress" style="display:none;">
-        <div class="dash-header"><h2>Ma Progression</h2></div>
-        <div class="dash-content">
-          <div class="progress-card">
-            <h3>Taxonomie de Bloom — Compétences acquises</h3>
-            <div class="prog-item"><div class="prog-header"><span>🟣 Mémoriser</span><span>90%</span></div><div class="prog-bar"><div class="prog-fill" style="width:90%;background:#9c4de5;"></div></div></div>
-            <div class="prog-item"><div class="prog-header"><span>🔵 Comprendre</span><span>75%</span></div><div class="prog-bar"><div class="prog-fill" style="width:75%;background:#4a9ede;"></div></div></div>
-            <div class="prog-item"><div class="prog-header"><span>🔴 Appliquer</span><span>60%</span></div><div class="prog-bar"><div class="prog-fill" style="width:60%;background:#e57373;"></div></div></div>
-            <div class="prog-item"><div class="prog-header"><span>🟢 Analyser</span><span>50%</span></div><div class="prog-bar"><div class="prog-fill" style="width:50%;background:#4a8c4a;"></div></div></div>
-            <div class="prog-item"><div class="prog-header"><span>🟡 Évaluer</span><span>30%</span></div><div class="prog-bar"><div class="prog-fill" style="width:30%;background:#c9a84c;"></div></div></div>
-            <div class="prog-item"><div class="prog-header"><span>🟠 Créer</span><span>15%</span></div><div class="prog-bar"><div class="prog-fill" style="width:15%;background:#e09030;"></div></div></div>
-          </div>
-        </div>
-      </div>
-      <div id="dash-certificates" style="display:none;">
-        <div class="dash-header"><h2>Mes Attestations</h2></div>
-        <div class="dash-content">
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
-            <div class="cert-card"><i class="fas fa-award" style="font-size:36px;color:var(--g);margin-bottom:12px;display:block;"></i><div style="font-size:8px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;color:var(--g);margin-bottom:8px;">SOFEDUC · Attestation</div><div style="font-family:'Times New Roman',serif;font-size:15px;font-weight:900;font-style:italic;text-transform:uppercase;margin-bottom:6px;line-height:1.3;">Visionnaire &amp; Multimodal</div><div style="font-size:10px;color:var(--gm);margin-bottom:14px;">12h · 1.2 UEC · Janvier 2026</div><button class="btn btn-sm btn-black"><i class="fas fa-download"></i> Télécharger PDF</button></div>
-          </div>
-          <p style="font-size:12px;color:var(--gm);margin-top:20px;font-style:italic;">Les attestations des formations en cours seront disponibles après complétion.</p>
-        </div>
-      </div>
-      <div id="dash-simulator" style="display:none;">
-        <div class="dash-header"><h2>Simulateur Gemini</h2></div>
-        <div class="dash-content">
-          <div class="sim-wrap" style="max-width:680px;">
-            <div class="sim-head"><i class="fas fa-robot"></i><div><h2>Agent Smith-Heffa</h2><p style="font-size:9px;opacity:.7;margin:0;letter-spacing:.1em;text-transform:uppercase;">Assistant pédagogique SOFEDUC</p></div></div>
-            <div class="sim-body">
-              <input type="text" id="dash-prompt" placeholder="Posez une question sur vos formations SOFEDUC..." style="width:100%;background:#111;border:1px solid var(--g);color:var(--w);padding:13px 16px;font-family:Arial,sans-serif;font-size:13px;border-radius:2px;outline:none;margin-bottom:10px;">
-              <button id="dash-sim-btn" onclick="runDashSim()" style="width:100%;background:var(--g);color:var(--b);border:none;padding:13px;font-family:Arial,sans-serif;font-weight:900;font-size:10px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border-radius:2px;margin-bottom:16px;"><i class="fas fa-robot" style="margin-right:6px;"></i>Demander à Gemini</button>
-              <pre id="dash-sim-out" style="background:#000;border:1px solid #222;border-left:3px solid var(--g);color:#ccc;font-family:'Courier New',monospace;font-size:12px;padding:16px;min-height:80px;white-space:pre-wrap;line-height:1.6;">Prêt.</pre>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+
+    <!-- Contenu -->
+    <section class="flex-1" id="f2-content"></section>
   </div>
 </div>
 
-<!-- ═══ VIEW 4 — COURS ═══ -->
-<div id="view-course" class="view">
-  <div class="course-page">
-    <div class="course-nav">
-      <button class="course-nav-back" onclick="backFromCourse()"><i class="fas fa-arrow-left"></i> Retour</button>
-      <span class="course-nav-title" id="course-nav-title">Formation</span>
+<!-- ══════════════════════════════════════════════════════
+     PAGE : MON ESPACE LMS
+══════════════════════════════════════════════════════ -->
+<div id="page-lms" class="page">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <h1 class="text-3xl font-black tracking-tighter mb-2">Mon Espace Apprenant</h1>
+    <p class="text-gray-500 text-sm mb-10">Progression SOFEDUC · Attestations · Sondage d'évaluation</p>
+
+    <div class="grid md:grid-cols-3 gap-4 mb-8">
+      <div class="bg-black text-white rounded-lg p-6 text-center border-2" style="border-color:var(--or)">
+        <div class="text-4xl font-black" style="color:var(--or)" id="lms-uec">0.0</div>
+        <div class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-2">UEC obtenues</div>
+      </div>
+      <div class="border border-gray-200 rounded-lg p-6 text-center">
+        <div class="text-4xl font-black" id="lms-modules">0</div>
+        <div class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-2">Modules complétés</div>
+      </div>
+      <div class="border border-gray-200 rounded-lg p-6 text-center">
+        <div class="text-4xl font-black" id="lms-formations">0/3</div>
+        <div class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-2">Formations finalisées</div>
+      </div>
     </div>
-    <div class="course-layout">
-      <aside class="course-sidebar-panel">
-        <div class="module-list">
-          <div class="module-title-bar">Modules du cours</div>
-          <div id="module-list-items"></div>
+
+    <div class="space-y-3 mb-8">
+      <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+        <span class="font-bold text-sm">Formation 1 — Agents IA Gemini 3.0</span>
+        <div class="flex items-center gap-3">
+          <div class="progress-bar w-32"><div class="progress-fill" id="lms-f1-bar" style="width:0%"></div></div>
+          <span class="text-xs text-gray-500" id="lms-f1-pct">0%</span>
         </div>
-      </aside>
-      <main class="course-main-panel" id="course-main-content"></main>
+      </div>
+      <div class="flex items-center justify-between p-4 border-2 rounded-lg" style="border-color:var(--or)">
+        <span class="font-bold text-sm">Formation 2 — IA Responsable & Loi 25 ★</span>
+        <div class="flex items-center gap-3">
+          <div class="progress-bar w-32"><div class="progress-fill" id="lms-f2-bar" style="width:0%"></div></div>
+          <span class="text-xs text-gray-500" id="lms-f2-pct">0%</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+        <span class="font-bold text-sm">Formation 3 — Productivité Agentique</span>
+        <div class="flex items-center gap-3">
+          <div class="progress-bar w-32"><div class="progress-fill" id="lms-f3-bar" style="width:0%"></div></div>
+          <span class="text-xs text-gray-500" id="lms-f3-pct">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-3 flex-wrap">
+      <button onclick="startFormation(2)" class="btn-gold">Reprendre Formation 2 →</button>
+      <button onclick="showSondage()" class="btn-black">📋 Sondage SOFEDUC</button>
+      <button onclick="showAttestation()" id="btn-attestation" class="btn-black" style="display:none">🏛️ Mon Attestation</button>
     </div>
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════════════════
+     PAGE : SIMULATEUR GEMINI
+══════════════════════════════════════════════════════ -->
+<div id="page-simulateur" class="page">
+  <div class="max-w-3xl mx-auto px-6 py-12">
+    <div class="mb-3"><span class="bloom-badge">Gemini 3.0 · Cloud Run MTL · 24ms</span></div>
+    <h1 class="text-3xl font-black tracking-tighter mb-2">Simulateur Stratégique IA</h1>
+    <p class="text-gray-500 text-sm mb-8">Agent Smith-Heffa · Inférence validée SOC2 Type II · Loi 25</p>
+
+    <div class="border-2 rounded-xl overflow-hidden" style="border-color:var(--or)">
+      <div class="bg-black p-6">
+        <textarea id="sim-prompt" rows="3" placeholder="Posez votre question stratégique ou défi organisationnel IA..."
+          class="w-full bg-gray-900 border border-gray-700 rounded-lg p-4 text-white text-sm focus:outline-none focus:border-yellow-500 resize-none placeholder-gray-500"></textarea>
+        <button id="sim-btn" onclick="runSimulator()" class="btn-gold mt-3 w-full text-center">
+          ⚡ SIMULER AVEC GEMINI
+        </button>
+      </div>
+      <div class="bg-white p-6">
+        <pre id="sim-output" class="whitespace-pre-wrap text-sm text-gray-800 min-h-24 font-mono">Prêt. Entrez votre question ci-dessus.</pre>
+      </div>
+    </div>
+    <p class="text-xs text-gray-400 text-center mt-4 uppercase tracking-widest">Inférence Cloud Run Montréal · northamerica-northeast1 · SOC2 Type II</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE : SONDAGE SOFEDUC Norme 10
+══════════════════════════════════════════════════════ -->
+<div id="page-sondage" class="page">
+  <div class="max-w-3xl mx-auto px-6 py-12">
+    <div class="mb-3 flex gap-2"><span class="bloom-badge">BTA-IARG-002</span><span class="bloom-badge">Norme SOFEDUC 10</span></div>
+    <h1 class="text-2xl font-black tracking-tighter mb-2">Sondage d'Évaluation de la Formation</h1>
+    <p class="text-gray-500 text-sm mb-8">Votre retour est confidentiel · Archivé 7 ans · Cloud Run Montréal · SOC2 Type II</p>
+
+    <div id="sondage-form">
+      <div class="flex items-center justify-between mb-4">
+        <div class="text-sm text-gray-500" id="sondage-progress-label">0 / 8 questions répondues</div>
+        <div class="progress-bar w-48"><div class="progress-fill" id="sondage-progress-bar" style="width:0%"></div></div>
+      </div>
+
+      <div class="overflow-x-auto rounded border border-gray-200 mb-6">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-black text-xs font-bold uppercase tracking-wider">
+              <th class="text-left px-4 py-3" style="color:var(--or)">Question</th>
+              <th class="px-3 py-3 text-center" style="color:var(--or)">1</th>
+              <th class="px-3 py-3 text-center" style="color:var(--or)">2</th>
+              <th class="px-3 py-3 text-center" style="color:var(--or)">3</th>
+              <th class="px-3 py-3 text-center" style="color:var(--or)">4</th>
+              <th class="px-3 py-3 text-center" style="color:var(--or)">5</th>
+            </tr>
+          </thead>
+          <tbody id="sondage-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-900 mb-2">Commentaires <span class="text-gray-400 font-normal">(facultatif)</span></label>
+        <textarea id="sondage-comment" rows="3" placeholder="Vos suggestions d'amélioration..."
+          class="w-full border border-gray-300 rounded px-4 py-3 text-sm focus:outline-none resize-none" style="focus-border-color:var(--or)"></textarea>
+      </div>
+
+      <button onclick="submitSondage()" id="sondage-btn" class="btn-gold w-full text-center" disabled>
+        SOUMETTRE MON ÉVALUATION
+      </button>
+    </div>
+
+    <div id="sondage-merci" style="display:none" class="text-center py-12">
+      <div class="w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 text-black" style="background:var(--or)">✓</div>
+      <h2 class="text-xl font-black mb-2">Merci pour votre retour !</h2>
+      <p class="text-gray-500 text-sm mb-2">Score moyen : <strong id="sondage-score" style="color:var(--or)">—/5</strong></p>
+      <p class="text-xs text-gray-400 mb-8">Archivé · Cloud Run Montréal · Norme SOFEDUC 10</p>
+      <button onclick="showAttestation()" class="btn-gold">🏛️ Obtenir mon attestation SOFEDUC</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     PAGE : ATTESTATION (print-ready)
+══════════════════════════════════════════════════════ -->
+<div id="page-attestation" class="page">
+  <div class="max-w-3xl mx-auto px-6 py-6 no-print flex justify-between items-center">
+    <button onclick="showPage('lms')" class="text-sm text-gray-500 hover:text-black">← Mon Espace</button>
+    <button onclick="window.print()" class="btn-gold">🖨️ Imprimer / Sauvegarder PDF</button>
+  </div>
+  <div class="max-w-3xl mx-auto px-6 pb-10">
+    <div class="border-4 p-1" style="border-color:var(--or)">
+      <div class="border p-8" style="border-color:#F5E6B0">
+        <!-- En-tête -->
+        <div class="bg-black text-center py-3 mb-8">
+          <p class="text-xs font-black tracking-widest uppercase" style="color:var(--or)">
+            BUTTERTECH ACADEMY · SOFEDUC AGRÉÉ · NVIDIA INCEPTION · GOOGLE FOR EDUCATION
+          </p>
+        </div>
+        <div class="text-center mb-8">
+          <p class="text-xs font-black tracking-widest uppercase mb-2" style="color:var(--or)">ATTESTATION DE RÉUSSITE</p>
+          <div class="w-20 h-0.5 mx-auto mb-4" style="background:var(--or)"></div>
+          <p class="text-gray-500 italic mb-4 text-sm">La présente atteste que</p>
+          <div class="border-b-2 mx-8 pb-1 mb-4" style="border-color:var(--or)">
+            <p class="text-2xl font-black" style="font-style:italic" id="attest-nom">[ Prénom NOM ]</p>
+          </div>
+          <p class="text-gray-500 italic mb-3 text-sm">a complété avec succès la formation</p>
+          <p class="text-2xl font-black tracking-tighter mb-1">Formation 2 — IA Responsable & Loi 25</p>
+          <p class="text-gray-500 italic text-sm mb-6">Conformité & Gouvernance Mondiale de l'Intelligence Artificielle</p>
+
+          <div class="grid grid-cols-4 gap-4 mb-8 text-center">
+            <div><p class="text-xs font-black uppercase tracking-widest" style="color:var(--or)">DURÉE</p><p class="text-sm mt-1">7h · 5 modules</p></div>
+            <div><p class="text-xs font-black uppercase tracking-widest" style="color:var(--or)">UEC SOFEDUC</p><p class="text-sm mt-1">0.7 UEC</p></div>
+            <div><p class="text-xs font-black uppercase tracking-widest" style="color:var(--or)">BLOOM</p><p class="text-sm mt-1">Analyser → Évaluer</p></div>
+            <div><p class="text-xs font-black uppercase tracking-widest" style="color:var(--or)">DATE</p><p class="text-sm mt-1" id="attest-date">—</p></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-12 px-8 mb-6">
+            <div class="text-center"><div class="border-b border-gray-400 h-8 mb-1"></div><p class="text-xs text-gray-500">Directeur de Formation · ButterTech Academy</p></div>
+            <div class="text-center"><div class="border-b border-gray-400 h-8 mb-1"></div><p class="text-xs text-gray-500">Responsable Accréditation · SOFEDUC</p></div>
+          </div>
+
+          <p class="text-xs text-gray-400" id="attest-num">N° BTA-IARG-002-XXXX · buttertech-academy.vercel.app/verify · Archivé 7 ans · SOC2 Type II</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT — LMS + Quiz + Simulateur
+══════════════════════════════════════════════════════ -->
 <script>
-(function(){
-"use strict";
-var COURSES=[
-  {id:0,title:"Visionnaire & Multimodal — Agents IA",hours:"12h",uec:"1.2",bloom:"Créer · Analyser · Appliquer",bloomClass:"create",
-   modules:[
-    {title:"Architecture des Agents IA Gemini 3.0",type:"video",done:true},
-    {title:"Vision Artificielle & Infrastructures NVIDIA NIM",type:"text",done:true},
-    {title:"Orchestration Multi-Agents — Lab pratique",type:"text",done:true},
-    {title:"Déploiement Cloud Run Montréal",type:"text",done:true},
-    {title:"Inférence NVIDIA NIM Validée — Exercices",type:"text",done:false},
-    {title:"Quiz final — Visionnaire & Multimodal",type:"quiz",done:false}
-   ],status:"done"},
-  {id:1,title:"IA Responsable & Loi 25 — Gouvernance",hours:"9h",uec:"0.9",bloom:"Évaluer · Analyser · Comprendre",bloomClass:"evaluate",
-   modules:[
-    {title:"Loi 25 — Principes fondamentaux au Québec",type:"video",done:true},
-    {title:"RGPD & Équivalences québécoises",type:"text",done:true},
-    {title:"Déploiement Cloud Run Montréal — SOC2 Type II",type:"text",done:false},
-    {title:"Audit de conformité IA en organisation",type:"text",done:false},
-    {title:"Quiz final — Gouvernance & Conformité",type:"quiz",done:false}
-   ],status:"progress"},
-  {id:2,title:"Productivité Agentique — Méthode P.T.C.F.",hours:"6h",uec:"0.6",bloom:"Appliquer · Créer",bloomClass:"apply",
-   modules:[
-    {title:"Introduction à la méthode P.T.C.F.",type:"video",done:false},
-    {title:"Persona · Tâche · Contexte · Format — Maîtrise",type:"text",done:false},
-    {title:"Google Workspace for Education — Cas réels",type:"text",done:false},
-    {title:"Quiz final — Productivité Agentique",type:"quiz",done:false}
-   ],status:"new"}
-];
-var LESSONS=[
-  {title:"Architecture des Agents IA Gemini 3.0",bloom:"create",bloomLabel:"Créer",tag:"Formation 1 · Module 1/6",
-   content:"L'orchestration d'agents IA via Gemini 3.0 représente le niveau le plus avancé de la certification Buttertech Academy. Cette formation couvre l'architecture multi-agents, le déploiement sur Cloud Run Montréal et l'inférence NVIDIA NIM validée.",
-   points:["Architecture multi-agents : orchestrateur + agents spécialisés Gemini 3.0","Déploiement serverless sur Cloud Run Montréal (northamerica-northeast1 — 24ms)","Inférence NVIDIA NIM : GPU H100 validé pour la production","Intégration Google Workspace for Education et outils SOFEDUC certifiés"],
-   quiz:{q:"Dans une architecture multi-agents Gemini 3.0, quel composant coordonne les agents spécialisés ?",opts:["L'agent de vision","L'orchestrateur principal","Le registre SOFEDUC","Le proxy Cloud Run"],correct:1}},
-  {title:"Loi 25 — Principes Fondamentaux",bloom:"evaluate",bloomLabel:"Évaluer",tag:"Formation 2 · Module 1/5",
-   content:"La Loi 25 (Loi modernisant des dispositions législatives en matière de protection des renseignements personnels) est en vigueur depuis septembre 2023 au Québec. Elle impose des obligations strictes aux organisations qui collectent et traitent des données personnelles, incluant les plateformes de formation en ligne.",
-   points:["Consentement explicite et éclairé requis avant toute collecte de données","Droit d'accès, de rectification et de retrait du consentement (tout apprenant)","Nomination obligatoire d'un responsable de la protection des renseignements personnels","Déclaration des incidents de confidentialité à la Commission d'accès à l'information (CAI)"],
-   quiz:{q:"Selon la liste SOFEDUC pour l'audit, que doit-on remplacer dans les CV soumis pour respecter la Loi 25 ?",opts:["Les titres académiques","Toute information personnelle par les coordonnées de l'organisation","Les expériences professionnelles","Les formations suivies"],correct:1}},
-  {title:"Introduction à la Méthode P.T.C.F.",bloom:"apply",bloomLabel:"Appliquer",tag:"Formation 3 · Module 1/4",
-   content:"La méthode P.T.C.F. (Persona · Tâche · Contexte · Format) est la méthode de prompting exclusive de Buttertech Academy, alignée sur le Google Workspace Prompting Guide 101. Les prompts efficaces comptent en moyenne 21 mots avec contexte pertinent.",
-   points:["Persona : définir le rôle que l'IA doit jouer — ex : 'Tu es un expert SOFEDUC en Loi 25'","Tâche : spécifier l'action avec un verbe précis — c'est le composant le plus important du prompt","Contexte : fournir les informations nécessaires pour une réponse pertinente et actionnable","Format : préciser la forme de sortie souhaitée — liste, tableau, paragraphe, code, rapport"],
-   quiz:{q:"Dans la méthode P.T.C.F., quel élément est décrit comme 'le composant le plus important d'un prompt' ?",opts:["Le Persona","La Tâche (avec un verbe d'action)","Le Contexte","Le Format"],correct:1}}
-];
-var currentCourseId=0,currentLesson=0,fromDash=false,quizAnswered=false;
-window.showView=function(id){document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);};
-window.doLogin=function(){var email=document.getElementById('login-email').value||'etudiant@buttertech.io';var name=email.split('@')[0].replace('.',' ');var initials=name.split(' ').map(function(w){return w[0].toUpperCase();}).join('').slice(0,2)||'É';document.getElementById('dash-username').textContent=name;document.getElementById('dash-avatar').textContent=initials;buildDashboard();showView('view-dashboard');showDash('overview');};
-window.showDash=function(panel){['overview','courses','progress','certificates','simulator'].forEach(function(p){var el=document.getElementById('dash-'+p);if(el)el.style.display=(p===panel)?'block':'none';});var links=document.querySelectorAll('.sidebar-link');links.forEach(function(l){l.classList.remove('active');});var map={overview:0,courses:1,progress:2,certificates:3,simulator:4};if(links[map[panel]])links[map[panel]].classList.add('active');};
-function buildDashboard(){var listEl=document.getElementById('dash-course-list');var allEl=document.getElementById('dash-all-courses');listEl.innerHTML='';allEl.innerHTML='';COURSES.forEach(function(c){listEl.appendChild(makeCLI(c));allEl.appendChild(makeCLI(c));});}
-function makeCLI(c){var item=document.createElement('div');item.className='course-list-item';item.onclick=function(){fromDash=true;openCourse(c.id);};var sm={done:'status-done',progress:'status-progress',new:'status-new'};var sl={done:'Complété',progress:'En cours',new:'À commencer'};item.innerHTML='<div class="course-num">'+(c.id+1)+'</div><div class="course-info"><h4>'+c.title+'</h4><p>'+c.hours+' · '+c.uec+' UEC · Bloom : '+c.bloom+'</p></div><span class="course-status '+sm[c.status]+'">'+sl[c.status]+'</span>';return item;}
-window.openCourse=function(id){currentCourseId=id;currentLesson=0;quizAnswered=false;var c=COURSES[id];document.getElementById('course-nav-title').textContent='Formation '+(id+1)+' · '+c.title;buildModuleList(c);loadLesson(id,0);showView('view-course');};
-function buildModuleList(c){var el=document.getElementById('module-list-items');el.innerHTML='';c.modules.forEach(function(m,i){var item=document.createElement('div');item.className='module-item'+(i===0?' active':'');var icon=m.type==='video'?'fa-play-circle':(m.type==='quiz'?'fa-question-circle':'fa-file-alt');item.innerHTML='<i class="fas '+icon+' mod-icon"></i><span style="flex:1;">'+m.title+'</span>'+(m.done?'<i class="fas fa-check-circle mod-done"></i>':'');item.onclick=(function(idx){return function(){loadLesson(currentCourseId,idx);};})(i);el.appendChild(item);});}
-window.loadLesson=function(courseId,moduleIdx){currentLesson=moduleIdx;quizAnswered=false;var c=COURSES[courseId];var m=c.modules[moduleIdx];document.querySelectorAll('.module-item').forEach(function(el,i){el.classList.toggle('active',i===moduleIdx);});var ld=LESSONS[courseId]||{title:m.title,bloom:c.bloomClass,bloomLabel:c.bloom.split(' · ')[0],tag:'Formation '+(courseId+1)+' · Module '+(moduleIdx+1)+'/'+c.modules.length,content:'Ce module couvre les aspects essentiels de "'+m.title+'". Contenu conforme aux directives SOFEDUC.',points:['Objectifs pédagogiques alignés SOFEDUC','Activités d\'apprentissage asynchrones certifiantes','Évaluation formative intégrée','Conformité Loi 25 et RGPD'],quiz:{q:'Question de validation — Formation '+(courseId+1),opts:['Réponse A','Réponse B','Réponse C (correcte)','Réponse D'],correct:2}};
-var html='<div class="lesson-card"><span class="lesson-tag">'+ld.tag+'</span><span class="bloom-badge '+ld.bloom+'"><i class="fas fa-brain"></i> Bloom : '+ld.bloomLabel+'</span><h2>'+m.title+'</h2>';
-if(m.type==='video'){html+='<div class="video-placeholder"><i class="fas fa-play-circle"></i><p>Vidéo de formation asynchrone · Durée estimée : 20–45 min<br>Hébergée sur Cloud Run Montréal · Sous-titrée FR/EN · SOC2 Type II</p></div>';}
-html+='<p>'+ld.content+'</p><ul>';ld.points.forEach(function(pt){html+='<li>'+pt+'</li>';});html+='</ul></div>';
-html+='<div class="quiz-block"><h3><i class="fas fa-check-square" style="color:var(--g);margin-right:8px;"></i>Évaluation Formative</h3><p class="quiz-q">'+ld.quiz.q+'</p>';
-ld.quiz.opts.forEach(function(opt,i){html+='<div class="quiz-opt" id="qopt-'+i+'" onclick="checkAnswer('+i+','+ld.quiz.correct+')">'+opt+'</div>';});
-html+='<div id="quiz-feedback" style="margin-top:10px;font-size:12px;font-weight:700;display:none;"></div>';
-html+='<div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;">'+(moduleIdx<c.modules.length-1?'<button class="btn btn-md btn-gold" onclick="loadLesson('+courseId+','+(moduleIdx+1)+')"><i class="fas fa-arrow-right"></i> Module suivant</button>':'<button class="btn btn-md btn-gold" onclick="backFromCourse()"><i class="fas fa-flag-checkered"></i> Terminer la formation</button>')+(moduleIdx>0?'<button class="btn btn-md btn-outline" onclick="loadLesson('+courseId+','+(moduleIdx-1)+')"><i class="fas fa-arrow-left"></i> Précédent</button>':'')+'</div></div>';
-document.getElementById('course-main-content').innerHTML=html;};
-window.checkAnswer=function(idx,correct){if(quizAnswered)return;quizAnswered=true;document.querySelectorAll('.quiz-opt').forEach(function(o,i){if(i===correct)o.classList.add('correct');else if(i===idx&&idx!==correct)o.classList.add('wrong');});var fb=document.getElementById('quiz-feedback');fb.style.display='block';fb.style.color=idx===correct?'#2d6a2d':'#c62828';fb.textContent=idx===correct?'✓ Bonne réponse ! Compétence validée.':'✗ Réponse incorrecte. La bonne réponse est indiquée en vert.';};
-window.backFromCourse=function(){if(fromDash){fromDash=false;showView('view-dashboard');}else{showView('view-landing');}};
-/* Gemini Landing */
-var btn=document.getElementById('academyBtn'),inp=document.getElementById('academyPrompt'),out=document.getElementById('academyOut');
-if(btn&&inp&&out){
-  async function callG(p){var r=await fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:p,system:"Tu es l'Agent Smith-Heffa de Buttertech Academy, assistant IA certifié SOFEDUC. Réponds en français, structuré, concis, actionnable."})});return await r.json();}
-  async function onSim(){var p=inp.value.trim();if(!p){out.textContent="Entrez un défi ou une question.";return;}btn.disabled=true;out.textContent="[ Smith-Heffa ] Analyse en cours...";try{var r=await callG(p);out.textContent=(r.mode==='live'?'[LIVE · '+(r.model||'Gemini')+']\n\n':'[DEMO]\n\n')+(r.text||'Aucune réponse.');}catch(e){out.textContent="[ERREUR] Gemini indisponible.";}finally{btn.disabled=false;}}
-  btn.addEventListener('click',onSim);inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();onSim();}});
-}
-/* Gemini Dashboard */
-window.runDashSim=function(){var p=document.getElementById('dash-prompt'),o=document.getElementById('dash-sim-out'),b=document.getElementById('dash-sim-btn');if(!p||!o||!b)return;var prompt=p.value.trim();if(!prompt){o.textContent="Entrez votre question.";return;}b.disabled=true;o.textContent="Analyse...";fetch('/api/gemini',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,system:"Tu es un assistant pédagogique SOFEDUC. Réponds en français, concis."})}).then(function(r){return r.json();}).then(function(d){o.textContent=(d.mode==='live'?'[LIVE]\n\n':'[DEMO]\n\n')+(d.text||'');}).catch(function(){o.textContent="[ERREUR] Gemini indisponible.";}).finally(function(){b.disabled=false;});};
+(function() {
+  'use strict';
+
+  // ── État global ────────────────────────────────────────
+  const STATE = {
+    f1: { done: [], total: 6 },
+    f2: { done: [], total: 5 },
+    f3: { done: [], total: 3 },
+    currentF2Module: 0,
+    quizAnswers: {},
+    quizSubmitted: false,
+    sondageAnswers: {},
+    nomApprenant: 'Prénom NOM'
+  };
+
+  // ── Données Formation 2 ────────────────────────────────
+  const F2_MODULES = [
+    {
+      id: 1, slug: 'module1', titre: 'Loi 25 — Principes Fondamentaux au Québec',
+      bloom: 'COMPRENDRE (2)', duree: '1h30',
+      intro: `La Loi 25 (Loi modernisant des dispositions législatives en matière de protection des renseignements personnels) est en vigueur depuis septembre 2023 au Québec. Elle impose des obligations strictes aux organisations qui collectent et traitent des données personnelles, incluant les plateformes de formation en ligne.`,
+      points: [
+        'Consentement explicite et éclairé requis avant toute collecte de données',
+        'Droit d\'accès, de rectification et de retrait du consentement (tout apprenant)',
+        'Nomination obligatoire d\'un Responsable de la Protection des Renseignements Personnels (RPP)',
+        'Déclaration des incidents de confidentialité à la Commission d\'accès à l\'information (CAI)',
+        'Évaluation des facteurs relatifs à la vie privée (EFVP) avant tout nouveau traitement à risque',
+      ],
+      quiz: {
+        q: 'Selon la Loi 25, dans quel délai maximum une organisation doit-elle répondre à une demande d\'accès aux données personnelles ?',
+        opts: ['15 jours calendaires', '30 jours calendaires', '60 jours calendaires', '72 heures'],
+        correct: 1,
+        explication: 'La Loi 25 prévoit un délai de 30 jours pour répondre à toute demande d\'accès, de rectification ou de retrait du consentement.'
+      }
+    },
+    {
+      id: 2, slug: 'module2', titre: 'RGPD & Équivalences Mondiales',
+      bloom: 'COMPRENDRE (2)', duree: '1h30',
+      intro: `Le RGPD (Règlement Général sur la Protection des Données) est entré en vigueur le 25 mai 2018 dans l'Union Européenne et constitue le cadre de référence mondial. La Loi 25 s'en inspire directement tout en intégrant des spécificités propres au contexte juridique canadien.`,
+      points: [
+        'RGPD EU : autorité CNIL/EDPB · sanctions jusqu\'à 20M€ ou 4% CA mondial',
+        'Loi 25 QC : autorité CAI · sanctions jusqu\'à 25M$ CAD ou 4% CA',
+        'UK-GDPR : post-Brexit · autorité ICO · 72h notification obligatoire',
+        'LGPD Brésil : autorité ANPD · inspiré du RGPD · base légale obligatoire',
+        'CCPA Californie : droits des consommateurs · pas de loi fédérale US unifiée',
+      ],
+      quiz: {
+        q: 'Selon le RGPD EU (Art. 33), dans quel délai une violation de données doit-elle être notifiée à l\'autorité de contrôle compétente ?',
+        opts: ['24 heures', '48 heures', '72 heures', '7 jours calendaires'],
+        correct: 2,
+        explication: 'L\'Art. 33 du RGPD impose une notification dans les 72 heures suivant la prise de connaissance de la violation, sauf si elle ne présente pas de risque pour les personnes.'
+      }
+    },
+    {
+      id: 3, slug: 'module3', titre: 'AI Act UE — Classification par Niveaux de Risque',
+      bloom: 'ANALYSER (4)', duree: '1h30',
+      intro: `L'AI Act UE est le premier règlement mondial sur l'intelligence artificielle. Entré en vigueur en août 2024, il adopte une approche basée sur les risques : plus un système IA présente de risques pour les droits fondamentaux, plus les obligations réglementaires sont strictes.`,
+      points: [
+        '🚫 Risque INACCEPTABLE : interdit · score social, manipulation subliminale · sanctions 35M€ / 7% CA',
+        '⚠️ Risque ÉLEVÉ : éducation, emploi, infrastructure critique · audit tiers obligatoire · Registre EU',
+        '⚡ Risque LIMITÉ : chatbots, deepfakes · obligation de transparence envers les utilisateurs',
+        '✅ Risque MINIMAL : spam, recommandation, traduction · aucune obligation spécifique',
+        'Application progressive : 2024 (interdictions) → 2025 (risque élevé) → 2027 (complet)',
+      ],
+      quiz: {
+        q: 'Selon l\'AI Act UE, un système IA utilisé pour le recrutement et la sélection de personnel est classifié à quel niveau de risque ?',
+        opts: ['Risque minimal', 'Risque limité', 'Risque élevé', 'Risque inacceptable'],
+        correct: 2,
+        explication: 'Les systèmes IA utilisés en emploi (tri de CV, entretiens automatisés, évaluation candidats) sont "risque élevé" car ils affectent des droits fondamentaux liés au travail.'
+      }
+    },
+    {
+      id: 4, slug: 'module4', titre: 'Déploiement Cloud Conforme — Privacy by Design',
+      bloom: 'ANALYSER (4)', duree: '1h30',
+      intro: `Le déploiement d'une IA conforme commence par le choix de l'infrastructure. Cloud Run Montréal (northamerica-northeast1) garantit la résidence des données au Canada, satisfaisant ainsi la Loi 25, avec une certification SOC2 Type II et une latence P95 de 24ms mesurée en production.`,
+      points: [
+        'Privacy by Design : intégrer la protection des données dès la conception, pas après',
+        'Cloud Run MTL : northamerica-northeast1 · données 100% Canada · SOC2 Type II · 24ms P95',
+        'Chiffrement : AES-256 au repos · TLS 1.3 en transit · Secret Manager pour les clés',
+        'Journalisation : Cloud Logs 7 ans (SOFEDUC & Loi 25) · traçabilité complète',
+        'EFVP obligatoire avant tout nouveau traitement IA présentant un risque sérieux',
+      ],
+      quiz: {
+        q: 'Quelle région Google Cloud garantit la résidence des données au Canada (Loi 25) avec SOC2 Type II ?',
+        opts: ['us-central1 (Iowa)', 'northamerica-northeast1 (Montréal)', 'northamerica-northeast2 (Toronto)', 'europe-west1 (Belgique)'],
+        correct: 1,
+        explication: 'northamerica-northeast1 = Montréal. Données 100% au Canada, SOC2 Type II, latence P95 à 24ms en production BTA.'
+      }
+    },
+    {
+      id: 5, slug: 'module5', titre: 'Audit SOFEDUC & Certification',
+      bloom: 'ÉVALUER ★ (5)', duree: '1h00',
+      intro: `La certification SOFEDUC repose sur la validation de 25 critères répartis en 5 catégories. Le quiz final de 20 questions (seuil 70%) permet d'obtenir l'attestation de réussite avec 0.7 UEC, archivée 7 ans sur Cloud Run Montréal conformément à la Loi 25 et aux normes SOFEDUC.`,
+      points: [
+        'A. Gouvernance & RPP : nomination RPP, politique de gouvernance, registre des traitements',
+        'B. Consentement & Droits : formulaires conformes, retrait actif, portabilité, désindexation',
+        'C. Sécurité Technique : AES-256, TLS 1.3, MFA, tests de pénétration, journalisation 7 ans',
+        'D. IA & Algorithmes : inventaire IA, évaluation AI Act, transparence, audit biais, supervision humaine',
+        'E. Conformité & Audit : EFVP, contrats sous-traitants, certification SOFEDUC, rapport annuel',
+      ],
+      quiz: null, // → Quiz final 20 questions
+      isFinal: true
+    }
+  ];
+
+  const QUIZ_FINAL = [
+    { q: 'Depuis quelle date la Loi 25 est-elle pleinement en vigueur au Québec ?', opts: ['Septembre 2022', 'Septembre 2023', 'Septembre 2024', 'Janvier 2024'], c: 1 },
+    { q: 'Quelle est la durée de conservation obligatoire des données de formation selon SOFEDUC ?', opts: ['3 ans', '5 ans', '7 ans', '10 ans'], c: 2 },
+    { q: 'L\'AI Act UE interdit catégoriquement quel type de système IA ?', opts: ['Les chatbots', 'Le score social par les autorités publiques', 'La recommandation de contenu', 'La traduction automatique'], c: 1 },
+    { q: 'Quelle est la sanction maximale pour violation grave de la Loi 25 ?', opts: ['1M$ CAD', '10M$ CAD', '25M$ CAD ou 4% CA', '50M$ CAD'], c: 2 },
+    { q: 'L\'EFVP est obligatoire dans quel contexte selon la Loi 25 ?', opts: ['Tout nouveau site web', 'Tout traitement susceptible de présenter un risque sérieux', 'Uniquement pour les grandes entreprises', 'Seulement pour les données de santé'], c: 1 },
+    { q: 'Quelle région Google Cloud garantit la résidence des données au Canada ?', opts: ['us-east1', 'northamerica-northeast1', 'europe-west3', 'asia-east1'], c: 1 },
+    { q: 'Le principe "Privacy by Design" signifie :', opts: ['Chiffrer les données après déploiement', 'Intégrer la protection des données dès la conception', 'Nommer un DPO externe', 'Utiliser uniquement des serveurs canadiens'], c: 1 },
+    { q: 'Combien de normes SOFEDUC doit respecter une formation pour l\'accréditation ?', opts: ['5', '7', '8', '10'], c: 3 },
+    { q: 'Dans quel délai une violation de données doit-elle être notifiée à l\'ICO (Royaume-Uni) ?', opts: ['24h', '48h', '72h', '7 jours'], c: 2 },
+    { q: 'Quelle loi brésilienne équivaut au RGPD ?', opts: ['CCPA', 'PDPA', 'LGPD', 'PIPL'], c: 2 },
+    { q: 'Le RPP nommé selon la Loi 25 doit :', opts: ['Être un avocat externe', 'Voir son nom publié sur le site de l\'organisation', 'Être certifié CIPP/C obligatoirement', 'Être un employé de la CAI'], c: 1 },
+    { q: 'Quel protocole de chiffrement est requis pour les communications ?', opts: ['SSL 3.0', 'TLS 1.0', 'TLS 1.2', 'TLS 1.3'], c: 3 },
+    { q: 'L\'AI Act prévoit des sanctions allant jusqu\'à quelle somme pour les violations graves ?', opts: ['10M€ ou 2% CA', '20M€ ou 4% CA', '35M€ ou 7% CA', '50M€ ou 10% CA'], c: 2 },
+    { q: 'Quelle est la définition d\'un incident de confidentialité selon la Loi 25 ?', opts: ['Toute erreur informatique', 'Accès, utilisation, divulgation, copie ou modification non autorisés', 'Uniquement le vol de données', 'Une erreur d\'employé seulement'], c: 1 },
+    { q: 'Le CCPA s\'applique dans quel état américain ?', opts: ['New York', 'Texas', 'Floride', 'Californie'], c: 3 },
+    { q: 'Quel outil Google Cloud stocke les secrets (clés API) de façon sécurisée ?', opts: ['Cloud Storage', 'Firestore', 'Secret Manager', 'Cloud SQL'], c: 2 },
+    { q: 'Quel est le seuil de réussite minimum pour l\'attestation SOFEDUC ?', opts: ['60%', '65%', '70%', '80%'], c: 2 },
+    { q: 'Quelle certification de sécurité est obtenue par Cloud Run Montréal ?', opts: ['ISO 27001 seulement', 'SOC1 Type I', 'SOC2 Type II', 'PCI-DSS Level 1'], c: 2 },
+    { q: 'L\'AI Act UE classe les systèmes IA de recrutement à quel niveau ?', opts: ['Risque minimal', 'Risque limité', 'Risque élevé', 'Risque inacceptable'], c: 2 },
+    { q: 'Combien de critères comporte la checklist d\'audit SOFEDUC pour la certification IA ?', opts: ['10 critères', '15 critères', '20 critères', '25 critères'], c: 3 },
+  ];
+
+  const SONDAGE_QUESTIONS = [
+    'Les objectifs de la formation ont été clairement présentés',
+    'Le contenu était adapté à mon niveau et mes besoins professionnels',
+    'Les exemples et cas pratiques étaient pertinents et applicables',
+    'Le formateur / la plateforme a facilité l\'apprentissage efficacement',
+    'La durée de la formation était appropriée au contenu',
+    'L\'évaluation (quiz) reflétait bien les apprentissages',
+    'Je recommanderais cette formation à un collègue',
+    'Cette formation a renforcé ma compréhension de la conformité IA',
+  ];
+
+  // ── Navigation ─────────────────────────────────────────
+  window.showPage = function(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    const p = document.getElementById('page-' + name);
+    if (p) p.classList.add('active');
+    const t = document.getElementById('tab-' + name);
+    if (t) t.classList.add('active');
+    if (name === 'lms') updateLMS();
+    if (name === 'formations') updateFormationsProgress();
+    window.scrollTo(0, 0);
+  };
+
+  // ── Formation 2 ────────────────────────────────────────
+  window.startFormation = function(num) {
+    if (num === 2) {
+      renderF2(STATE.currentF2Module);
+      showPage('formation2');
+    } else {
+      alert('Formation ' + num + ' disponible avec le Bundle Quintessence — buttertech-academy.vercel.app');
+    }
+  };
+
+  function renderF2(moduleIndex) {
+    STATE.currentF2Module = moduleIndex;
+    const mod = F2_MODULES[moduleIndex];
+    if (!mod) return;
+
+    // Sidebar
+    const sidebar = document.getElementById('f2-sidebar');
+    if (sidebar) {
+      sidebar.innerHTML = F2_MODULES.map((m, i) => `
+        <li>
+          <button onclick="renderF2(${i})"
+            class="w-full text-left flex items-center gap-2 py-1.5 px-2 rounded text-sm transition-all ${i === moduleIndex ? 'font-bold' : 'text-gray-600 hover:text-black'}"
+            style="${i === moduleIndex ? 'color:var(--or)' : ''}">
+            <span class="w-4 h-4 rounded-full border-2 flex items-center justify-center text-xs shrink-0
+              ${STATE.f2.done.includes(i) ? 'bg-green-500 border-green-500 text-white' : i === moduleIndex ? 'border-yellow-500' : 'border-gray-300'}">
+              ${STATE.f2.done.includes(i) ? '✓' : ''}
+            </span>
+            <span>${m.titre.split(' — ')[0].replace('Module ', '').slice(0, 28)}...</span>
+          </button>
+        </li>
+      `).join('');
+    }
+
+    // Contenu
+    const content = document.getElementById('f2-content');
+    if (!content) return;
+
+    if (mod.isFinal) {
+      renderFinalQuiz(content, mod, moduleIndex);
+    } else {
+      renderModule(content, mod, moduleIndex);
+    }
+  }
+
+  function renderModule(content, mod, moduleIndex) {
+    const done = STATE.f2.done.includes(moduleIndex);
+    content.innerHTML = `
+      <div class="mb-3 flex gap-2 flex-wrap">
+        <span class="bloom-badge">Formation 2 · Module ${mod.id}/5</span>
+        <span class="bloom-badge" style="background:#000;color:var(--or)">${mod.bloom}</span>
+      </div>
+      <h1 class="text-2xl font-black tracking-tighter mb-1">${mod.titre}</h1>
+      <p class="text-sm mb-6" style="color:var(--or);font-weight:700">Durée estimée : ${mod.duree}</p>
+
+      <div class="bg-black text-white rounded p-5 mb-5 flex items-center justify-center" style="min-height:160px">
+        <div class="text-center">
+          <div class="w-12 h-12 border-2 rounded-full flex items-center justify-center mx-auto mb-3 cursor-pointer hover:opacity-80" style="border-color:var(--or)">
+            <span style="color:var(--or);font-size:20px">▶</span>
+          </div>
+          <p class="text-gray-400 text-xs">Vidéo · ${mod.duree} · Cloud Run Montréal · SOC2 Type II</p>
+        </div>
+      </div>
+
+      <div class="border border-gray-200 rounded p-5 mb-5">
+        <p class="text-gray-800 text-sm leading-relaxed mb-4">${mod.intro}</p>
+        <ul class="space-y-2">
+          ${mod.points.map(p => `<li class="flex items-start gap-2 text-sm text-gray-700"><span style="color:var(--or);margin-top:2px">•</span>${p}</li>`).join('')}
+        </ul>
+      </div>
+
+      ${mod.quiz ? renderQuizBlock(mod.quiz, moduleIndex) : ''}
+    `;
+
+    if (mod.quiz) setupQuiz(mod.quiz, moduleIndex);
+  }
+
+  function renderQuizBlock(quiz, moduleIndex) {
+    return `
+      <div class="border-2 rounded p-6" style="border-color:var(--or)">
+        <h2 class="font-black text-lg mb-1" style="color:var(--or)">☑ ÉVALUATION FORMATIVE</h2>
+        <p class="font-bold mb-4 text-sm text-gray-900">${quiz.q}</p>
+        <div id="quiz-opts-${moduleIndex}" class="mb-4">
+          ${quiz.opts.map((o, i) => `
+            <button class="quiz-opt" data-idx="${i}" onclick="selectQuizOpt(${moduleIndex}, ${i})">${o}</button>
+          `).join('')}
+        </div>
+        <div id="quiz-actions-${moduleIndex}">
+          <button onclick="submitQuiz(${moduleIndex})" id="quiz-btn-${moduleIndex}" class="btn-gold" disabled>VALIDER MA RÉPONSE</button>
+        </div>
+        <div id="quiz-result-${moduleIndex}" style="display:none" class="mt-4"></div>
+      </div>
+    `;
+  }
+
+  function setupQuiz(quiz, moduleIndex) {
+    STATE.quizAnswers[moduleIndex] = null;
+    STATE.quizSubmitted = false;
+  }
+
+  window.selectQuizOpt = function(modIdx, optIdx) {
+    if (STATE.f2.done.includes(modIdx)) return;
+    STATE.quizAnswers[modIdx] = optIdx;
+    document.querySelectorAll(`#quiz-opts-${modIdx} .quiz-opt`).forEach((btn, i) => {
+      btn.classList.toggle('selected', i === optIdx);
+    });
+    const submitBtn = document.getElementById(`quiz-btn-${modIdx}`);
+    if (submitBtn) submitBtn.disabled = false;
+  };
+
+  window.submitQuiz = function(modIdx) {
+    const mod = F2_MODULES[modIdx];
+    const selected = STATE.quizAnswers[modIdx];
+    if (selected === null || selected === undefined) return;
+    const correct = mod.quiz.correct;
+    const isCorrect = selected === correct;
+
+    document.querySelectorAll(`#quiz-opts-${modIdx} .quiz-opt`).forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === correct) btn.classList.add('correct');
+      if (i === selected && !isCorrect) btn.classList.add('wrong');
+    });
+
+    const resultEl = document.getElementById(`quiz-result-${modIdx}`);
+    if (resultEl) {
+      resultEl.style.display = 'block';
+      resultEl.innerHTML = `
+        <div class="rounded p-3 text-sm font-bold mb-3 ${isCorrect ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}">
+          ${isCorrect ? '✅ Excellent !' : '❌ Bonne réponse : ' + mod.quiz.opts[correct]}
+        </div>
+        <div class="bg-gray-50 border border-gray-200 rounded p-3 text-xs text-gray-600 italic mb-4">💡 ${mod.quiz.explication}</div>
+        ${modIdx < F2_MODULES.length - 1
+          ? `<button onclick="renderF2(${modIdx + 1})" class="btn-gold">→ MODULE SUIVANT</button>`
+          : `<button onclick="renderF2(${modIdx + 1})" class="btn-gold">→ QUIZ FINAL</button>`}
+      `;
+    }
+
+    const btnEl = document.getElementById(`quiz-btn-${modIdx}`);
+    if (btnEl) btnEl.style.display = 'none';
+
+    if (!STATE.f2.done.includes(modIdx)) {
+      STATE.f2.done.push(modIdx);
+      updateLMS();
+    }
+  };
+
+  // ── Quiz Final Formation 2 ─────────────────────────────
+  function renderFinalQuiz(content, mod, moduleIndex) {
+    let answered = {};
+    let submitted = false;
+
+    const renderQ = () => {
+      const answeredCount = Object.keys(answered).length;
+      content.innerHTML = `
+        <div class="mb-3 flex gap-2"><span class="bloom-badge">Module 5/5 · Quiz Final</span><span class="bloom-badge" style="background:#000;color:var(--or)">ÉVALUER ★ (5)</span></div>
+        <h1 class="text-2xl font-black tracking-tighter mb-1">${mod.titre}</h1>
+        <p class="text-sm mb-4 font-bold" style="color:var(--or)">20 questions · Seuil 70% · Attestation SOFEDUC à l'issue</p>
+
+        <div class="border-2 rounded p-6 mb-4" style="border-color:var(--or)">
+          <p class="text-sm text-gray-600 mb-6">${mod.intro}</p>
+          <ul class="space-y-2 mb-6">
+            ${mod.points.map(p => `<li class="flex items-start gap-2 text-sm text-gray-700"><span style="color:var(--or);margin-top:2px">•</span>${p}</li>`).join('')}
+          </ul>
+        </div>
+
+        <div class="border-2 rounded p-6" style="border-color:var(--or)">
+          <h2 class="font-black text-lg mb-1" style="color:var(--or)">☑ QUIZ FINAL — 20 QUESTIONS</h2>
+          <p class="text-xs text-gray-500 mb-6">${answeredCount}/20 questions répondues</p>
+          <div class="progress-bar mb-6"><div class="progress-fill" style="width:${answeredCount/20*100}%"></div></div>
+          <div class="space-y-6" id="final-quiz-container">
+            ${QUIZ_FINAL.map((q, qi) => `
+              <div>
+                <p class="font-bold text-sm mb-2"><span style="color:var(--or)">Q${qi+1}.</span> ${q.q}</p>
+                <div class="space-y-2">
+                  ${q.opts.map((o, oi) => `
+                    <button onclick="selectFinal(${qi},${oi})" data-q="${qi}" data-o="${oi}"
+                      class="quiz-opt ${answered[qi]===oi ? 'selected' : ''}">
+                      ${o}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="mt-6 text-center text-xs text-gray-400 mb-3">${answeredCount}/20 questions répondues</div>
+          <button onclick="submitFinalQuiz()" id="final-submit-btn" class="btn-gold w-full text-center" ${answeredCount<20?'disabled':''}>
+            SOUMETTRE LE QUIZ FINAL
+          </button>
+        </div>
+      `;
+
+      window.selectFinal = function(qi, oi) {
+        answered[qi] = oi;
+        renderQ();
+        window.scrollTo(0, document.getElementById('final-quiz-container') ? document.getElementById('final-quiz-container').getBoundingClientRect().top + window.scrollY - 100 : 0);
+      };
+
+      window.submitFinalQuiz = function() {
+        const score = QUIZ_FINAL.filter((q, i) => answered[i] === q.c).length;
+        const pct = Math.round(score / QUIZ_FINAL.length * 100);
+        const passed = pct >= 70;
+
+        if (passed && !STATE.f2.done.includes(moduleIndex)) {
+          STATE.f2.done.push(moduleIndex);
+          updateLMS();
+        }
+
+        content.innerHTML = `
+          <div class="text-center py-12">
+            <div class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 font-black
+              ${passed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+              ${passed ? '��' : '📚'}
+            </div>
+            <div class="text-5xl font-black mb-2 ${passed ? 'text-green-700' : 'text-red-600'}">${pct}%</div>
+            <p class="font-black text-lg mb-2 ${passed ? 'text-green-700' : 'text-red-600'}">
+              ${passed ? '✅ RÉUSSITE — Attestation SOFEDUC délivrée' : '⚠️ Score insuffisant — Minimum requis : 70%'}
+            </p>
+            <p class="text-sm text-gray-500 mb-8">${score}/20 bonnes réponses</p>
+            ${passed
+              ? `<div class="flex gap-3 justify-center flex-wrap">
+                   <button onclick="showSondage()" class="btn-gold">📋 Sondage SOFEDUC →</button>
+                   <button onclick="showAttestation()" class="btn-black">🏛️ Mon Attestation</button>
+                 </div>`
+              : `<button onclick="renderF2(${moduleIndex})" class="btn-black">🔄 Reprendre le quiz</button>`
+            }
+          </div>
+        `;
+      };
+    };
+
+    renderQ();
+  }
+
+  // ── LMS Update ─────────────────────────────────────────
+  function updateLMS() {
+    const f2pct = Math.round(STATE.f2.done.length / STATE.f2.total * 100);
+    const totalModules = STATE.f1.done.length + STATE.f2.done.length + STATE.f3.done.length;
+    const totalMax = STATE.f1.total + STATE.f2.total + STATE.f3.total;
+    const uec = ((STATE.f2.done.length / STATE.f2.total) * 0.7).toFixed(1);
+
+    const el = (id) => document.getElementById(id);
+    if (el('lms-uec')) el('lms-uec').textContent = uec;
+    if (el('lms-modules')) el('lms-modules').textContent = totalModules;
+    if (el('lms-f2-bar')) el('lms-f2-bar').style.width = f2pct + '%';
+    if (el('lms-f2-pct')) el('lms-f2-pct').textContent = f2pct + '%';
+    if (el('lms-f1-bar')) el('lms-f1-bar').style.width = '0%';
+    if (el('lms-f3-bar')) el('lms-f3-bar').style.width = '0%';
+
+    const formations = [
+      STATE.f1.done.length === STATE.f1.total,
+      STATE.f2.done.length === STATE.f2.total,
+      STATE.f3.done.length === STATE.f3.total,
+    ].filter(Boolean).length;
+    if (el('lms-formations')) el('lms-formations').textContent = formations + '/3';
+
+    if (STATE.f2.done.length === STATE.f2.total) {
+      const btnAttest = el('btn-attestation');
+      if (btnAttest) btnAttest.style.display = 'inline-block';
+    }
+  }
+
+  function updateFormationsProgress() {
+    const f2pct = Math.round(STATE.f2.done.length / STATE.f2.total * 100);
+    const el = (id) => document.getElementById(id);
+    if (el('f2-progress')) el('f2-progress').style.width = f2pct + '%';
+    if (el('f2-progress-label')) el('f2-progress-label').textContent = STATE.f2.done.length + ' / 5 modules complétés';
+  }
+
+  // ── Sondage ────────────────────────────────────────────
+  window.showSondage = function() {
+    renderSondage();
+    showPage('sondage');
+  };
+
+  function renderSondage() {
+    const tbody = document.getElementById('sondage-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = SONDAGE_QUESTIONS.map((q, qi) => `
+      <tr class="${qi%2===0?'bg-white':'bg-gray-50'}">
+        <td class="px-4 py-3 text-sm text-gray-800"><span class="font-bold" style="color:var(--or)">Q${qi+1}</span> ${q}</td>
+        ${[1,2,3,4,5].map(v => `
+          <td class="px-3 py-3 text-center">
+            <button onclick="selectSondage(${qi},${v})" id="s-${qi}-${v}"
+              class="w-7 h-7 rounded-full border-2 transition-all ${STATE.sondageAnswers[qi]===v?'bg-yellow-500 border-yellow-500':'border-gray-300 hover:border-yellow-400'}"
+              style="${STATE.sondageAnswers[qi]===v?'background:var(--or);border-color:var(--or)':''}">
+            </button>
+          </td>
+        `).join('')}
+      </tr>
+    `).join('');
+    updateSondageProgress();
+  }
+
+  window.selectSondage = function(qi, val) {
+    STATE.sondageAnswers[qi] = val;
+    renderSondage();
+  };
+
+  function updateSondageProgress() {
+    const count = Object.keys(STATE.sondageAnswers).length;
+    const pct = Math.round(count / SONDAGE_QUESTIONS.length * 100);
+    const el = (id) => document.getElementById(id);
+    if (el('sondage-progress-label')) el('sondage-progress-label').textContent = count + ' / ' + SONDAGE_QUESTIONS.length + ' questions répondues';
+    if (el('sondage-progress-bar')) el('sondage-progress-bar').style.width = pct + '%';
+    const btn = el('sondage-btn');
+    if (btn) btn.disabled = count < SONDAGE_QUESTIONS.length;
+  }
+
+  window.submitSondage = function() {
+    const vals = Object.values(STATE.sondageAnswers);
+    const avg = (vals.reduce((a,b)=>a+b,0) / vals.length).toFixed(1);
+    document.getElementById('sondage-form').style.display = 'none';
+    document.getElementById('sondage-merci').style.display = 'block';
+    document.getElementById('sondage-score').textContent = avg + '/5';
+  };
+
+  // ── Attestation ────────────────────────────────────────
+  window.showAttestation = function() {
+    const nom = prompt('Entrez votre nom complet pour l\'attestation :') || 'Prénom NOM';
+    STATE.nomApprenant = nom;
+    const num = 'BTA-IARG-002-' + Math.random().toString(36).slice(2,8).toUpperCase();
+    const now = new Date().toLocaleDateString('fr-CA', {year:'numeric',month:'long',day:'numeric'});
+    const el = (id) => document.getElementById(id);
+    if (el('attest-nom')) el('attest-nom').textContent = nom;
+    if (el('attest-date')) el('attest-date').textContent = now;
+    if (el('attest-num')) el('attest-num').textContent = 'N° ' + num + ' · buttertech-academy.vercel.app/verify · Archivé 7 ans · SOC2 Type II';
+    showPage('attestation');
+  };
+
+  // ── Simulateur Gemini ──────────────────────────────────
+  window.runSimulator = function() {
+    const prompt = (document.getElementById('sim-prompt') || {}).value || '';
+    const out = document.getElementById('sim-output');
+    const btn = document.getElementById('sim-btn');
+    if (!prompt.trim()) return;
+    if (btn) btn.disabled = true;
+    if (out) out.textContent = 'Analyse en cours...';
+    fetch('/api/gemini', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, system: 'Tu es Agent Smith-Heffa, expert IA et conformité SOFEDUC. Réponse structurée, concise, en français.' })
+    })
+    .then(r => r.json())
+    .then(d => { if (out) out.textContent = (d.mode==='live'?'[LIVE]\n\n':'[DEMO]\n\n') + (d.text||''); })
+    .catch(() => { if (out) out.textContent = '[ERREUR] Gemini indisponible.'; })
+    .finally(() => { if (btn) btn.disabled = false; });
+  };
+
+  // ── Init ───────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    renderSondage();
+    showPage('home');
+  });
+
 })();
 </script>
+
 </body>
 </html>
