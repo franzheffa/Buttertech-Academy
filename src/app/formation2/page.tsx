@@ -52,7 +52,7 @@ export default function Formation2Page() {
 
         {/* Contenu principal */}
         <section className="flex-1">
-          <div class="mb-3 flex gap-2 flex-wrap">
+          <div className="mb-3 flex gap-2 flex-wrap">
             <span className="bloom-badge">BTA-IARG-002</span>
             <span className="bloom-badge" style={{background:'#000',color:'#C9A84C'}}>🎓 BLOOM : COMPRENDRE → ÉVALUER</span>
             <span className="bloom-badge" style={{background:'#1A7A4A',color:'white'}}>0.7 UEC SOFEDUC</span>
