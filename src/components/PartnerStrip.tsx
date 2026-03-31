@@ -26,6 +26,19 @@ export default function PartnerStrip({ variant = 'light' }: PartnerStripProps) {
         </p>
       </div>
 
+      <div className="mb-5 flex flex-wrap gap-2">
+        {['Google for Education', 'Gemini Enterprise', 'Google Workspace for Education', 'Maps Platform', 'Trust'].map((badge) => (
+          <span
+            key={badge}
+            className={`rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] ${
+              dark ? 'border-[#C9A84C]/40 text-[#f3d27a]' : 'border-[#C9A84C]/40 text-[#7a5c12]'
+            }`}
+          >
+            {badge}
+          </span>
+        ))}
+      </div>
+
       <div className="grid gap-4 md:grid-cols-[1.2fr_1fr]">
         <div className="grid gap-4">
           {partnerPlacements.map((placement) => (
@@ -61,7 +74,7 @@ export default function PartnerStrip({ variant = 'light' }: PartnerStripProps) {
             >
               <p className="mb-3 text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">{logo.category}</p>
               <div className="flex min-h-[120px] items-center justify-center rounded-[1rem] border border-dashed border-[#C9A84C]/30 bg-white p-4">
-                <img src={logo.src} alt={logo.alt} className="max-h-16 w-auto object-contain sm:max-h-20" />
+                <img src={logo.src} alt={logo.alt} className="max-h-20 w-auto object-contain sm:max-h-24" />
               </div>
             </div>
           ))}

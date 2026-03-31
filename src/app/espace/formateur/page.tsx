@@ -47,6 +47,16 @@ export default function EspaceFormateurPage() {
           ))}
         </section>
 
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {teacherJourney.cockpit.map((metric) => (
+            <article key={metric.label} className="kpi-tile">
+              <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">{metric.label}</p>
+              <p className="mt-4 text-4xl font-black tracking-tight">{metric.value}</p>
+              <p className="mt-3 text-sm leading-6 text-neutral-600">{metric.detail}</p>
+            </article>
+          ))}
+        </section>
+
         <section className="grid gap-4 lg:grid-cols-2">
           {teacherJourney.complianceChecklist.map((feature) => (
             <article key={feature.title} className="shell-card">
@@ -55,6 +65,43 @@ export default function EspaceFormateurPage() {
               <p className="mt-3 text-sm leading-7 text-neutral-600">{feature.text}</p>
             </article>
           ))}
+        </section>
+
+        <section className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <article className="shell-card">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Cockpit de session</p>
+            <div className="mt-4 grid gap-4 md:grid-cols-3">
+              {teacherJourney.liveOps.map((workflow) => (
+                <article key={workflow.title} className="soft-panel">
+                  <h2 className="text-xl font-black tracking-tight">{workflow.title}</h2>
+                  <ul className="mt-4 space-y-3 text-sm leading-6 text-neutral-600">
+                    {workflow.items.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="mt-2 h-2 w-2 rounded-full bg-[#C9A84C]" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </article>
+
+          <article className="dark-shell">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Alertes de cohorte</p>
+            <div className="mt-4 space-y-3">
+              {teacherJourney.cohortAlerts.map((alert) => (
+                <div key={alert.learner} className="rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h2 className="text-lg font-black tracking-tight text-white">{alert.learner}</h2>
+                    <span className="status-pill border-[#C9A84C]/40 text-[#f3d27a]">A traiter</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-neutral-300">{alert.issue}</p>
+                  <p className="mt-3 text-[11px] font-black uppercase tracking-[0.18em] text-neutral-400">{alert.action}</p>
+                </div>
+              ))}
+            </div>
+          </article>
         </section>
 
         <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
@@ -79,6 +126,32 @@ export default function EspaceFormateurPage() {
               ))}
             </div>
           </article>
+        </section>
+
+        <section className="shell-card">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Rubrique d evaluation</p>
+              <h2 className="mt-2 text-2xl font-black tracking-tight">Grille lisible pour correction, feedback et attestations</h2>
+            </div>
+            <span className="status-pill border-[#C9A84C]/40 text-[#7a5c12]">CPU / SOFEDUC</span>
+          </div>
+          <div className="mt-5 overflow-x-auto rounded-[1.5rem] border border-black/10">
+            <div className="min-w-[720px]">
+              <div className="grid grid-cols-[1.2fr_0.4fr_1fr] bg-black px-4 py-3 text-[11px] font-black uppercase tracking-[0.18em] text-[#C9A84C]">
+                <div>Critere</div>
+                <div>Pond.</div>
+                <div>Signal attendu</div>
+              </div>
+              {teacherJourney.rubricRows.map((row) => (
+                <div key={row.criterion} className="grid grid-cols-[1.2fr_0.4fr_1fr] border-t border-black/10 bg-white px-4 py-4 text-sm leading-6 text-neutral-700">
+                  <div className="font-semibold text-black">{row.criterion}</div>
+                  <div className="font-black text-[#7a5c12]">{row.weighting}</div>
+                  <div>{row.signal}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section className="shell-card">

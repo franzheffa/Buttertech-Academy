@@ -42,6 +42,12 @@ body {
   .kpi-tile {
     @apply rounded-[1.5rem] border border-[#C9A84C]/20 bg-white px-4 py-4 shadow-[0_14px_40px_rgba(0,0,0,0.05)];
   }
+  .status-pill {
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em];
+  }
+  .soft-panel {
+    @apply rounded-[1.5rem] border border-black/10 bg-[#fffaf0] p-5;
+  }
   .gold-grid {
     background-image: linear-gradient(rgba(201, 168, 76, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(201, 168, 76, 0.08) 1px, transparent 1px);
     background-size: 24px 24px;

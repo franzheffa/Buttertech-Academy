@@ -1,9 +1,15 @@
 export const partnerLogos = [
   {
     name: 'Google for Education Partner',
-    src: '/partners/google-for-education-partner-horizontal.png',
+    src: '/partners/google-for-education-partner-horizontal-wide.png',
     alt: 'Google for Education Partner',
     category: 'Academy',
+  },
+  {
+    name: 'Google Workspace for Education',
+    src: '/partners/google-workspace-for-education-color.png',
+    alt: 'Google Workspace for Education',
+    category: 'Productivite education',
   },
   {
     name: 'Gemini Enterprise',
@@ -110,6 +116,28 @@ export const studentJourney = {
     { name: 'Evaluation 3', weight: '20%', format: 'Travail reflexif ou production ecrite' },
     { name: 'Epreuve finale', weight: '35%', format: 'Projet final, expose ou portfolio' },
   ],
+  liveSchedule: [
+    { slot: 'Lundi 18:30', type: 'Synchrone', topic: 'Classe virtuelle, demonstration et questions', status: 'En direct ou replay' },
+    { slot: 'Mercredi 12:00', type: 'Coaching', topic: 'Heure de bureau, accompagnement individuel et feedback', status: 'Sur reservation' },
+    { slot: 'Vendredi 17:00', type: 'Asynchrone', topic: 'Depot des traces, quiz, portfolio et retroaction', status: 'Echeance visible' },
+  ],
+  submissions: [
+    { item: 'Pretest du bloc 1', due: 'Aujourd hui', status: 'A completer', tone: 'attention' },
+    { item: 'Etude de cas de la seance 4', due: '02 avr. 2026', status: 'Depose', tone: 'done' },
+    { item: 'Journal reflexif intermediaire', due: '05 avr. 2026', status: 'Retroaction recue', tone: 'review' },
+    { item: 'Portfolio final', due: '12 avr. 2026', status: 'Preparation', tone: 'progress' },
+  ],
+  progression: [
+    { label: 'Bloc 1', value: '100%', detail: 'Fondations, pretest et objectifs completes' },
+    { label: 'Bloc 2', value: '74%', detail: 'Ateliers et etude de cas en cours' },
+    { label: 'Bloc 3', value: '38%', detail: 'Production, peer review et consolidation' },
+    { label: 'Bloc 4', value: '12%', detail: 'Epreuve finale planifiee' },
+  ],
+  attestationStack: [
+    { title: 'Attestation de participation', state: 'Disponible', detail: 'Generee apres validation des traces synchrones et asynchrones.' },
+    { title: 'Badge de competence intermediaire', state: 'En preparation', detail: 'Delivre apres le bloc 2 et la grille d observation.' },
+    { title: 'Attestation finale SOFEDUC', state: 'Conditionnelle', detail: 'Publiee apres epreuve finale, sondage et portfolio conformes.' },
+  ],
 } as const
 
 export const teacherJourney = {
@@ -176,6 +204,37 @@ export const teacherJourney = {
     'Grilles de participation, travaux et portfolio',
     'Sondage final et pieces d attestation',
   ],
+  cockpit: [
+    { label: 'Presence synchrone', value: '94%', detail: 'Participation moyenne sur les 3 dernieres seances' },
+    { label: 'Travaux remis', value: '27/30', detail: 'Depots recueillis et traces asynchrones disponibles' },
+    { label: 'Cohorte a risque', value: '3', detail: 'Apprenants a relancer sous 24h' },
+    { label: 'Attestations pretes', value: '18', detail: 'Pieces generables des la fermeture de cohorte' },
+  ],
+  liveOps: [
+    {
+      title: 'Regie synchrone',
+      items: ['Lancer la salle Zoom/Meet', 'Partager objectifs, taxonomie et activites', 'Capturer presence, questions et interactions'],
+    },
+    {
+      title: 'Flux asynchrone',
+      items: ['Verifier depots et journaux de bord', 'Pousser la retroaction sous 48h', 'Programmer rappels et echeances'],
+    },
+    {
+      title: 'Qualite de cohorte',
+      items: ['Suivre satisfaction et comprehension', 'Isoler les apprenants a risque', 'Documenter les ajustements pedagogiques'],
+    },
+  ],
+  rubricRows: [
+    { criterion: 'Participation et engagement', weighting: '15%', signal: 'Presence, interactions, questions, collaboration' },
+    { criterion: 'Application des notions', weighting: '25%', signal: 'Etudes de cas, exercices, demonstrations' },
+    { criterion: 'Production et transfert', weighting: '35%', signal: 'Travail final, portfolio, argumentation' },
+    { criterion: 'Reflexivite et amelioration', weighting: '25%', signal: 'Journal de bord, autoevaluation, integration du feedback' },
+  ],
+  cohortAlerts: [
+    { learner: 'Cohorte A · 2 apprenants', issue: 'Absence a la derniere seance synchrone', action: 'Relance + replay + mini checkpoint' },
+    { learner: 'Cohorte B · 1 apprenant', issue: 'Portfolio incomplet', action: 'Feedback cible et deadline adaptee' },
+    { learner: 'Cohorte C · 3 apprenants', issue: 'Quiz bloc 2 sous le seuil', action: 'Atelier de remobilisation' },
+  ],
 } as const
 
 export const goToMarketData = {
@@ -223,5 +282,16 @@ export const goToMarketData = {
       status: 'Active',
       description: 'Positionnement Mandiant, Threat Intelligence et gouvernance IA enterprise.',
     },
+  ],
+  motions: [
+    { name: 'Academy Certification Funnel', owner: 'Education', stage: 'Scale', detail: 'Landing, cohortes, attestations et preuve partenaire Google for Education.' },
+    { name: 'Gemini Productivity Enablement', owner: 'AI Enterprise', stage: 'Live', detail: 'Cas d usage, accompagnement et adoption Workspace for Education.' },
+    { name: 'Viize Parking Narrative', owner: 'Maps Platform', stage: 'Build', detail: 'Motion parking intelligence, exploitation cartographique et operations terrain.' },
+  ],
+  monitoring: [
+    'Taux de completion par cohorte',
+    'Delai moyen de retroaction formateur',
+    'Activation des attestations et badges',
+    'Usage des assets partenaires sur les pages clefs',
   ],
 } as const

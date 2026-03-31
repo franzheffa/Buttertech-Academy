@@ -37,6 +37,35 @@ export default function GoToMarketPage() {
           ))}
         </section>
 
+        <section className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <article className="shell-card">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Motions prioritaires</p>
+            <div className="mt-4 space-y-4">
+              {goToMarketData.motions.map((motion) => (
+                <article key={motion.name} className="soft-panel">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h2 className="text-xl font-black tracking-tight">{motion.name}</h2>
+                    <span className="status-pill border-[#C9A84C]/40 text-[#7a5c12]">{motion.stage}</span>
+                  </div>
+                  <p className="mt-2 text-sm font-semibold text-neutral-500">{motion.owner}</p>
+                  <p className="mt-3 text-sm leading-7 text-neutral-600">{motion.detail}</p>
+                </article>
+              ))}
+            </div>
+          </article>
+
+          <article className="dark-shell">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Monitoring vivant</p>
+            <div className="mt-4 grid gap-3">
+              {goToMarketData.monitoring.map((item) => (
+                <div key={item} className="rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm leading-6 text-neutral-300">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
         <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="shell-card">
             <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Campaigns</p>

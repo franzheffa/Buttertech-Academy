@@ -46,6 +46,57 @@ export default function EspaceApprenantPage() {
           ))}
         </section>
 
+        <section className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <article className="shell-card">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Calendrier de formation</p>
+                <h2 className="mt-2 text-2xl font-black tracking-tight">Synchrone, coaching et flux asynchrone</h2>
+              </div>
+              <span className="status-pill border-[#C9A84C]/40 text-[#7a5c12]">Mobile first</span>
+            </div>
+            <div className="mt-5 grid gap-4">
+              {studentJourney.liveSchedule.map((item) => (
+                <div key={item.slot} className="rounded-[1.25rem] border border-black/10 bg-[#fffaf0] p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className="text-lg font-black tracking-tight">{item.slot}</p>
+                    <span className="status-pill border-[#C9A84C]/40 text-[#7a5c12]">{item.type}</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-neutral-700">{item.topic}</p>
+                  <p className="mt-3 text-[11px] font-black uppercase tracking-[0.18em] text-neutral-500">{item.status}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="dark-shell">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Travaux et remises</p>
+            <div className="mt-4 space-y-3">
+              {studentJourney.submissions.map((item) => (
+                <div key={item.item} className="rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h2 className="text-lg font-black tracking-tight text-white">{item.item}</h2>
+                    <span
+                      className={`status-pill ${
+                        item.tone === 'done'
+                          ? 'border-emerald-400/30 text-emerald-300'
+                          : item.tone === 'review'
+                            ? 'border-sky-400/30 text-sky-300'
+                            : item.tone === 'progress'
+                              ? 'border-[#C9A84C]/40 text-[#f3d27a]'
+                              : 'border-rose-400/30 text-rose-300'
+                      }`}
+                    >
+                      {item.status}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-[11px] font-black uppercase tracking-[0.18em] text-neutral-400">{item.due}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
         <section className="grid gap-4 lg:grid-cols-2">
           {studentJourney.learningBlocks.map((feature) => (
             <article key={feature.title} className="shell-card">
@@ -85,6 +136,41 @@ export default function EspaceApprenantPage() {
               {studentJourney.evidenceBoard.map((item) => (
                 <div key={item} className="rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm leading-6 text-neutral-300">
                   {item}
+                </div>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <article className="shell-card">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Progression par bloc</p>
+            <div className="mt-4 space-y-4">
+              {studentJourney.progression.map((item) => (
+                <div key={item.label} className="rounded-[1.25rem] border border-black/10 bg-white p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-lg font-black tracking-tight">{item.label}</h2>
+                    <span className="text-lg font-black text-[#7a5c12]">{item.value}</span>
+                  </div>
+                  <div className="mt-3 h-2 rounded-full bg-[#f5ead0]">
+                    <div className="h-2 rounded-full bg-[#C9A84C]" style={{ width: item.value }} />
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-neutral-600">{item.detail}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="shell-card">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Attestations et badges</p>
+            <div className="mt-4 space-y-4">
+              {studentJourney.attestationStack.map((item) => (
+                <div key={item.title} className="soft-panel">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h2 className="text-lg font-black tracking-tight">{item.title}</h2>
+                    <span className="status-pill border-[#C9A84C]/40 text-[#7a5c12]">{item.state}</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-neutral-600">{item.detail}</p>
                 </div>
               ))}
             </div>
