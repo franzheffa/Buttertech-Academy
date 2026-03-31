@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar'
+import PartnerStrip from '@/components/PartnerStrip'
 import Link from 'next/link'
 
 export default function HomePage() {
@@ -7,29 +8,52 @@ export default function HomePage() {
       <Navbar />
 
       {/* Hero */}
-      <header className="bg-black text-white py-24 px-6 text-center">
-        <div className="max-w-4xl mx-auto">
-          <div className="inline-block border border-[#C9A84C] text-[#C9A84C] text-[10px] font-black px-4 py-2 tracking-widest uppercase mb-8">
-            Leader IA Réglementée · Google & NVIDIA Partner · SOFEDUC Agréé
+      <header className="bg-black text-white px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <div className="inline-block border border-[#C9A84C] text-[#C9A84C] text-[10px] font-black px-4 py-2 tracking-widest uppercase mb-8">
+              Leader IA Reglementee · Google & NVIDIA Partner · SOFEDUC Agree
+            </div>
+            <h1 className="text-4xl font-black tracking-tighter leading-tight mb-6 italic sm:text-6xl">
+              L&apos;IA DE CONFIANCE.<br />
+              <span className="text-[#C9A84C]">CERTIFIEE.</span>
+            </h1>
+            <p className="text-neutral-300 text-base max-w-2xl mb-10 leading-7">
+              Une academie structuree selon les normes de planification, de delivery et d evaluation attendues en contexte SOFEDUC,
+              avec des espaces dedies aux apprenants et aux formateurs pour le synchrone et l asynchrone.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/formations" className="btn-gold">Voir les formations →</Link>
+              <Link href="/espace/apprenant" className="btn-black">Entrer dans l&apos;espace apprenant</Link>
+            </div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-tight mb-6 italic">
-            L'IA DE CONFIANCE.<br />
-            <span className="text-[#C9A84C]">CERTIFIÉE.</span>
-          </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
-            NVIDIA Inception · Google for Education · Rigueur académique SOFEDUC · Conformité Loi 25 & RGPD
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/formations" className="btn-gold">Voir les formations →</Link>
-            <a href="https://smith-heffa-paygate.vercel.app" target="_blank" rel="noopener noreferrer" className="btn-black">Bundle Quintessence 399$</a>
+
+          <div className="rounded-[2rem] border border-[#C9A84C]/30 bg-white/[0.04] p-5 sm:p-6">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[1.5rem] border border-white/10 bg-black/40 p-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Apprenant</p>
+                <p className="mt-3 text-xl font-black">Cockpit de progression</p>
+              <p className="mt-2 text-sm leading-6 text-neutral-300">Objectifs, blocs de cours, preuves, attestations et suivi de progression.</p>
+              </div>
+              <div className="rounded-[1.5rem] border border-white/10 bg-black/40 p-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Formateur</p>
+                <p className="mt-3 text-xl font-black">Pilotage de cohortes</p>
+              <p className="mt-2 text-sm leading-6 text-neutral-300">Analyse prealable, macrodesign, delivery, traces et qualite.</p>
+              </div>
+              <div className="rounded-[1.5rem] border border-white/10 bg-black/40 p-4 sm:col-span-2">
+                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Go to market</p>
+                <p className="mt-3 text-xl font-black">Control tower partenaire</p>
+              <p className="mt-2 text-sm leading-6 text-neutral-300">KPI, ecosysteme et pilotage du go to market sans casser la colonne pedagogique.</p>
+              </div>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Stats */}
       <section className="bg-black border-t-2 border-[#C9A84C] py-10">
-        <div className="max-w-4xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {[['3', 'Formations SOFEDUC'], ['2.7', 'UEC Certifiées'], ['24ms', 'Cloud Run Montréal'], ['SOC2', 'Type II · Loi 25']].map(([val, label]) => (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {[['3', 'Formations SOFEDUC'], ['15', 'Seances structurees'], ['4', 'Blocs pedagogiques'], ['2.7', 'UEC Certifiees']].map(([val, label]) => (
             <div key={val}>
               <div className="text-3xl font-black text-[#C9A84C]">{val}</div>
               <div className="text-gray-400 text-[10px] font-black tracking-widest uppercase mt-1">{label}</div>
@@ -39,8 +63,8 @@ export default function HomePage() {
       </section>
 
       {/* 3 Formations */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-black text-center tracking-tighter mb-3">Parcours Certifiés SOFEDUC</h2>
           <p className="text-center text-gray-500 mb-14 text-sm">Taxonomie de Bloom · Session Mars 2026</p>
           <div className="grid md:grid-cols-3 gap-6">
@@ -83,6 +107,33 @@ export default function HomePage() {
               </ul>
               <Link href="/formations/3" className="btn-black block text-center text-[10px]">Commencer →</Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+        <PartnerStrip />
+      </section>
+
+      <section className="py-10 px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl grid gap-4 lg:grid-cols-3">
+          <div className="shell-card">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Espace apprenant</p>
+            <h2 className="mt-3 text-2xl font-black tracking-tight">Experience mobile first</h2>
+            <p className="mt-3 text-sm leading-7 text-neutral-600">Parcours, blocs de cours, evaluations, preuves d apprentissage et attestations.</p>
+            <Link href="/espace/apprenant" className="mt-6 btn-black">Voir l&apos;espace apprenant</Link>
+          </div>
+          <div className="shell-card">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Espace formateur</p>
+            <h2 className="mt-3 text-2xl font-black tracking-tight">Pilotage et qualite</h2>
+            <p className="mt-3 text-sm leading-7 text-neutral-600">Analyse prealable, macrodesign, cohortes, preuves pedagogiques et satisfaction.</p>
+            <Link href="/espace/formateur" className="mt-6 btn-black">Voir l&apos;espace formateur</Link>
+          </div>
+          <div className="dark-shell">
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Control tower</p>
+            <h2 className="mt-3 text-2xl font-black tracking-tight text-white">Go to market actif</h2>
+            <p className="mt-3 text-sm leading-7 text-neutral-300">KPI, ecosysteme, campagnes, offers et lecture vivante des solutions Buttertech.</p>
+            <Link href="/go-to-market" className="mt-6 btn-gold">Ouvrir le control tower</Link>
           </div>
         </div>
       </section>

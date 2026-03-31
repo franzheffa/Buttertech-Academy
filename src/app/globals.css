@@ -3,23 +3,48 @@
 @tailwind utilities;
 
 :root {
+  --blanc: #ffffff;
   --or: #C9A84C;
   --or-light: #E8C96A;
   --noir: #0A0A0A;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(201, 168, 76, 0.14), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #fffaf0 38%, #ffffff 100%);
+  color: #111111;
+}
+
 @layer components {
   .btn-gold {
-    @apply bg-[#C9A84C] text-black font-black text-xs px-8 py-3 tracking-widest uppercase transition-all hover:bg-[#E8C96A] cursor-pointer inline-block;
+    @apply inline-block cursor-pointer bg-[#C9A84C] px-6 py-3 text-xs font-black uppercase tracking-widest text-black transition-all hover:bg-[#E8C96A];
   }
   .btn-black {
-    @apply bg-black text-[#C9A84C] font-black text-xs px-8 py-3 tracking-widest uppercase border-2 border-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-black cursor-pointer inline-block;
+    @apply inline-block cursor-pointer border-2 border-[#C9A84C] bg-black px-6 py-3 text-xs font-black uppercase tracking-widest text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-black;
   }
   .bloom-badge {
     @apply bg-[#C9A84C] text-black text-[10px] font-black px-3 py-1 tracking-widest uppercase;
   }
   .section-title {
     @apply text-3xl font-black tracking-tighter;
+  }
+  .shell-card {
+    @apply rounded-[1.75rem] border border-black/10 bg-white p-5 shadow-[0_20px_60px_rgba(0,0,0,0.06)] sm:p-6;
+  }
+  .dark-shell {
+    @apply rounded-[1.75rem] border border-[#C9A84C]/30 bg-[#050505] p-5 text-white shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:p-6;
+  }
+  .kpi-tile {
+    @apply rounded-[1.5rem] border border-[#C9A84C]/20 bg-white px-4 py-4 shadow-[0_14px_40px_rgba(0,0,0,0.05)];
+  }
+  .gold-grid {
+    background-image: linear-gradient(rgba(201, 168, 76, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(201, 168, 76, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
   .gold { color: var(--or); }
   .bg-gold { background: var(--or); }
