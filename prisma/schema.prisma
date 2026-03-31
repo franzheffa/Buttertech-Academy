@@ -42,9 +42,31 @@ model Sondage {
   id          String   @id @default(cuid())
   formation   String
   email       String?
-  q1 Int q2 Int q3 Int q4 Int q5 Int q6 Int q7 Int q8 Int
+  q1          Int
+  q2          Int
+  q3          Int
+  q4          Int
+  q5          Int
+  q6          Int
+  q7          Int
+  q8          Int
   avgScore    Float
   commentaire String?
   submittedAt DateTime @default(now())
   @@map("sondages")
+}
+
+model AcademyAccess {
+  id           String   @id @default(cuid())
+  email        String
+  role         String
+  displayName  String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  lastLoginAt  DateTime?
+
+  @@unique([email, role])
+  @@index([email])
+  @@map("academy_access")
 }

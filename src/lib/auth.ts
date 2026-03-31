@@ -1,5 +1,7 @@
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { prisma } from '@/lib/prisma'
+import { verifyPassword } from '@/lib/passwords'
 
 type AcademyAccount = {
   id: string
@@ -74,6 +76,46 @@ function getSharedRoleAccount(email: string, password: string, role: string) {
   return null
 }
 
+async function getDatabaseAccount(email: string, password: string, role: string) {
+  const normalizedRole = role === 'teacher' ? 'teacher' : role === 'student' ? 'student' : role === 'admin' ? 'admin' : null
+  const normalizedEmail = email.trim().toLowerCase()
+
+  if (!normalizedRole || !normalizedEmail.includes('@')) {
+    return null
+  }
+
+  try {
+    const account = await prisma.academyAccess.findUnique({
+      where: {
+        email_role: {
+          email: normalizedEmail,
+          role: normalizedRole,
+        },
+      },
+    })
+
+    if (!account || !verifyPassword(password, account.passwordHash)) {
+      return null
+    }
+
+    return {
+      id: account.id,
+      name:
+        account.displayName ||
+        (normalizedRole === 'teacher'
+          ? 'Espace Professeurs'
+          : normalizedRole === 'admin'
+            ? 'Administration Academy'
+            : 'Espace Etudiants'),
+      email: account.email,
+      role: normalizedRole as 'student' | 'teacher' | 'admin',
+    }
+  } catch (error) {
+    console.error('academy auth database lookup failed', error)
+    return null
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
@@ -97,6 +139,12 @@ export const authOptions: NextAuthOptions = {
 
         if (!email || !password) {
           return null
+        }
+
+        const databaseAccount = await getDatabaseAccount(email, password, role)
+
+        if (databaseAccount) {
+          return databaseAccount
         }
 
         const account = getConfiguredAccounts().find(

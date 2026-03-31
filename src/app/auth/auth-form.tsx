@@ -10,8 +10,11 @@ export default function AuthForm() {
   const callbackUrl = searchParams.get('callbackUrl') || ''
   const error = searchParams.get('error')
   const [loading, setLoading] = useState(false)
+  const [registering, setRegistering] = useState(false)
   const [tab, setTab] = useState<'login' | 'register'>('login')
   const [role, setRole] = useState<'student' | 'teacher'>('student')
+  const [registerError, setRegisterError] = useState('')
+  const [registerSuccess, setRegisterSuccess] = useState('')
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -29,6 +32,55 @@ export default function AuthForm() {
     })
 
     setLoading(false)
+  }
+
+  async function handleRegister(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setRegistering(true)
+    setRegisterError('')
+    setRegisterSuccess('')
+
+    const formData = new FormData(event.currentTarget)
+    const email = String(formData.get('registerEmail') || '').trim()
+    const password = String(formData.get('registerPassword') || '')
+    const displayName = String(formData.get('displayName') || '').trim()
+
+    try {
+      const response = await fetch('/api/access/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          displayName,
+          role,
+        }),
+      })
+
+      const payload = await response.json()
+
+      if (!response.ok) {
+        setRegisterError(payload?.error || 'Impossible de creer ton acces pour le moment.')
+        setRegistering(false)
+        return
+      }
+
+      setRegisterSuccess('Acces cree. Tu peux maintenant te connecter avec ce meme email et ce mot de passe.')
+      setTab('login')
+
+      await signIn('credentials', {
+        email,
+        password,
+        role,
+        callbackUrl: callbackUrl || (role === 'teacher' ? '/espace/formateur' : '/espace/apprenant'),
+      })
+    } catch (registerIssue) {
+      setRegisterError('Impossible de creer ton acces pour le moment.')
+    }
+
+    setRegistering(false)
   }
 
   return (
@@ -151,6 +203,12 @@ export default function AuthForm() {
                 Le rôle choisi détermine automatiquement l’espace d’arrivée après connexion.
               </div>
 
+              {registerSuccess ? (
+                <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                  {registerSuccess}
+                </div>
+              ) : null}
+
               {error ? (
                 <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
                   Connexion refusée. Vérifie le rôle choisi, ton email et le mot de passe du rôle activé pour ton accès.
@@ -166,7 +224,7 @@ export default function AuthForm() {
           <div className="mt-5 grid gap-4">
             <h2 className="text-2xl font-black tracking-tight">Créer un accès Academy</h2>
             <p className="text-sm leading-7 text-neutral-600">
-              L’activation passe par un accès étudiants ou professeurs. Choisis ton rôle, puis demande l’activation du mot de passe correspondant.
+              Choisis ton rôle Academy, crée ton mot de passe, puis entre directement dans ton espace sans quitter le site.
             </p>
             <div className="grid gap-3 md:grid-cols-2">
               <div className="soft-panel">
@@ -178,12 +236,56 @@ export default function AuthForm() {
                 <p className="mt-3 text-sm leading-6 text-neutral-700">Accès cohortes, évaluations, rubriques, feedback, conformité et suivi qualité.</p>
               </div>
             </div>
-            <a
-              href="mailto:franzheffa@buttertech.io?subject=Demande%20d%27acc%C3%A8s%20Buttertech%20Academy&body=Bonjour%2C%0AJe%20souhaite%20cr%C3%A9er%20mon%20acc%C3%A8s%20Academy.%0AR%C3%B4le%20souhait%C3%A9%20%3A%20%C3%89tudiants%20ou%20Professeurs.%0AEmail%20Buttertech%20%3A%20"
-              className="btn-black text-center"
-            >
-              Demander mon accès
-            </a>
+            <form onSubmit={handleRegister} className="grid gap-4">
+              <label className="grid gap-2 text-sm font-semibold text-neutral-700">
+                Nom affiché
+                <input
+                  name="displayName"
+                  type="text"
+                  className="rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-[#C9A84C]"
+                  placeholder="Prénom Nom"
+                />
+              </label>
+
+              <label className="grid gap-2 text-sm font-semibold text-neutral-700">
+                Email
+                <input
+                  name="registerEmail"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  className="rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-[#C9A84C]"
+                  placeholder="nom@entreprise.com"
+                />
+              </label>
+
+              <label className="grid gap-2 text-sm font-semibold text-neutral-700">
+                Mot de passe
+                <input
+                  name="registerPassword"
+                  type="password"
+                  required
+                  minLength={8}
+                  autoComplete="new-password"
+                  className="rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-[#C9A84C]"
+                  placeholder="Minimum 8 caractères"
+                />
+              </label>
+
+              <div className="rounded-2xl border border-[#C9A84C]/30 bg-[#C9A84C]/8 px-4 py-3 text-sm text-neutral-700">
+                Le rôle sélectionné en haut sera attaché à cet accès et déterminera l’espace d’arrivée après connexion.
+              </div>
+
+              {registerError ? (
+                <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                  {registerError}
+                </div>
+              ) : null}
+
+              <button type="submit" disabled={registering} className="btn-black text-center disabled:opacity-60">
+                {registering ? 'Création...' : 'Créer mon accès'}
+              </button>
+            </form>
           </div>
         )}
       </section>
