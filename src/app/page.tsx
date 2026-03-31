@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar'
-import PartnerStrip from '@/components/PartnerStrip'
 import Link from 'next/link'
 
 export default function HomePage() {
@@ -9,7 +8,7 @@ export default function HomePage() {
 
       {/* Hero */}
       <header className="bg-black text-white px-4 py-16 sm:px-6 sm:py-24">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div>
             <div className="inline-block border border-[#C9A84C] text-[#C9A84C] text-[10px] font-black px-4 py-2 tracking-widest uppercase mb-8">
               Leader IA Reglementee · Google & NVIDIA Partner · SOFEDUC Agree
@@ -20,30 +19,30 @@ export default function HomePage() {
             </h1>
             <p className="text-neutral-300 text-base max-w-2xl mb-10 leading-7">
               Une academie structuree selon les normes de planification, de delivery et d evaluation attendues en contexte SOFEDUC,
-              avec des espaces dedies aux apprenants et aux formateurs pour le synchrone et l asynchrone.
+              avec des espaces dedies aux etudiants et aux professeurs pour le synchrone et l asynchrone.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/formations" className="btn-gold">Voir les formations →</Link>
-              <Link href="/espace/apprenant" className="btn-black">Entrer dans l&apos;espace apprenant</Link>
+              <Link href="/espace/apprenant" className="btn-black">Entrer dans l&apos;espace étudiants</Link>
             </div>
           </div>
 
           <div className="rounded-[2rem] border border-[#C9A84C]/30 bg-white/[0.04] p-5 sm:p-6">
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4">
               <div className="rounded-[1.5rem] border border-white/10 bg-black/40 p-4">
-                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Apprenant</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Étudiants</p>
                 <p className="mt-3 text-xl font-black">Cockpit de progression</p>
-              <p className="mt-2 text-sm leading-6 text-neutral-300">Objectifs, blocs de cours, preuves, attestations et suivi de progression.</p>
+                <p className="mt-2 text-sm leading-6 text-neutral-300">Objectifs, blocs de cours, preuves, attestations et suivi de progression.</p>
               </div>
               <div className="rounded-[1.5rem] border border-white/10 bg-black/40 p-4">
-                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Formateur</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Professeurs</p>
                 <p className="mt-3 text-xl font-black">Pilotage de cohortes</p>
-              <p className="mt-2 text-sm leading-6 text-neutral-300">Analyse prealable, macrodesign, delivery, traces et qualite.</p>
+                <p className="mt-2 text-sm leading-6 text-neutral-300">Analyse prealable, macrodesign, delivery, traces et qualite.</p>
               </div>
-              <div className="rounded-[1.5rem] border border-white/10 bg-black/40 p-4 sm:col-span-2">
-                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Go to market</p>
-                <p className="mt-3 text-xl font-black">Control tower partenaire</p>
-              <p className="mt-2 text-sm leading-6 text-neutral-300">KPI, ecosysteme et pilotage du go to market sans casser la colonne pedagogique.</p>
+              <div className="rounded-[1.5rem] border border-white/10 bg-black/40 p-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">AI Studio</p>
+                <p className="mt-3 text-xl font-black">Studio IA séparé</p>
+                <p className="mt-2 text-sm leading-6 text-neutral-300">Workflow, orchestration et experimentation IA en dehors du site Academy.</p>
               </div>
             </div>
           </div>
@@ -111,29 +110,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
-        <PartnerStrip />
-      </section>
-
       <section className="py-10 px-4 sm:px-6">
         <div className="mx-auto max-w-6xl grid gap-4 lg:grid-cols-3">
           <div className="shell-card">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Espace apprenant</p>
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Espace étudiants</p>
             <h2 className="mt-3 text-2xl font-black tracking-tight">Experience mobile first</h2>
             <p className="mt-3 text-sm leading-7 text-neutral-600">Parcours, blocs de cours, evaluations, preuves d apprentissage et attestations.</p>
-            <Link href="/espace/apprenant" className="mt-6 btn-black">Voir l&apos;espace apprenant</Link>
+            <Link href="/espace/apprenant" className="mt-6 btn-black">Voir l&apos;espace étudiants</Link>
           </div>
           <div className="shell-card">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Espace formateur</p>
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Espace professeurs</p>
             <h2 className="mt-3 text-2xl font-black tracking-tight">Pilotage et qualite</h2>
             <p className="mt-3 text-sm leading-7 text-neutral-600">Analyse prealable, macrodesign, cohortes, preuves pedagogiques et satisfaction.</p>
-            <Link href="/espace/formateur" className="mt-6 btn-black">Voir l&apos;espace formateur</Link>
+            <Link href="/espace/formateur" className="mt-6 btn-black">Voir l&apos;espace professeurs</Link>
           </div>
           <div className="dark-shell">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Control tower</p>
-            <h2 className="mt-3 text-2xl font-black tracking-tight text-white">Go to market actif</h2>
-            <p className="mt-3 text-sm leading-7 text-neutral-300">KPI, ecosysteme, campagnes, offers et lecture vivante des solutions Buttertech.</p>
-            <Link href="/go-to-market" className="mt-6 btn-gold">Ouvrir le control tower</Link>
+            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">AI Studio</p>
+            <h2 className="mt-3 text-2xl font-black tracking-tight text-white">Surface IA dédiée</h2>
+            <p className="mt-3 text-sm leading-7 text-neutral-300">Accès séparé au studio IA Smith-Heffa pour les usages multimodaux et l’orchestration avancée.</p>
+            <a href="https://aistudio-smith-heffa.vercel.app" target="_blank" rel="noopener noreferrer" className="mt-6 btn-gold">Ouvrir AI Studio</a>
           </div>
         </div>
       </section>

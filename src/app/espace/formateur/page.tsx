@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar'
-import PartnerStrip from '@/components/PartnerStrip'
 import { teacherJourney } from '@/lib/academy-data'
 import Link from 'next/link'
 
@@ -12,7 +11,7 @@ export default function EspaceFormateurPage() {
           <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#C9A84C]">Analyse prealable et macrodesign</p>
-              <h1 className="mt-4 text-4xl font-black tracking-tight text-black sm:text-5xl">{teacherJourney.hero.title}</h1>
+              <h1 className="mt-4 text-4xl font-black tracking-tight text-black sm:text-5xl">Espace Professeurs et Macrodesign</h1>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base">
                 {teacherJourney.hero.subtitle}
               </p>
@@ -173,7 +172,6 @@ export default function EspaceFormateurPage() {
           </div>
         </section>
 
-        <PartnerStrip variant="dark" />
       </main>
     </>
   )

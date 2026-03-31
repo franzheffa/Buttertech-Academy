@@ -28,9 +28,9 @@ export default function Navbar() {
             <Link href="/" className="hover:text-[#C9A84C] transition-colors">Accueil</Link>
             <Link href="/formations" className="hover:text-[#C9A84C] transition-colors">Formations</Link>
             <Link href="/espace" className="hover:text-[#C9A84C] transition-colors">Espace</Link>
-            <Link href="/espace/apprenant" className="hover:text-[#C9A84C] transition-colors">Apprenant</Link>
-            <Link href="/espace/formateur" className="hover:text-[#C9A84C] transition-colors">Formateur</Link>
-            <Link href="/go-to-market" className="hover:text-[#C9A84C] transition-colors">Go To Market</Link>
+            <Link href="/espace/apprenant" className="hover:text-[#C9A84C] transition-colors">Étudiants</Link>
+            <Link href="/espace/formateur" className="hover:text-[#C9A84C] transition-colors">Professeurs</Link>
+            <a href="https://aistudio-smith-heffa.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-[#C9A84C] transition-colors">AI Studio</a>
             <Link href="/simulateur" className="hover:text-[#C9A84C] transition-colors">Simulateur IA</Link>
           </div>
         </div>

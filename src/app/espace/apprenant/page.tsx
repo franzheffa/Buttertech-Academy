@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar'
-import PartnerStrip from '@/components/PartnerStrip'
 import { studentJourney } from '@/lib/academy-data'
 import Link from 'next/link'
 
@@ -12,7 +11,7 @@ export default function EspaceApprenantPage() {
           <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#C9A84C]">Parcours synchrone et asynchrone</p>
-              <h1 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">{studentJourney.hero.title}</h1>
+              <h1 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Espace Étudiants SOFEDUC</h1>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-300 sm:text-base">
                 {studentJourney.hero.subtitle}
               </p>
@@ -177,7 +176,6 @@ export default function EspaceApprenantPage() {
           </article>
         </section>
 
-        <PartnerStrip />
       </main>
     </>
   )
