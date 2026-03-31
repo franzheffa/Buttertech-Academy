@@ -26,6 +26,19 @@ const FORMATIONS: Record<string, {
         points: ['20 questions · seuil réussite 70% · attestation SOFEDUC', 'Concevoir un schéma d\'architecture multi-agents complet', '0.6 UEC SOFEDUC · BTA-AGENTS-001 · archivage 7 ans'] },
     ],
   },
+  '2': {
+    titre: 'IA Responsable & Loi 25',
+    sousTitre: 'Conformité & Gouvernance Mondiale de l’IA',
+    code: 'BTA-IARG-002', uec: 0.7, bloom: '2→5', duree: '7 heures',
+    description: 'Comprenez les obligations de conformité, les cadres réglementaires mondiaux et les preuves exigées pour déployer des solutions IA en contexte institutionnel et entreprise. Cette vue donne accès au contenu détaillé du parcours et complète la route dédiée /formation2.',
+    modules: [
+      { num: 1, titre: 'Loi 25 — Principes Fondamentaux au Québec', duree: '1h30', bloom: 'COMPRENDRE (2)', points: ['Consentement explicite et gouvernance des renseignements personnels', 'Responsable de la protection des renseignements personnels', 'Évaluation formative et quiz de compréhension'] },
+      { num: 2, titre: 'RGPD & Équivalences Mondiales', duree: '1h30', bloom: 'COMPRENDRE (2)', points: ['RGPD, UK-GDPR, LGPD et extraterritorialité', 'Lecture comparative des obligations et sanctions', 'Repères pour l’enseignement et les opérations'] },
+      { num: 3, titre: 'AI Act UE — Classification des risques', duree: '1h30', bloom: 'ANALYSER (4)', points: ['Niveaux de risque et obligations associées', 'Traçabilité, registre et exigences de conformité', 'Applications concrètes pour les usages IA'] },
+      { num: 4, titre: 'Déploiement Cloud Conforme — Privacy by Design', duree: '1h30', bloom: 'ANALYSER (4)', points: ['Cloud Run Montréal et principes de sécurité', 'Secret Manager, chiffrement et journalisation', 'Architecture de déploiement responsable'] },
+      { num: 5, titre: 'Audit SOFEDUC & Certification — Quiz Final', duree: '1h00', bloom: 'ÉVALUER (5)', points: ['Checklist de conformité et preuves attendues', 'Quiz final avec seuil de réussite', 'Attestation et archivage pédagogique'] },
+    ],
+  },
   '3': {
     titre: 'Productivité Agentique',
     sousTitre: 'Prompt Engineering P.T.C.F. & Automatisation Cloud',
@@ -40,6 +53,10 @@ const FORMATIONS: Record<string, {
         points: ['Cloud Run vs Zapier · Cloud Functions · triggers', 'Apps Script : script fonctionnel + sécurité + déploiement', 'Atelier final : pipeline automatisé complet · certification'] },
     ],
   },
+}
+
+export function generateStaticParams() {
+  return Object.keys(FORMATIONS).map((slug) => ({ slug }))
 }
 
 export default function FormationSlugPage({ params }: { params: { slug: string } }) {

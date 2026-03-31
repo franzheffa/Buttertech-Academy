@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 export default function AuthForm() {
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/espace'
+  const callbackUrl = searchParams.get('callbackUrl') || ''
   const error = searchParams.get('error')
   const [loading, setLoading] = useState(false)
   const [tab, setTab] = useState<'login' | 'register'>('login')
@@ -19,12 +19,13 @@ export default function AuthForm() {
     const formData = new FormData(event.currentTarget)
     const email = String(formData.get('email') || '')
     const password = String(formData.get('password') || '')
+    const targetUrl = callbackUrl || (role === 'teacher' ? '/espace/formateur' : '/espace/apprenant')
 
     await signIn('credentials', {
       email,
       password,
       role,
-      callbackUrl,
+      callbackUrl: targetUrl,
     })
 
     setLoading(false)
@@ -83,7 +84,7 @@ export default function AuthForm() {
           <>
             <h2 className="mt-5 text-2xl font-black tracking-tight">Ouvrir votre session</h2>
             <p className="mt-3 text-sm leading-7 text-neutral-600">
-              Utilise ton email Buttertech et choisis le bon rôle Academy avant de te connecter.
+              Utilise ton email habituel, choisis le bon rôle Academy, puis entre le mot de passe du rôle qui t’a été activé.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -104,6 +105,21 @@ export default function AuthForm() {
               ))}
             </div>
 
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <div className="soft-panel">
+                <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#C9A84C]">Étudiants</p>
+                <p className="mt-3 text-sm leading-6 text-neutral-700">
+                  Accès à la progression, aux blocs, aux remises, aux attestations et aux activités synchrones et asynchrones.
+                </p>
+              </div>
+              <div className="soft-panel">
+                <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#C9A84C]">Professeurs</p>
+                <p className="mt-3 text-sm leading-6 text-neutral-700">
+                  Accès aux cohortes, aux grilles d’évaluation, aux preuves pédagogiques et au pilotage qualité.
+                </p>
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
               <input name="role" type="hidden" value={role} />
 
@@ -113,8 +129,9 @@ export default function AuthForm() {
                   name="email"
                   type="email"
                   required
+                  autoComplete="username"
                   className="rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-[#C9A84C]"
-                  placeholder="nom@buttertech.io"
+                  placeholder="nom@entreprise.com"
                 />
               </label>
 
@@ -124,14 +141,19 @@ export default function AuthForm() {
                   name="password"
                   type="password"
                   required
+                  autoComplete="current-password"
                   className="rounded-2xl border border-black/10 bg-white px-4 py-3 outline-none transition focus:border-[#C9A84C]"
                   placeholder="••••••••••"
                 />
               </label>
 
+              <div className="rounded-2xl border border-[#C9A84C]/30 bg-[#C9A84C]/8 px-4 py-3 text-sm text-neutral-700">
+                Le rôle choisi détermine automatiquement l’espace d’arrivée après connexion.
+              </div>
+
               {error ? (
                 <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-                  Connexion refusée. Vérifie le rôle choisi, ton email Buttertech et le mot de passe associé.
+                  Connexion refusée. Vérifie le rôle choisi, ton email et le mot de passe du rôle activé pour ton accès.
                 </div>
               ) : null}
 
@@ -144,7 +166,7 @@ export default function AuthForm() {
           <div className="mt-5 grid gap-4">
             <h2 className="text-2xl font-black tracking-tight">Créer un accès Academy</h2>
             <p className="text-sm leading-7 text-neutral-600">
-              L’activation passe par un accès étudiants ou professeurs. Utilise ton adresse Buttertech, puis demande l’activation du mot de passe correspondant.
+              L’activation passe par un accès étudiants ou professeurs. Choisis ton rôle, puis demande l’activation du mot de passe correspondant.
             </p>
             <div className="grid gap-3 md:grid-cols-2">
               <div className="soft-panel">

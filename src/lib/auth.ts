@@ -49,7 +49,7 @@ function getSharedRoleAccount(email: string, password: string, role: string) {
   const normalizedRole = role === 'teacher' ? 'teacher' : role === 'student' ? 'student' : null
   const normalizedEmail = email.trim().toLowerCase()
 
-  if (!normalizedRole || !normalizedEmail.endsWith('@buttertech.io')) {
+  if (!normalizedRole || !normalizedEmail.includes('@')) {
     return null
   }
 
