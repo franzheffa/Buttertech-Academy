@@ -45,6 +45,35 @@ function getConfiguredAccounts(): AcademyAccount[] {
   return accounts
 }
 
+function getSharedRoleAccount(email: string, password: string, role: string) {
+  const normalizedRole = role === 'teacher' ? 'teacher' : role === 'student' ? 'student' : null
+  const normalizedEmail = email.trim().toLowerCase()
+
+  if (!normalizedRole || !normalizedEmail.endsWith('@buttertech.io')) {
+    return null
+  }
+
+  if (normalizedRole === 'student' && process.env.ACADEMY_STUDENT_PASSWORD && password === process.env.ACADEMY_STUDENT_PASSWORD) {
+    return {
+      id: `academy-student-${normalizedEmail}`,
+      name: 'Espace Etudiants',
+      email: normalizedEmail,
+      role: 'student' as const,
+    }
+  }
+
+  if (normalizedRole === 'teacher' && process.env.ACADEMY_TEACHER_PASSWORD && password === process.env.ACADEMY_TEACHER_PASSWORD) {
+    return {
+      id: `academy-teacher-${normalizedEmail}`,
+      name: 'Espace Professeurs',
+      email: normalizedEmail,
+      role: 'teacher' as const,
+    }
+  }
+
+  return null
+}
+
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
@@ -59,10 +88,12 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Mot de passe', type: 'password' },
+        role: { label: 'Role', type: 'text' },
       },
       async authorize(credentials) {
         const email = credentials?.email?.trim().toLowerCase()
         const password = credentials?.password ?? ''
+        const role = String(credentials?.role || '').trim().toLowerCase()
 
         if (!email || !password) {
           return null
@@ -73,7 +104,11 @@ export const authOptions: NextAuthOptions = {
         )
 
         if (!account) {
-          return null
+          const sharedAccount = getSharedRoleAccount(email, password, role)
+          if (!sharedAccount) {
+            return null
+          }
+          return sharedAccount
         }
 
         return {
