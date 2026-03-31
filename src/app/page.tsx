@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar'
+import PartnerProofBar from '@/components/PartnerProofBar'
 import Link from 'next/link'
 
 export default function HomePage() {
@@ -108,6 +109,10 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+        <PartnerProofBar />
       </section>
 
       <section className="py-10 px-4 sm:px-6">

@@ -138,6 +138,11 @@ export const studentJourney = {
     { title: 'Badge de competence intermediaire', state: 'En preparation', detail: 'Delivre apres le bloc 2 et la grille d observation.' },
     { title: 'Attestation finale SOFEDUC', state: 'Conditionnelle', detail: 'Publiee apres epreuve finale, sondage et portfolio conformes.' },
   ],
+  partnerProof: [
+    'Google for Education pour la structure pedagogique et l adoption en contexte educatif',
+    'Google Workspace for Education pour les supports, depots et collaboration',
+    'Gemini pour l accompagnement IA contextuel dans les parcours',
+  ],
 } as const
 
 export const teacherJourney = {
@@ -234,6 +239,11 @@ export const teacherJourney = {
     { learner: 'Cohorte A · 2 apprenants', issue: 'Absence a la derniere seance synchrone', action: 'Relance + replay + mini checkpoint' },
     { learner: 'Cohorte B · 1 apprenant', issue: 'Portfolio incomplet', action: 'Feedback cible et deadline adaptee' },
     { learner: 'Cohorte C · 3 apprenants', issue: 'Quiz bloc 2 sous le seuil', action: 'Atelier de remobilisation' },
+  ],
+  partnerProof: [
+    'Google for Education Partner pour le signal institutionnel visible',
+    'Google Workspace for Education pour la logistique de cohortes et les ressources',
+    'Google Cloud pour l execution et la securisation des experiences IA',
   ],
 } as const
 

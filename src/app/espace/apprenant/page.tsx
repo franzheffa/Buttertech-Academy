@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar'
+import PartnerProofBar from '@/components/PartnerProofBar'
 import { studentJourney } from '@/lib/academy-data'
 import Link from 'next/link'
 
@@ -44,6 +45,8 @@ export default function EspaceApprenantPage() {
             </article>
           ))}
         </section>
+
+        <PartnerProofBar />
 
         <section className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <article className="shell-card">
@@ -174,6 +177,17 @@ export default function EspaceApprenantPage() {
               ))}
             </div>
           </article>
+        </section>
+
+        <section className="shell-card">
+          <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Repères partenaires</p>
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            {studentJourney.partnerProof.map((item) => (
+              <div key={item} className="soft-panel text-sm leading-6 text-neutral-700">
+                {item}
+              </div>
+            ))}
+          </div>
         </section>
 
       </main>

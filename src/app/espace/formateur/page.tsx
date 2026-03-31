@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar'
+import PartnerProofBar from '@/components/PartnerProofBar'
 import { teacherJourney } from '@/lib/academy-data'
 import Link from 'next/link'
 
@@ -16,7 +17,7 @@ export default function EspaceFormateurPage() {
                 {teacherJourney.hero.subtitle}
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href="/go-to-market" className="btn-gold">Piloter le go to market</Link>
+                <Link href="/simulateur" className="btn-gold">Ouvrir le simulateur IA</Link>
                 <Link href="/sondage" className="btn-black">Suivre la satisfaction</Link>
               </div>
             </div>
@@ -45,6 +46,8 @@ export default function EspaceFormateurPage() {
             </article>
           ))}
         </section>
+
+        <PartnerProofBar emphasis="academy" />
 
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {teacherJourney.cockpit.map((metric) => (
@@ -168,6 +171,17 @@ export default function EspaceFormateurPage() {
                   ))}
                 </ul>
               </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="shell-card">
+          <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Présence partenaire dans le delivery</p>
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            {teacherJourney.partnerProof.map((item) => (
+              <div key={item} className="soft-panel text-sm leading-6 text-neutral-700">
+                {item}
+              </div>
             ))}
           </div>
         </section>
