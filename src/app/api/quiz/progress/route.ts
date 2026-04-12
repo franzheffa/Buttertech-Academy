@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getCurrentAcademyIdentity } from '@/lib/academy-session'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     const identity = await getCurrentAcademyIdentity()

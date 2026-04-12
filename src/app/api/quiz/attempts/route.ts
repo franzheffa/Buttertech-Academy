@@ -3,6 +3,8 @@ import { getCurrentAcademyIdentity } from '@/lib/academy-session'
 import { prisma } from '@/lib/prisma'
 import { getQuizDefinition } from '@/lib/quiz-registry'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request) {
   try {
     const identity = await getCurrentAcademyIdentity()
