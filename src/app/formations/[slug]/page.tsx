@@ -137,6 +137,7 @@ export default function FormationSlugPage({ params }: { params: { slug: string }
 
         <QuizCard
           storageKey={`academy-formation-${params.slug}-quiz`}
+          quizKey={`formation:${params.slug}`}
           title={`Quiz actif — ${formation.titre}`}
           description="Chaque parcours dispose maintenant d un quiz de validation rapide pour repetition, revision et verification de la comprehension avant ou apres evaluation formelle."
           questions={formationQuizzes[params.slug]}

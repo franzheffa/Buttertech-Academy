@@ -113,6 +113,7 @@ export default function Formation2ModulePage({ params }: { params: { module: str
         <div className="mt-8">
           <QuizCard
             storageKey={`academy-module-${params.module}-quiz`}
+            quizKey={`module:${params.module}`}
             title={`Quiz du module — ${moduleData.titre}`}
             description="Chaque module est maintenant accompagne d un quiz actif pour revision, repetition et verification locale des acquis avant le passage a la suite."
             questions={moduleQuizzes[params.module]}

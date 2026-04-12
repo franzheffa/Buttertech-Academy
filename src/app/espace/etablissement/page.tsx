@@ -1,5 +1,8 @@
 import Navbar from '@/components/Navbar'
+import OfferCatalogSection from '@/components/OfferCatalogSection'
 import Link from 'next/link'
+
+export const dynamic = 'force-dynamic'
 
 const campusStacks = [
   {
@@ -25,7 +28,7 @@ const commerceRows = [
   ['Direction et operations', 'Reporting, gouvernance, bundles premium et coordination avec le paygate.'],
 ]
 
-export default function EspaceEtablissementPage() {
+export default async function EspaceEtablissementPage() {
   return (
     <>
       <Navbar />
@@ -82,6 +85,15 @@ export default function EspaceEtablissementPage() {
               ))}
             </div>
           </article>
+        </section>
+
+        <section className="mt-8">
+          <OfferCatalogSection
+            audience="institution"
+            kicker="Catalogue institutionnel"
+            title="Offres campus avec activation et rails de paiement"
+            description="Les bundles campus, premium et services d adoption sont maintenant sortis d un catalogue persistant. Chaque offre peut ouvrir une intention de paiement ou d activation directement depuis l espace etablissement."
+          />
         </section>
       </main>
     </>

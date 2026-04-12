@@ -1,7 +1,11 @@
 import Navbar from '@/components/Navbar'
+import OfferCatalogSection from '@/components/OfferCatalogSection'
 import PartnerProofBar from '@/components/PartnerProofBar'
+import QuizProgressPanel from '@/components/QuizProgressPanel'
 import { studentJourney } from '@/lib/academy-data'
 import Link from 'next/link'
+
+export const dynamic = 'force-dynamic'
 
 const aiActions = [
   { emoji: '📝', title: 'Resumes de cours', text: 'Transformer un module en fiche de revision ou plan oral en quelques minutes.' },
@@ -9,7 +13,7 @@ const aiActions = [
   { emoji: '💡', title: 'Coaching IA', text: 'Demander une explication, un exemple, un plan de projet ou une revision avant quiz.' },
 ]
 
-export default function EspaceApprenantPage() {
+export default async function EspaceApprenantPage() {
   return (
     <>
       <Navbar />
@@ -61,6 +65,15 @@ export default function EspaceApprenantPage() {
             </article>
           ))}
         </section>
+
+        <OfferCatalogSection
+          audience="student"
+          kicker="Catalogue IA et paiements"
+          title="Packs IA persistants et paiement par offre"
+          description="Chaque offre etudiante est maintenant issue d un catalogue Prisma. Les activations peuvent partir en carte, mobile money, Orange Money ou Interac selon le pack selectionne."
+        />
+
+        <QuizProgressPanel />
 
         <section className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <article className="shell-card">

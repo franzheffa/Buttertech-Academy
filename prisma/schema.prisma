@@ -65,8 +65,105 @@ model AcademyAccess {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   lastLoginAt  DateTime?
+  purchaseIntents PurchaseIntent[]
+  quizAttempts    QuizAttempt[]
+  learningProgress LearningProgress[]
 
   @@unique([email, role])
   @@index([email])
   @@map("academy_access")
+}
+
+model CatalogOffer {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  title            String
+  subtitle         String?
+  description      String
+  audience         String
+  category         String
+  emoji            String?
+  priceCents       Int
+  currency         String   @default("CAD")
+  billingInterval  String?
+  active           Boolean  @default(true)
+  position         Int      @default(0)
+  paygateProductCode String?
+  paygateBaseUrl   String?
+  externalUrl      String?
+  metadata         Json?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  purchaseIntents  PurchaseIntent[]
+
+  @@index([audience, active, position])
+  @@map("catalog_offers")
+}
+
+model PurchaseIntent {
+  id              String         @id @default(cuid())
+  offerId         String
+  academyAccessId String?
+  email           String?
+  role            String?
+  paymentRail     String
+  status          String         @default("created")
+  amountCents     Int
+  currency        String
+  checkoutUrl     String?
+  metadata        Json?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  offer           CatalogOffer   @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  academyAccess   AcademyAccess? @relation(fields: [academyAccessId], references: [id], onDelete: SetNull)
+
+  @@index([offerId, createdAt])
+  @@index([academyAccessId, createdAt])
+  @@index([email, role, createdAt])
+  @@map("purchase_intents")
+}
+
+model QuizAttempt {
+  id              String         @id @default(cuid())
+  academyAccessId String?
+  email           String?
+  role            String?
+  quizKey         String
+  formationCode   String?
+  moduleKey       String?
+  score           Int
+  totalQuestions  Int
+  percentage      Int
+  passed          Boolean
+  answers         Json
+  submittedAt     DateTime       @default(now())
+  academyAccess   AcademyAccess? @relation(fields: [academyAccessId], references: [id], onDelete: SetNull)
+
+  @@index([academyAccessId, submittedAt])
+  @@index([email, role, submittedAt])
+  @@index([quizKey, submittedAt])
+  @@map("quiz_attempts")
+}
+
+model LearningProgress {
+  id               String         @id @default(cuid())
+  academyAccessId  String?
+  email            String?
+  role             String?
+  progressKey      String
+  formationCode    String?
+  moduleKey        String?
+  bestScore        Int            @default(0)
+  lastScore        Int            @default(0)
+  attemptsCount    Int            @default(0)
+  completionStatus String         @default("in_progress")
+  completedAt      DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  academyAccess    AcademyAccess? @relation(fields: [academyAccessId], references: [id], onDelete: SetNull)
+
+  @@index([academyAccessId, updatedAt])
+  @@index([email, role, updatedAt])
+  @@index([progressKey])
+  @@map("learning_progress")
 }

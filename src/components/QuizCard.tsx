@@ -5,14 +5,17 @@ import type { QuizQuestion } from '@/lib/quiz-data'
 
 type QuizCardProps = {
   storageKey: string
+  quizKey: string
   title: string
   description: string
   questions: QuizQuestion[]
 }
 
-export default function QuizCard({ storageKey, title, description, questions }: QuizCardProps) {
+export default function QuizCard({ storageKey, quizKey, title, description, questions }: QuizCardProps) {
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [syncMessage, setSyncMessage] = useState<string | null>(null)
+  const [syncing, setSyncing] = useState(false)
 
   const answeredCount = Object.keys(answers).length
   const ready = answeredCount === questions.length
@@ -80,7 +83,8 @@ export default function QuizCard({ storageKey, title, description, questions }: 
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#C9A84C]">Resultat</p>
             <p className="mt-2 text-sm leading-7 text-neutral-600">
-              Seuil conseille: 70%. Ce quiz reste local a la session de l utilisateur et peut servir de repetition ou de validation interne.
+              Seuil conseille: 70%. Ce quiz garde un mode local pour la stabilite et enregistre aussi la progression Prisma
+              quand l utilisateur est connecte.
             </p>
           </div>
           {submitted ? <div className="text-right"><p className="text-3xl font-black text-black">{percentage}%</p><p className="text-xs font-black uppercase tracking-[0.16em] text-neutral-500">{score}/{questions.length} bonnes reponses</p></div> : null}
@@ -88,14 +92,39 @@ export default function QuizCard({ storageKey, title, description, questions }: 
         <div className="mt-5 flex flex-wrap gap-3">
           <button
             type="button"
-            disabled={!ready}
-            onClick={() => {
+            disabled={!ready || syncing}
+            onClick={async () => {
               window.localStorage.setItem(storageKey, JSON.stringify(answers))
               setSubmitted(true)
+              setSyncMessage(null)
+
+              setSyncing(true)
+
+              try {
+                const response = await fetch('/api/quiz/attempts', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ quizKey, answers }),
+                })
+
+                const data = await response.json()
+
+                if (response.ok) {
+                  setSyncMessage(`Progression enregistree · ${data.result?.percentage ?? percentage}%`)
+                } else if (response.status === 401) {
+                  setSyncMessage('Mode local actif. Connecte-toi pour synchroniser les scores et la progression.')
+                } else {
+                  setSyncMessage(data?.error || 'Correction effectuee, mais la synchronisation serveur a echoue.')
+                }
+              } catch {
+                setSyncMessage('Correction locale enregistree. Synchronisation temporairement indisponible.')
+              } finally {
+                setSyncing(false)
+              }
             }}
             className="btn-gold disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {ready ? 'Corriger le quiz' : `Repondre aux ${questions.length - answeredCount} questions restantes`}
+            {ready ? (syncing ? 'Synchronisation...' : 'Corriger le quiz') : `Repondre aux ${questions.length - answeredCount} questions restantes`}
           </button>
           <button
             type="button"
@@ -103,12 +132,14 @@ export default function QuizCard({ storageKey, title, description, questions }: 
               window.localStorage.removeItem(storageKey)
               setAnswers({})
               setSubmitted(false)
+              setSyncMessage(null)
             }}
             className="btn-black"
           >
             Reinitialiser
           </button>
         </div>
+        {syncMessage ? <p className="mt-4 text-sm leading-6 text-neutral-600">{syncMessage}</p> : null}
       </div>
     </section>
   )
