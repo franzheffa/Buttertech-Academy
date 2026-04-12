@@ -6,7 +6,7 @@ export async function GET() {
     service: 'buttertech-academy',
     version: '1.0.0',
     region: process.env.GOOGLE_CLOUD_REGION ?? 'northamerica-northeast1',
-    sofeduc: 'BTA-PA-001 · BTA-IARG-002',
+    academyTracks: ['BTA-AGENTS-001', 'BTA-IARG-002', 'BTA-PA-001'],
     timestamp: new Date().toISOString(),
   })
 }

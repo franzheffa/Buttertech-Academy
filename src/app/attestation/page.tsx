@@ -1,4 +1,5 @@
 'use client'
+
 import { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
@@ -6,115 +7,95 @@ import Link from 'next/link'
 export default function AttestationPage() {
   const [nom, setNom] = useState('')
   const [editing, setEditing] = useState(true)
-  const [certNum] = useState(`BTA-2026-${Math.random().toString(36).slice(2,6).toUpperCase()}`)
-  const now = new Date().toLocaleDateString('fr-CA', {year:'numeric',month:'long',day:'numeric'})
-  const displayNom = nom.trim() || '[ Prénom NOM du Participant ]'
+  const [certNum] = useState(`BTA-2026-${Math.random().toString(36).slice(2, 6).toUpperCase()}`)
+  const now = new Date().toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })
+  const displayNom = nom.trim() || '[ Prenom NOM du participant ]'
 
   return (
     <>
       <div className="no-print">
         <Navbar />
-        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/espace" className="text-sm text-gray-500 hover:text-black transition-colors">← Mon Espace</Link>
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
+          <Link href="/espace" className="text-sm text-gray-500 transition-colors hover:text-black">← Mon espace</Link>
           <div className="flex gap-3">
-            <button onClick={() => setEditing(!editing)}
-              className={editing ? 'btn-gold text-xs' : 'btn-black text-xs'}>
-              {editing ? '✓ Confirmer le nom' : '✏️ Modifier le nom'}
+            <button onClick={() => setEditing(!editing)} className={editing ? 'btn-gold text-xs' : 'btn-black text-xs'}>
+              {editing ? 'Confirmer le nom' : 'Modifier le nom'}
             </button>
-            <button onClick={() => window.print()} className="btn-gold text-xs">🖨️ Imprimer / PDF</button>
+            <button onClick={() => window.print()} className="btn-gold text-xs">Imprimer / PDF</button>
           </div>
         </div>
 
-        {editing && (
-          <div className="max-w-3xl mx-auto px-6 pb-4">
+        {editing ? (
+          <div className="mx-auto max-w-3xl px-6 pb-4">
             <input
               value={nom}
-              onChange={e => setNom(e.target.value)}
+              onChange={(event) => setNom(event.target.value)}
               placeholder="Entrez votre nom complet (ex: Marie Dupont)"
-              className="w-full border-2 border-[#C9A84C] rounded px-4 py-3 text-base focus:outline-none font-bold text-center"
+              className="w-full rounded border-2 border-[#C9A84C] px-4 py-3 text-center text-base font-bold focus:outline-none"
               autoFocus
             />
-            <p className="text-xs text-gray-400 text-center mt-1">Ce nom apparaîtra sur votre attestation officielle SOFEDUC</p>
+            <p className="mt-1 text-center text-xs text-gray-400">Ce nom apparaitra sur votre attestation Buttertech Academy.</p>
           </div>
-        )}
+        ) : null}
       </div>
 
-      {/* ATTESTATION — Print-ready */}
-      <div className="max-w-3xl mx-auto px-6 pb-10">
+      <div className="mx-auto max-w-3xl px-6 pb-10">
         <div className="border-4 border-[#C9A84C] p-1 shadow-2xl">
           <div className="border border-[#F5E6B0] p-10">
-
-            {/* En-tête */}
-            <div className="bg-black text-center py-4 mb-10">
-              <p className="text-[11px] font-black tracking-[0.3em] uppercase text-[#C9A84C]">
-                BUTTERTECH ACADEMY · SOFEDUC AGRÉÉ · NVIDIA INCEPTION · GOOGLE FOR EDUCATION
-              </p>
+            <div className="mb-10 bg-black py-4 text-center">
+              <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#C9A84C]">BUTTERTECH ACADEMY · GOOGLE FOR EDUCATION · GEMINI · NVIDIA INCEPTION</p>
             </div>
 
-            {/* Corps */}
             <div className="text-center">
-              <p className="text-xs font-black tracking-[0.3em] uppercase text-[#C9A84C] mb-3">
-                ATTESTATION DE RÉUSSITE
-              </p>
-              <div className="w-24 h-0.5 bg-[#C9A84C] mx-auto mb-8" />
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.3em] text-[#C9A84C]">ATTESTATION DE REUSSITE</p>
+              <div className="mx-auto mb-8 h-0.5 w-24 bg-[#C9A84C]" />
 
-              <p className="text-gray-500 italic mb-5 text-sm">La présente atteste que</p>
-
-              <div className="border-b-2 border-[#C9A84C] mx-12 pb-2 mb-5">
+              <p className="mb-5 text-sm italic text-gray-500">La presente atteste que</p>
+              <div className="mx-12 mb-5 border-b-2 border-[#C9A84C] pb-2">
                 <p className="text-3xl font-black italic text-gray-900">{displayNom}</p>
               </div>
+              <p className="mb-4 text-sm italic text-gray-500">a complete avec succes la formation</p>
+              <p className="mb-1 text-2xl font-black tracking-tighter">Formation 2 — IA Responsable & Loi 25</p>
+              <p className="mb-10 text-sm italic text-gray-500">Conformite & gouvernance mondiale de l intelligence artificielle</p>
 
-              <p className="text-gray-500 italic mb-4 text-sm">a complété avec succès la formation</p>
-
-              <p className="text-2xl font-black tracking-tighter mb-1">
-                Formation 2 — IA Responsable & Loi 25
-              </p>
-              <p className="text-gray-500 italic text-sm mb-10">
-                Conformité & Gouvernance Mondiale de l'Intelligence Artificielle
-              </p>
-
-              {/* Méta */}
-              <div className="grid grid-cols-4 gap-4 mb-10 text-center">
+              <div className="mb-10 grid grid-cols-4 gap-4 text-center">
                 {[
-                  ['DURÉE', '7h · 5 modules'],
-                  ['UEC SOFEDUC', '0.7 UEC · BTA-IARG-002'],
-                  ['BLOOM', 'Analyser → Évaluer'],
-                  ['DATE', now],
-                ].map(([l, v]) => (
-                  <div key={l} className="border border-[#F5E6B0] rounded p-3">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-[#C9A84C] mb-1">{l}</p>
-                    <p className="text-sm font-bold text-gray-800">{v}</p>
+                  ['Duree', '7h · 5 modules'],
+                  ['Credits', '0.7 UEC · BTA-IARG-002'],
+                  ['Bloom', 'Analyser → Evaluer'],
+                  ['Date', now],
+                ].map(([label, value]) => (
+                  <div key={label} className="rounded border border-[#F5E6B0] p-3">
+                    <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-[#C9A84C]">{label}</p>
+                    <p className="text-sm font-bold text-gray-800">{value}</p>
                   </div>
                 ))}
               </div>
 
-              {/* Signatures */}
-              <div className="grid grid-cols-2 gap-16 px-8 mb-8">
+              <div className="mb-8 grid grid-cols-2 gap-16 px-8">
                 {[
-                  ['Franz Heffa', 'Directeur de la formation', 'ButterTech Academy'],
-                  ['Unité Éducation BTA', 'Coordinatrice pédagogique', 'SOFEDUC Agréé'],
-                ].map(([name, titre, org]) => (
-                  <div key={titre} className="text-center">
-                    <p className="font-black text-gray-800 mb-1 italic">{name}</p>
-                    <div className="border-b border-gray-400 mb-1" />
-                    <p className="text-xs text-gray-500">{titre}</p>
+                  ['Franz Heffa', 'Direction programme et ecosysteme', 'Buttertech Academy'],
+                  ['Unite education BTA', 'Coordination pedagogique', 'Buttertech Academy'],
+                ].map(([name, title, org]) => (
+                  <div key={title} className="text-center">
+                    <p className="mb-1 font-black italic text-gray-800">{name}</p>
+                    <div className="mb-1 border-b border-gray-400" />
+                    <p className="text-xs text-gray-500">{title}</p>
                     <p className="text-xs font-bold text-gray-700">{org}</p>
                   </div>
                 ))}
               </div>
 
-              {/* Logos partenaires */}
-              <div className="flex justify-center gap-6 mb-6">
-                {['SOFEDUC Agréé', 'NVIDIA Inception', 'Google for Education', 'Loi 25 Conforme'].map((l) => (
-                  <div key={l} className="border border-[#C9A84C] rounded px-3 py-1.5 text-[10px] font-black text-[#C9A84C] uppercase tracking-wider">
-                    {l}
+              <div className="mb-6 flex justify-center gap-6">
+                {['Buttertech Academy', 'Google ecosystem', 'Gemini ready', 'Loi 25 aware'].map((label) => (
+                  <div key={label} className="rounded border border-[#C9A84C] px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-[#C9A84C]">
+                    {label}
                   </div>
                 ))}
               </div>
 
-              {/* Numéro de certificat */}
-              <div className="bg-gray-50 rounded p-3 text-xs text-gray-500">
-                N° {certNum} · buttertech-academy.vercel.app/verify · Archivé 7 ans · Cloud Run Montréal · SOC2 Type II · Loi 25 Québec
+              <div className="rounded bg-gray-50 p-3 text-xs text-gray-500">
+                N° {certNum} · buttertech-academy.vercel.app · Archive pedagogique · Cloud Run Montreal · SOC2 Type II · Loi 25 Quebec
               </div>
             </div>
           </div>

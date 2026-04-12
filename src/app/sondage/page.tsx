@@ -1,17 +1,18 @@
 'use client'
+
 import { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
 
 const QUESTIONS = [
-  'Les objectifs de la formation ont été clairement présentés dès le départ',
-  'Le contenu était adapté à mon niveau et à mes besoins professionnels',
-  'Les exemples et cas pratiques étaient pertinents et immédiatement applicables',
-  'Le formateur / la plateforme a facilité l\'apprentissage de façon efficace',
-  'La durée de la formation était appropriée par rapport au contenu présenté',
-  'L\'évaluation (quiz) reflétait bien les apprentissages de la formation',
-  'Je recommanderais cette formation à un collègue ou à mon organisation',
-  'Cette formation a renforcé ma compréhension de la conformité IA',
+  'Les objectifs de la formation ont ete clairement presentes des le depart',
+  'Le contenu etait adapte a mon niveau et a mes besoins professionnels',
+  'Les exemples et cas pratiques etaient pertinents et applicables',
+  'Le formateur ou la plateforme a facilite l apprentissage de facon efficace',
+  'La duree de la formation etait appropriee par rapport au contenu presente',
+  'L evaluation par quiz refletait bien les apprentissages de la formation',
+  'Je recommanderais cette formation a un collegue ou a mon organisation',
+  'Cette formation a renforce ma comprehension de la conformite IA',
 ]
 
 export default function SondagePage() {
@@ -29,78 +30,71 @@ export default function SondagePage() {
     setSubmitted(true)
   }
 
-  if (submitted) return (
-    <>
-      <Navbar />
-      <main className="max-w-2xl mx-auto px-6 py-20 text-center">
-        <div className="w-20 h-20 bg-[#C9A84C] rounded-full flex items-center justify-center text-4xl mx-auto mb-6">✓</div>
-        <h1 className="text-2xl font-black mb-3">Merci pour votre retour !</h1>
-        <p className="text-gray-600 mb-2 text-sm">Score moyen de satisfaction :</p>
-        <p className="text-5xl font-black text-[#C9A84C] mb-2">{avg}<span className="text-xl">/5</span></p>
-        <p className="text-xs text-gray-400 mb-10">Archivé · Cloud Run Montréal · Norme SOFEDUC 10 · 7 ans</p>
-        <div className="flex gap-3 justify-center flex-wrap">
-          <Link href="/attestation" className="btn-gold">🏛️ Obtenir mon attestation SOFEDUC</Link>
-          <Link href="/espace" className="btn-black">← Mon espace</Link>
-        </div>
-      </main>
-    </>
-  )
+  if (submitted) {
+    return (
+      <>
+        <Navbar />
+        <main className="mx-auto max-w-2xl px-6 py-20 text-center">
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#C9A84C] text-4xl">✓</div>
+          <h1 className="mb-3 text-2xl font-black">Merci pour votre retour.</h1>
+          <p className="mb-2 text-sm text-gray-600">Score moyen de satisfaction :</p>
+          <p className="mb-2 text-5xl font-black text-[#C9A84C]">{avg}<span className="text-xl">/5</span></p>
+          <p className="mb-10 text-xs text-gray-400">Archive pedagogique · Cloud Run Montreal · 7 ans</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link href="/attestation" className="btn-gold">Obtenir mon attestation</Link>
+            <Link href="/espace" className="btn-black">← Mon espace</Link>
+          </div>
+        </main>
+      </>
+    )
+  }
 
   return (
     <>
       <Navbar />
-      <main className="max-w-3xl mx-auto px-6 py-12">
-        <div className="mb-3 flex gap-2 flex-wrap">
+      <main className="mx-auto max-w-3xl px-6 py-12">
+        <div className="mb-3 flex flex-wrap gap-2">
           <span className="bloom-badge">BTA-IARG-002</span>
-          <span className="bloom-badge" style={{background:'#000',color:'#C9A84C'}}>Norme SOFEDUC 10</span>
+          <span className="bloom-badge" style={{ background: '#000', color: '#C9A84C' }}>Evaluation de satisfaction</span>
         </div>
-        <h1 className="text-2xl font-black tracking-tighter mb-2">Sondage d'Évaluation de la Formation</h1>
-        <p className="text-gray-500 text-sm mb-8">Confidentiel · Anonymisé · Archivé 7 ans · Cloud Run Montréal · SOC2 Type II</p>
+        <h1 className="mb-2 text-2xl font-black tracking-tighter">Sondage d evaluation de la formation</h1>
+        <p className="mb-8 text-sm text-gray-500">Confidentiel · Anonymise · Archive 7 ans · Cloud Run Montreal · SOC2 Type II</p>
 
-        {/* Barre de progression */}
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs text-gray-500 font-bold">{progress} / {QUESTIONS.length} questions répondues</span>
-          <span className="text-xs text-[#C9A84C] font-bold">{Math.round((progress/QUESTIONS.length)*100)}%</span>
+        <div className="mb-2 flex items-center justify-between">
+          <span className="text-xs font-bold text-gray-500">{progress} / {QUESTIONS.length} questions repondues</span>
+          <span className="text-xs font-bold text-[#C9A84C]">{Math.round((progress / QUESTIONS.length) * 100)}%</span>
         </div>
-        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden mb-8">
-          <div className="h-full bg-[#C9A84C] rounded-full transition-all" style={{width:`${(progress/QUESTIONS.length)*100}%`}} />
+        <div className="mb-8 h-1.5 overflow-hidden rounded-full bg-gray-100">
+          <div className="h-full rounded-full bg-[#C9A84C] transition-all" style={{ width: `${(progress / QUESTIONS.length) * 100}%` }} />
         </div>
 
-        {/* Légende */}
-        <div className="flex gap-3 mb-4 text-xs text-gray-500 font-bold">
-          <span>1 = Très insatisfait</span>
+        <div className="mb-4 flex gap-3 text-xs font-bold text-gray-500">
+          <span>1 = Tres insatisfait</span>
           <span>·</span>
           <span>3 = Neutre</span>
           <span>·</span>
-          <span>5 = Très satisfait</span>
+          <span>5 = Tres satisfait</span>
         </div>
 
-        {/* Questions */}
-        <div className="overflow-x-auto rounded border border-gray-200 mb-6">
-          <table className="w-full text-sm min-w-[500px]">
+        <div className="mb-6 overflow-x-auto rounded border border-gray-200">
+          <table className="min-w-[500px] w-full text-sm">
             <thead>
               <tr className="bg-black">
-                <th className="text-left px-4 py-3 text-[#C9A84C] text-xs font-black uppercase tracking-wider">Question</th>
-                {[1,2,3,4,5].map(n => (
-                  <th key={n} className="px-4 py-3 text-[#C9A84C] text-xs font-black text-center w-12">{n}</th>
+                <th className="px-4 py-3 text-left text-xs font-black uppercase tracking-wider text-[#C9A84C]">Question</th>
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <th key={n} className="w-12 px-4 py-3 text-center text-xs font-black text-[#C9A84C]">{n}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {QUESTIONS.map((q, qi) => (
-                <tr key={qi} className={qi % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                  <td className="px-4 py-3 text-gray-800 leading-snug">
-                    <span className="font-black text-[#C9A84C] mr-1.5">Q{qi+1}</span>{q}
-                  </td>
-                  {[1,2,3,4,5].map(v => (
-                    <td key={v} className="px-4 py-3 text-center">
+              {QUESTIONS.map((question, qi) => (
+                <tr key={question} className={qi % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                  <td className="px-4 py-3 leading-snug text-gray-800"><span className="mr-1.5 font-black text-[#C9A84C]">Q{qi + 1}</span>{question}</td>
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <td key={value} className="px-4 py-3 text-center">
                       <button
-                        onClick={() => setAnswers(prev => ({...prev, [qi]: v}))}
-                        className={`w-8 h-8 rounded-full border-2 transition-all hover:scale-110 ${
-                          answers[qi] === v
-                            ? 'bg-[#C9A84C] border-[#C9A84C] scale-110'
-                            : 'border-gray-300 hover:border-[#C9A84C]'
-                        }`}
+                        onClick={() => setAnswers((prev) => ({ ...prev, [qi]: value }))}
+                        className={`h-8 w-8 rounded-full border-2 transition-all hover:scale-110 ${answers[qi] === value ? 'scale-110 border-[#C9A84C] bg-[#C9A84C]' : 'border-gray-300 hover:border-[#C9A84C]'}`}
                       />
                     </td>
                   ))}
@@ -110,19 +104,15 @@ export default function SondagePage() {
           </table>
         </div>
 
-        {/* Commentaire */}
         <div className="mb-6">
-          <label className="block text-sm font-black text-gray-900 mb-2 uppercase tracking-wider">
-            Commentaires <span className="text-gray-400 font-normal normal-case tracking-normal">(facultatif)</span>
+          <label className="mb-2 block text-sm font-black uppercase tracking-wider text-gray-900">
+            Commentaires <span className="normal-case tracking-normal text-gray-400 font-normal">(facultatif)</span>
           </label>
-          <textarea value={comment} onChange={e => setComment(e.target.value)} rows={3}
-            placeholder="Vos suggestions d'amélioration ou points forts de la formation..."
-            className="w-full border border-gray-300 rounded px-4 py-3 text-sm focus:outline-none focus:border-[#C9A84C] resize-none transition-colors" />
+          <textarea value={comment} onChange={(event) => setComment(event.target.value)} rows={3} placeholder="Vos suggestions d amelioration ou points forts de la formation..." className="w-full resize-none rounded border border-gray-300 px-4 py-3 text-sm transition-colors focus:border-[#C9A84C] focus:outline-none" />
         </div>
 
-        <button onClick={submit} disabled={!allAnswered}
-          className="btn-gold w-full text-center disabled:opacity-40 disabled:cursor-not-allowed text-sm">
-          {allAnswered ? 'SOUMETTRE MON ÉVALUATION' : `Répondre aux ${QUESTIONS.length - progress} questions restantes...`}
+        <button onClick={submit} disabled={!allAnswered} className="btn-gold w-full text-center text-sm disabled:cursor-not-allowed disabled:opacity-40">
+          {allAnswered ? 'Soumettre mon evaluation' : `Repondre aux ${QUESTIONS.length - progress} questions restantes...`}
         </button>
       </main>
     </>

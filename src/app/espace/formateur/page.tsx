@@ -3,6 +3,12 @@ import PartnerProofBar from '@/components/PartnerProofBar'
 import { teacherJourney } from '@/lib/academy-data'
 import Link from 'next/link'
 
+const facultyTools = [
+  { emoji: '📚', title: 'Pilotage des cohortes', text: 'Vision seance, progression, depots, feedback et relances depuis une surface unique.' },
+  { emoji: '🧪', title: 'Quiz et preuves', text: 'Activer des quiz, verifier les blocs et conserver une trace lisible des evaluations.' },
+  { emoji: '🤝', title: 'Lien campus', text: 'Coordonner l adoption avec l administration, les licences et les offres institutionnelles.' },
+]
+
 export default function EspaceFormateurPage() {
   return (
     <>
@@ -12,13 +18,11 @@ export default function EspaceFormateurPage() {
           <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#C9A84C]">Analyse prealable et macrodesign</p>
-              <h1 className="mt-4 text-4xl font-black tracking-tight text-black sm:text-5xl">Espace Professeurs et Macrodesign</h1>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base">
-                {teacherJourney.hero.subtitle}
-              </p>
+              <h1 className="mt-4 text-4xl font-black tracking-tight text-black sm:text-5xl">Espace professeurs et delivery</h1>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base">{teacherJourney.hero.subtitle}</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link href="/simulateur" className="btn-gold">Ouvrir le simulateur IA</Link>
-                <Link href="/sondage" className="btn-black">Suivre la satisfaction</Link>
+                <Link href="/espace/etablissement" className="btn-black">Coordonner avec l etablissement</Link>
               </div>
             </div>
 
@@ -48,6 +52,16 @@ export default function EspaceFormateurPage() {
         </section>
 
         <PartnerProofBar emphasis="academy" />
+
+        <section className="grid gap-4 md:grid-cols-3">
+          {facultyTools.map((item) => (
+            <article key={item.title} className="shell-card">
+              <div className="text-3xl">{item.emoji}</div>
+              <h2 className="mt-4 text-xl font-black tracking-tight">{item.title}</h2>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">{item.text}</p>
+            </article>
+          ))}
+        </section>
 
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {teacherJourney.cockpit.map((metric) => (
@@ -105,87 +119,6 @@ export default function EspaceFormateurPage() {
             </div>
           </article>
         </section>
-
-        <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-          <article className="shell-card">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Methodes et evaluation</p>
-            <div className="mt-4 grid gap-3">
-              {teacherJourney.teachingMethods.map((item) => (
-                <div key={item} className="rounded-[1.25rem] border border-black/10 bg-[#fffaf0] px-4 py-4 text-sm leading-6 text-neutral-700">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </article>
-
-          <article className="dark-shell">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Pieces de conformite</p>
-            <div className="mt-4 space-y-3">
-              {teacherJourney.evidenceBoard.map((item) => (
-                <div key={item} className="rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm leading-6 text-neutral-300">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </article>
-        </section>
-
-        <section className="shell-card">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Rubrique d evaluation</p>
-              <h2 className="mt-2 text-2xl font-black tracking-tight">Grille lisible pour correction, feedback et attestations</h2>
-            </div>
-            <span className="status-pill border-[#C9A84C]/40 text-[#7a5c12]">CPU / SOFEDUC</span>
-          </div>
-          <div className="mt-5 overflow-x-auto rounded-[1.5rem] border border-black/10">
-            <div className="min-w-[720px]">
-              <div className="grid grid-cols-[1.2fr_0.4fr_1fr] bg-black px-4 py-3 text-[11px] font-black uppercase tracking-[0.18em] text-[#C9A84C]">
-                <div>Critere</div>
-                <div>Pond.</div>
-                <div>Signal attendu</div>
-              </div>
-              {teacherJourney.rubricRows.map((row) => (
-                <div key={row.criterion} className="grid grid-cols-[1.2fr_0.4fr_1fr] border-t border-black/10 bg-white px-4 py-4 text-sm leading-6 text-neutral-700">
-                  <div className="font-semibold text-black">{row.criterion}</div>
-                  <div className="font-black text-[#7a5c12]">{row.weighting}</div>
-                  <div>{row.signal}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="shell-card">
-          <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Workflow de delivery</p>
-          <div className="mt-4 grid gap-4 md:grid-cols-3">
-            {teacherJourney.workflows.map((workflow) => (
-              <article key={workflow.name} className="rounded-[1.5rem] border border-black/10 bg-white p-5">
-                <h2 className="text-xl font-black tracking-tight">{workflow.name}</h2>
-                <ul className="mt-4 space-y-3 text-sm leading-6 text-neutral-600">
-                  {workflow.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-2 h-2 w-2 rounded-full bg-[#C9A84C]" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="shell-card">
-          <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Présence partenaire dans le delivery</p>
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            {teacherJourney.partnerProof.map((item) => (
-              <div key={item} className="soft-panel text-sm leading-6 text-neutral-700">
-                {item}
-              </div>
-            ))}
-          </div>
-        </section>
-
       </main>
     </>
   )

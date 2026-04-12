@@ -3,6 +3,12 @@ import PartnerProofBar from '@/components/PartnerProofBar'
 import { studentJourney } from '@/lib/academy-data'
 import Link from 'next/link'
 
+const aiActions = [
+  { emoji: '📝', title: 'Resumes de cours', text: 'Transformer un module en fiche de revision ou plan oral en quelques minutes.' },
+  { emoji: '🌍', title: 'Traduction et reformulation', text: 'Travailler en francais, anglais ou bilingue sans casser la clarté des livrables.' },
+  { emoji: '💡', title: 'Coaching IA', text: 'Demander une explication, un exemple, un plan de projet ou une revision avant quiz.' },
+]
+
 export default function EspaceApprenantPage() {
   return (
     <>
@@ -12,13 +18,11 @@ export default function EspaceApprenantPage() {
           <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
               <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#C9A84C]">Parcours synchrone et asynchrone</p>
-              <h1 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Espace Étudiants SOFEDUC</h1>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-300 sm:text-base">
-                {studentJourney.hero.subtitle}
-              </p>
+              <h1 className="mt-4 text-4xl font-black tracking-tight text-white sm:text-5xl">Espace etudiants Buttertech Academy</h1>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-300 sm:text-base">{studentJourney.hero.subtitle}</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link href="/formations" className="btn-gold">Explorer les formations</Link>
-                <Link href="/attestation" className="btn-black">Voir mes attestations</Link>
+                <Link href="/boutique-ia" className="btn-black">Voir les packs IA</Link>
               </div>
             </div>
 
@@ -47,6 +51,16 @@ export default function EspaceApprenantPage() {
         </section>
 
         <PartnerProofBar />
+
+        <section className="grid gap-4 md:grid-cols-3">
+          {aiActions.map((item) => (
+            <article key={item.title} className="shell-card">
+              <div className="text-3xl">{item.emoji}</div>
+              <h2 className="mt-4 text-xl font-black tracking-tight">{item.title}</h2>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">{item.text}</p>
+            </article>
+          ))}
+        </section>
 
         <section className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <article className="shell-card">
@@ -114,36 +128,6 @@ export default function EspaceApprenantPage() {
           ))}
         </section>
 
-        <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-          <article className="shell-card">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Trajectoire evaluative</p>
-            <div className="mt-4 space-y-4">
-              {studentJourney.evaluations.map((evaluation) => (
-                <div key={evaluation.name} className="rounded-[1.25rem] border border-black/10 bg-white p-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <h2 className="text-xl font-black tracking-tight">{evaluation.name}</h2>
-                    <span className="rounded-full border border-[#C9A84C]/40 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-[#7a5c12]">
-                      {evaluation.weight}
-                    </span>
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-neutral-600">{evaluation.format}</p>
-                </div>
-              ))}
-            </div>
-          </article>
-
-          <article className="dark-shell">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Preuves visibles</p>
-            <div className="mt-4 space-y-3">
-              {studentJourney.evidenceBoard.map((item) => (
-                <div key={item} className="rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm leading-6 text-neutral-300">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </article>
-        </section>
-
         <section className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <article className="shell-card">
             <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Progression par bloc</p>
@@ -178,18 +162,6 @@ export default function EspaceApprenantPage() {
             </div>
           </article>
         </section>
-
-        <section className="shell-card">
-          <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[#C9A84C]">Repères partenaires</p>
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            {studentJourney.partnerProof.map((item) => (
-              <div key={item} className="soft-panel text-sm leading-6 text-neutral-700">
-                {item}
-              </div>
-            ))}
-          </div>
-        </section>
-
       </main>
     </>
   )

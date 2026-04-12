@@ -2,17 +2,12 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { hashPassword } from '@/lib/passwords'
 
-type AcademyRole = 'student' | 'teacher'
+type AcademyRole = 'student' | 'teacher' | 'admin'
 
 function normalizeRole(input: string): AcademyRole | null {
-  if (input === 'teacher') {
-    return 'teacher'
-  }
-
-  if (input === 'student') {
-    return 'student'
-  }
-
+  if (input === 'teacher') return 'teacher'
+  if (input === 'student') return 'student'
+  if (input === 'admin') return 'admin'
   return null
 }
 
@@ -34,37 +29,14 @@ export async function POST(request: Request) {
     const passwordHash = hashPassword(password)
 
     const account = await prisma.academyAccess.upsert({
-      where: {
-        email_role: {
-          email,
-          role,
-        },
-      },
-      update: {
-        displayName: displayName || null,
-        passwordHash,
-      },
-      create: {
-        email,
-        role,
-        displayName: displayName || null,
-        passwordHash,
-      },
+      where: { email_role: { email, role } },
+      update: { displayName: displayName || null, passwordHash },
+      create: { email, role, displayName: displayName || null, passwordHash },
     })
 
-    return NextResponse.json({
-      ok: true,
-      account: {
-        id: account.id,
-        email: account.email,
-        role: account.role,
-      },
-    })
+    return NextResponse.json({ ok: true, account: { id: account.id, email: account.email, role: account.role } })
   } catch (error) {
     console.error('academy access register failed', error)
-    return NextResponse.json(
-      { error: 'Impossible de creer l acces pour le moment.' },
-      { status: 500 },
-    )
+    return NextResponse.json({ error: 'Impossible de creer l acces pour le moment.' }, { status: 500 })
   }
 }

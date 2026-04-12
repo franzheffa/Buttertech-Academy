@@ -23,33 +23,33 @@ export const partnerPlacements = [
   {
     title: 'Buttertech Academy',
     description:
-      'Google for Education, Google Workspace for Education et Gemini Enterprise structurent les parcours, la productivite et l accompagnement IA.',
-    badges: ['Google for Education', 'Google Workspace for Education', 'Gemini Enterprise'],
+      'Google for Education, Google Workspace for Education et Gemini structurent les parcours, la productivite et l accompagnement IA.',
+    badges: ['Google for Education', 'Google Workspace for Education', 'Gemini'],
   },
   {
-    title: 'Viize Parking Intelligence',
+    title: 'AI commerce',
     description:
-      'Google Maps Platform Partner doit accompagner chaque surface qui parle de parking, cartographie, geolocalisation ou optimisation de flux.',
-    badges: ['Google Maps Platform Partner', 'Parking Intelligence', 'Operations'],
+      'La plateforme prepare une distribution locale des outils IA avec paiement simple et accompagnement de mise en route.',
+    badges: ['Gemini', 'AI packs', 'Smith-Heffa Paygate'],
   },
   {
-    title: 'Cyber and Trust',
+    title: 'Enterprise trust',
     description:
-      'Mandiant et Threat Intelligence se placent sur les experiences trust, securite, resilience et gouvernance.',
-    badges: ['Mandiant', 'Threat Intelligence', 'Enterprise Trust'],
+      'Google Cloud, NVIDIA et une base cloud native servent de colonne vertebrale pour les experiences d apprentissage et d orchestration.',
+    badges: ['Google Cloud', 'NVIDIA', 'Enterprise trust'],
   },
 ] as const
 
 export const studentJourney = {
   hero: {
-    title: 'Espace Apprenant SOFEDUC',
+    title: 'Espace apprenant Buttertech Academy',
     subtitle:
-      'Un cockpit de formation synchrone et asynchrone avec objectifs d apprentissage, blocs de cours, traces evaluatives, attestations et accompagnement continu.',
+      'Un cockpit de formation synchrone et asynchrone avec objectifs d apprentissage, blocs de cours, traces evaluatives, attestations et accompagnement IA continu.',
   },
   metrics: [
-    { value: '15', label: 'Seances structurees', detail: 'Vision seance par seance avec objectifs, activites et traces' },
-    { value: '4', label: 'Blocs de cours', detail: 'Organisation claire selon les visées, contenus et evaluations' },
-    { value: '100%', label: 'Pieces visibles', detail: 'Plan de cours, blocs, activites, preuves et attestations centralises' },
+    { value: '15', label: 'Seances structurees', detail: 'Vision seance par seance avec objectifs, activites et traces.' },
+    { value: '4', label: 'Blocs de cours', detail: 'Organisation claire selon les visees, contenus et evaluations.' },
+    { value: '24/7', label: 'Accompagnement IA', detail: 'Aides a la revision, resumes, traduction et preparation des livrables.' },
   ],
   weeklyFlow: [
     {
@@ -65,8 +65,8 @@ export const studentJourney = {
       text: 'Travail individuel, retroaction, portfolio, post-test, depot des traces et preparation de l evaluation suivante.',
     },
     {
-      title: 'Encadrement continu',
-      text: 'Forum, heures de bureau, feedback, journal de bord et rappel des competences visees restent accessibles en tout temps.',
+      title: 'Pack IA etudiant',
+      text: 'Gemini, outils de productivite, espace documents et orientation vers les paiements locaux sont relies dans le meme parcours.',
     },
   ],
   learningBlocks: [
@@ -136,7 +136,7 @@ export const studentJourney = {
   attestationStack: [
     { title: 'Attestation de participation', state: 'Disponible', detail: 'Generee apres validation des traces synchrones et asynchrones.' },
     { title: 'Badge de competence intermediaire', state: 'En preparation', detail: 'Delivre apres le bloc 2 et la grille d observation.' },
-    { title: 'Attestation finale SOFEDUC', state: 'Conditionnelle', detail: 'Publiee apres epreuve finale, sondage et portfolio conformes.' },
+    { title: 'Attestation finale Buttertech Academy', state: 'Conditionnelle', detail: 'Publiee apres epreuve finale, sondage et portfolio conformes.' },
   ],
   partnerProof: [
     'Google for Education pour la structure pedagogique et l adoption en contexte educatif',
@@ -147,14 +147,14 @@ export const studentJourney = {
 
 export const teacherJourney = {
   hero: {
-    title: 'Espace Formateur et Macrodesign',
+    title: 'Espace formateur et macrodesign',
     subtitle:
-      'Un poste de pilotage qui aligne analyse prealable, macrodesign, plan de cours, seances synchrones, activites asynchrones, evaluations et preuves de qualite SOFEDUC.',
+      'Un poste de pilotage qui aligne analyse prealable, macrodesign, plan de cours, seances synchrones, activites asynchrones, evaluations et preuves de qualite pedagogique.',
   },
   metrics: [
-    { value: '15', label: 'Seances pilotables', detail: 'Chaque seance peut etre marquee synchrone, asynchrone ou hybride' },
-    { value: '4', label: 'Piliers SOFEDUC', detail: 'Analyse, macrodesign, delivery, evaluation' },
-    { value: '360°', label: 'Vision de cohorte', detail: 'Progression, preuves, satisfaction, risques et relances' },
+    { value: '15', label: 'Seances pilotables', detail: 'Chaque seance peut etre marquee synchrone, asynchrone ou hybride.' },
+    { value: '4', label: 'Piliers pedagogiques', detail: 'Analyse, macrodesign, delivery, evaluation.' },
+    { value: '360°', label: 'Vision de cohorte', detail: 'Progression, preuves, satisfaction, risques et relances.' },
   ],
   complianceChecklist: [
     {
@@ -244,64 +244,5 @@ export const teacherJourney = {
     'Google for Education Partner pour le signal institutionnel visible',
     'Google Workspace for Education pour la logistique de cohortes et les ressources',
     'Google Cloud pour l execution et la securisation des experiences IA',
-  ],
-} as const
-
-export const goToMarketData = {
-  hero: {
-    title: 'Control Tower Go To Market',
-    subtitle:
-      'Un site vivant qui relie ecosysteme, campagnes, solutions, operations et KPI enterprise pour Buttertech Academy et ses plateformes.',
-  },
-  pillars: [
-    {
-      title: 'Ecosysteme partenaire',
-      text: 'Google for Education, Gemini Enterprise, Google Workspace for Education, Google Maps Platform, NVIDIA et Mandiant.',
-    },
-    {
-      title: 'Offres et motions',
-      text: 'Academy, Viize parking intelligence, agent smith-heffa, prompt ops, gouvernance IA et accompagnement enterprise.',
-    },
-    {
-      title: 'Pilotage KPI',
-      text: 'Pipeline, activation, completion, satisfaction, conversion bundle et qualite de delivery.',
-    },
-  ],
-  kpis: [
-    { label: 'Pipeline partenaire', value: '$1.24M', trend: '+18% ce mois' },
-    { label: 'Apprenants actifs', value: '1,284', trend: '+11% mobile first' },
-    { label: 'Taux de completion', value: '93%', trend: '+7 pts' },
-    { label: 'Accounts enterprise', value: '42', trend: '+9 ouverts' },
-  ],
-  campaigns: [
-    {
-      name: 'Academy Education Launch',
-      channel: 'Education / Enterprise',
-      status: 'Active',
-      description: 'Campagne autour des parcours certifiants, Gemini Enterprise et Workspace for Education.',
-    },
-    {
-      name: 'Viize Smart Parking Motion',
-      channel: 'Maps / Mobility',
-      status: 'Planned',
-      description: 'Narratif parking intelligent avec Google Maps Platform Partner et analytics terrain.',
-    },
-    {
-      name: 'Trust and Security Expansion',
-      channel: 'Cyber / C-suite',
-      status: 'Active',
-      description: 'Positionnement Mandiant, Threat Intelligence et gouvernance IA enterprise.',
-    },
-  ],
-  motions: [
-    { name: 'Academy Certification Funnel', owner: 'Education', stage: 'Scale', detail: 'Landing, cohortes, attestations et preuve partenaire Google for Education.' },
-    { name: 'Gemini Productivity Enablement', owner: 'AI Enterprise', stage: 'Live', detail: 'Cas d usage, accompagnement et adoption Workspace for Education.' },
-    { name: 'Viize Parking Narrative', owner: 'Maps Platform', stage: 'Build', detail: 'Motion parking intelligence, exploitation cartographique et operations terrain.' },
-  ],
-  monitoring: [
-    'Taux de completion par cohorte',
-    'Delai moyen de retroaction formateur',
-    'Activation des attestations et badges',
-    'Usage des assets partenaires sur les pages clefs',
   ],
 } as const
